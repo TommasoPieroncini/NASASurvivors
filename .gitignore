@@ -1,0 +1,9 @@
+WaterApp/*.iml
+WaterApp/.gradle
+WaterApp/local.properties
+WaterApp/.idea/workspace.xml
+WaterApp/.idea/libraries
+WaterApp/.DS_Store
+WaterApp/build
+WaterApp/captures
+WaterApp/externalNativeBuild
