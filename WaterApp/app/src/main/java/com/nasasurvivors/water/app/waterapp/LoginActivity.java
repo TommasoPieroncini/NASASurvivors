@@ -336,7 +336,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
-                Toast.makeText(getBaseContext(), "Looged in!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "Logged in!", Toast.LENGTH_SHORT).show();
                 AppSingleton.getInstance().setUsername(mEmail);
                 Intent loggedIn = new Intent(getBaseContext(), WelcomeActivity.class);
                 loggedIn.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
