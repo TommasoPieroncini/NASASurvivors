@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button login = (Button) findViewById(R.id.login);
         Button register = (Button) findViewById(R.id.register);
+        Button editProfile = (Button) findViewById(R.id.edit_profile);
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,6 +39,13 @@ public class MainActivity extends AppCompatActivity {
                 // AppSingleton.getInstance(getBaseContext()).incompleteMethod();
             }
         });
+
+        if (AppSingleton.getInstance().getUsername() != null) {
+            login.setVisibility(View.INVISIBLE);
+            register.setVisibility(View.INVISIBLE);
+            editProfile.setVisibility(View.VISIBLE);
+        }
+
     }
 
 }

@@ -2,6 +2,7 @@ package com.nasasurvivors.water.app.waterapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +26,14 @@ public class WelcomeActivity extends AppCompatActivity {
 
         TextView welcome = (TextView) findViewById(R.id.welcome);
         welcome.setText("Welcome, " + AppSingleton.getInstance().getUsername() + "!");
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent main = new Intent(getBaseContext(), MainActivity.class);
+                startActivity(main);
+            }
+        }, 3000);
     }
 
     @Override
