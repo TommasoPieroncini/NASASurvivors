@@ -46,6 +46,14 @@ public class MainActivity extends AppCompatActivity {
             editProfile.setVisibility(View.VISIBLE);
         }
 
+        editProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toEditProfile = new Intent(getBaseContext(), EditProfileActivity.class);
+                startActivity(toEditProfile);
+            }
+        });
+
     }
 
 }

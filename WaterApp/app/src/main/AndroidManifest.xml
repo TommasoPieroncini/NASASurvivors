@@ -15,8 +15,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".RegistrationActivity"
-            android:parentActivityName=".MainActivity">
-        </activity>
+            android:parentActivityName=".MainActivity"></activity>
         <activity
             android:name=".LoginActivity"
             android:parentActivityName=".MainActivity">
@@ -37,8 +36,8 @@
         <activity
             android:name=".WelcomeActivity"
             android:label="@string/title_activity_welcome"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".EditProfileActivity"></activity>
     </application>
 
 </manifest>
