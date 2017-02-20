@@ -48,12 +48,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private static final int REQUEST_READ_CONTACTS = 0;
 
     /**
+     * arraylist to hold valid credentials for login.
+     */
+    private ArrayList<String> CREDENTIALS = new ArrayList<String>();
+
+
+    /**
      * A dummy authentication store containing known user names and passwords.
      * TODO: remove after connecting to a real authentication system.
      */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "test:pass", "NASAsurvivors:pass", "user:pass"
-    };
+//    private static final String[] CREDENTIALS = new String[]{
+//            "test:pass", "NASAsurvivors:pass", "user:pass"
+//    };
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
@@ -69,6 +75,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        // Add built-in credentials to arraylist
+        CREDENTIALS.add("test:pass");
+        CREDENTIALS.add("NASAsurvivors:pass");
+        CREDENTIALS.add("user:pass");
+
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
@@ -318,7 +329,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
 
-            for (String credential : DUMMY_CREDENTIALS) {
+            for (String credential : CREDENTIALS) {
                 String[] pieces = credential.split(":");
                 if (pieces[0].equals(mEmail)) {
                     // Account exists, return true if the password matches.
