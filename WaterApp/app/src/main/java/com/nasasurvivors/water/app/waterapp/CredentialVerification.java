@@ -1,5 +1,8 @@
 package com.nasasurvivors.water.app.waterapp;
 
+import android.util.Log;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 
 /**
@@ -9,11 +12,21 @@ import java.util.ArrayList;
 public class CredentialVerification {
     private ArrayList<String> creds = new ArrayList<String>();
 
-    public void addCreds(String user, String pass) {
+    public boolean addCreds(String user, String pass) {
+        int size = creds.size();
         creds.add(user + ":" + pass);
+        Log.i("Adding credentials", "Adding credentials");
+        return creds.size() == size + 1;
     }
 
-    public ArrayList<String> toArrayList() {
+    public ArrayList<String> getData() {
         return creds;
     }
+
+    private static final CredentialVerification credentials = new CredentialVerification();
+
+    public static CredentialVerification getInstance() {
+        return credentials;
+    }
+
 }

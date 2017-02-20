@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     /**
      * arraylist to hold valid credentials for login.
      */
-    private CredentialVerification credentials = new CredentialVerification();
+    //private CredentialVerification credentials = new CredentialVerification();
 
 
     /**
@@ -76,9 +76,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Add built-in credentials to arraylist
-        credentials.addCreds("test", "pass");
-        credentials.addCreds("NASAsurvivors", "pass");
-        credentials.addCreds("user", "pass");
+        CredentialVerification.getInstance().addCreds("test", "pass");
+        CredentialVerification.getInstance().addCreds("NASAsurvivors", "pass");
+        CredentialVerification.getInstance().addCreds("user", "pass");
 
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
@@ -329,9 +329,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
 
-            for (String credential : credentials.toArrayList()) {
+            for (String credential : CredentialVerification.getInstance().getData()) {
+                Log.i("Debugging credentials", credential.toString());
                 String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
+                if (pieces.length != 0 && pieces[0].equals(mEmail)) {
                     // Account exists, return true if the password matches.
                     return pieces[1].equals(mPassword);
                 }
