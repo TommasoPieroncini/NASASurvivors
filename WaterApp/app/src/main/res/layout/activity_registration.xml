@@ -97,7 +97,7 @@
                 android:layout_height="match_parent">
 
                 <Button
-                    android:text="Register"
+                    android:text="Register & Sign-in"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/register_btn"

@@ -28,8 +28,8 @@ public class WelcomeActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent main = new Intent(getBaseContext(), MainActivity.class);
-                startActivity(main);
+                TextView welcome = (TextView) findViewById(R.id.welcome);
+                welcome.setText("NASASurvivors Project");
             }
         }, 3000);
     }
@@ -48,9 +48,19 @@ public class WelcomeActivity extends AppCompatActivity {
             case R.id.logout:
                 logout();
                 return true;
+            case R.id.editProfile:
+                editProfile();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void editProfile() {
+        Intent edit = new Intent(this, EditProfileActivity.class);
+        edit.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        Toast.makeText(this, "Editing time!", Toast.LENGTH_SHORT).show();
+        startActivity(edit);
     }
 
     private void logout() {

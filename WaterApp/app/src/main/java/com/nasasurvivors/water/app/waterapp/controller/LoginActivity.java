@@ -51,19 +51,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private static final int REQUEST_READ_CONTACTS = 0;
 
     /**
-     * arraylist to hold valid credentials for login.
-     */
-    //private CredentialVerification credentials = new CredentialVerification();
-
-
-    /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
-     */
-//    private static final String[] CREDENTIALS = new String[]{
-//            "test:pass", "NASAsurvivors:pass", "user:pass"
-//    };
-    /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
     private UserLoginTask mAuthTask = null;
