@@ -1,7 +1,6 @@
-package com.nasasurvivors.water.app.waterapp;
+package com.nasasurvivors.water.app.waterapp.controller;
 
 import android.content.Intent;
-import android.net.Credentials;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -11,6 +10,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.nasasurvivors.water.app.waterapp.R;
+import com.nasasurvivors.water.app.waterapp.model.CredentialVerification;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,25 +21,24 @@ import java.util.List;
  */
 
 public class RegistrationActivity extends AppCompatActivity {
-    //private CredentialVerification creds = new CredentialVerification();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
-//        EditText user = (EditText) findViewById(R.id.username_input);
-//        EditText pass = (EditText) findViewById(R.id.password_input);
-
+        // UI Components
         Spinner typeSpinner = (Spinner) findViewById(R.id.type_spinner);
+        Button registerBtn = (Button) findViewById(R.id.register_btn);
 
+        // Populate user types spinner
         List<String> userTypes = Arrays.asList("What type of user are you?", "User", "Worker", "Manager", "Admin");
 
         ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, userTypes);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         typeSpinner.setAdapter(adapter);
 
-        Button registerBtn = (Button) findViewById(R.id.register_btn);
+
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

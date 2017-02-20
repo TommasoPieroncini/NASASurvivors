@@ -14,17 +14,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".RegistrationActivity"
-            android:parentActivityName=".MainActivity"></activity>
+            android:name=".controller.RegistrationActivity"
+            android:parentActivityName=".controller.MainActivity"></activity>
         <activity
-            android:name=".LoginActivity"
-            android:parentActivityName=".MainActivity">
+            android:name=".controller.LoginActivity"
+            android:parentActivityName=".controller.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.nasasurvivors.water.app.waterapp.MainActivity" />
+                android:value="com.nasasurvivors.water.app.waterapp.controller.MainActivity" />
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".controller.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -34,10 +34,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".WelcomeActivity"
+            android:name=".controller.WelcomeActivity"
             android:label="@string/title_activity_welcome"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".EditProfileActivity"></activity>
+        <activity android:name=".controller.EditProfileActivity"></activity>
     </application>
 
 </manifest>

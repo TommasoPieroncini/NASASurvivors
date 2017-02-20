@@ -1,7 +1,9 @@
-package com.nasasurvivors.water.app.waterapp;
+package com.nasasurvivors.water.app.waterapp.controller;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.nasasurvivors.water.app.waterapp.R;
 
 public class EditProfileActivity extends AppCompatActivity {
 

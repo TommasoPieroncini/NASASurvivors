@@ -1,7 +1,6 @@
-package com.nasasurvivors.water.app.waterapp;
+package com.nasasurvivors.water.app.waterapp.model;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 

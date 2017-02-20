@@ -1,4 +1,4 @@
-package com.nasasurvivors.water.app.waterapp;
+package com.nasasurvivors.water.app.waterapp.controller;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -31,6 +31,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.nasasurvivors.water.app.waterapp.R;
+import com.nasasurvivors.water.app.waterapp.model.CredentialVerification;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,10 +78,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        // Add built-in credentials to arraylist
-        CredentialVerification.getInstance().addCreds("test", "pass");
-        CredentialVerification.getInstance().addCreds("NASAsurvivors", "pass");
-        CredentialVerification.getInstance().addCreds("user", "pass");
 
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);

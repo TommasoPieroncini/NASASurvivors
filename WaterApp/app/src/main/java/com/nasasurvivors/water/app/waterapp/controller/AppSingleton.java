@@ -1,6 +1,5 @@
-package com.nasasurvivors.water.app.waterapp;
+package com.nasasurvivors.water.app.waterapp.controller;
 
-import android.app.Activity;
 import android.content.Context;
 import android.widget.Toast;
 
