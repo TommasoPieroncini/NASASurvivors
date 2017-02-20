@@ -1,5 +1,6 @@
 package com.nasasurvivors.water.app.waterapp;
 
+import android.app.Activity;
 import android.content.Context;
 import android.widget.Toast;
 
