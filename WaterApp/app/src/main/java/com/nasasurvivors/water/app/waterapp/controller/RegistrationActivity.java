@@ -49,7 +49,8 @@ public class RegistrationActivity extends AppCompatActivity {
                 String passStr = pass.getText().toString();
 
                 if (CredentialVerification.getInstance().addCreds(userStr, passStr)) {
-                    Intent registered = new Intent(getBaseContext(), MainActivity.class);
+                    Intent registered = new Intent(getBaseContext(), WelcomeActivity.class);
+                    AppSingleton.getInstance().setUsername(userStr);
                     startActivity(registered);
                     Toast.makeText(getBaseContext(), "Registered " + userStr, Toast.LENGTH_SHORT).show();
                 } else {
