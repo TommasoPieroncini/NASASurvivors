@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
 
         Button login = (Button) findViewById(R.id.login);
         Button register = (Button) findViewById(R.id.register);
-        Button editProfile = (Button) findViewById(R.id.edit_profile);
 
 
         login.setOnClickListener(new View.OnClickListener() {
@@ -39,21 +38,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(toRegister);
             }
         });
-
-        if (AppSingleton.getInstance().getUsername() != null) {
-            login.setVisibility(View.INVISIBLE);
-            register.setVisibility(View.INVISIBLE);
-            editProfile.setVisibility(View.VISIBLE);
-        }
-
-        editProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent toEditProfile = new Intent(getBaseContext(), EditProfileActivity.class);
-                startActivity(toEditProfile);
-            }
-        });
-
     }
 
 }

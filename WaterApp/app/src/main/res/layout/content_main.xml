@@ -56,16 +56,4 @@
         android:layout_marginTop="10dp"
         android:id="@+id/signature" />
 
-    <Button
-        android:text="Edit Profile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/edit_profile"
-        android:layout_alignBottom="@+id/register"
-        android:layout_alignLeft="@+id/login"
-        android:layout_alignStart="@+id/login"
-        android:layout_marginBottom="30dp"
-        android:layout_alignRight="@+id/login"
-        android:layout_alignEnd="@+id/login"
-        android:visibility="invisible" />
 </RelativeLayout>
