@@ -72,4 +72,9 @@ public class WelcomeActivity extends AppCompatActivity {
         AppSingleton.getInstance().setUsername(null);
         startActivity(loggedOut);
     }
+
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(getBaseContext(), "You have reached the point of no return", Toast.LENGTH_SHORT).show();
+    }
 }
