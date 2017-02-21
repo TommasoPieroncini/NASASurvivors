@@ -315,13 +315,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
 
-            for (String credential : CredentialVerification.getInstance().getData()) {
-                Log.i("Debugging credentials", credential.toString());
-                String[] pieces = credential.split(":");
-                if (pieces.length != 0 && pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
+//            for (String credential : CredentialVerification.getInstance().getData()) {
+//                Log.i("Debugging credentials", credential.toString());
+//                String[] pieces = credential.split(":");
+//                if (pieces.length != 0 && pieces[0].equals(mEmail)) {
+//                    // Account exists, return true if the password matches.
+//                    return pieces[1].equals(mPassword);
+//                }
+//            }
+            if (CredentialVerification.getInstance().getData().containsKey(mEmail) && CredentialVerification.getInstance().getData().get(mEmail).equals(mPassword)) {
+                return true;
             }
 
             // TODO: register the new account here.
