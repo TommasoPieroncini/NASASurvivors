@@ -35,12 +35,8 @@ public class MainActivity extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: Implement registration activity
                 Intent toRegister = new Intent(getBaseContext(), RegistrationActivity.class);
                 startActivity(toRegister);
-
-                // call this line when the feature you opened is not yet implemented (i.e.no registration screen yet)
-                // AppSingleton.getInstance(getBaseContext()).incompleteMethod();
             }
         });
 

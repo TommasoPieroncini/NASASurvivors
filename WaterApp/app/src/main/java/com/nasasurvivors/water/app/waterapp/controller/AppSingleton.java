@@ -23,6 +23,7 @@ public class AppSingleton {
     private AppSingleton() {
     }
 
+    // use for incomplete methods.
     public void incompleteMethod() {
         Toast.makeText(currContext, "Functionality not implemented (YET)", Toast.LENGTH_SHORT).show();
     }
