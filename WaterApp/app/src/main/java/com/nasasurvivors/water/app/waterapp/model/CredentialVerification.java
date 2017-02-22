@@ -27,6 +27,11 @@ public class CredentialVerification {
         return true;
     }
 
+    public boolean removeCreds(String username) {
+        creds.remove(username);
+        return true;
+    }
+
     public HashMap<String, User> getData() {
         return creds;
     }

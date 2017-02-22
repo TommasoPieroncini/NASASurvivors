@@ -8,6 +8,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +20,7 @@ import com.nasasurvivors.water.app.waterapp.model.AppSingleton;
 public class MainActivity extends AppCompatActivity {
 
     private TextView welcome;
+    private TextView project;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,15 +30,26 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
+        Animation anim1 = AnimationUtils.loadAnimation(this, R.anim.slide_in_left);
+        anim1.reset();
         welcome = (TextView) findViewById(R.id.welcome);
         welcome.setText("Welcome, " + AppSingleton.getInstance().getCurrentUser().getUsername() + "!");
-        Handler handler = new Handler();
+        welcome.clearAnimation();
+        welcome.startAnimation(anim1);
+
+        Animation anim2 = AnimationUtils.loadAnimation(this, R.anim.slide_in_right);
+        anim2.reset();
+        project = (TextView) findViewById(R.id.project_text);
+        project.clearAnimation();
+        project.startAnimation(anim2);
+
+        /*Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 welcome.setText("NASASurvivors Project");
             }
-        }, 3000);
+        }, 3000);*/
     }
 
     @Override
@@ -62,8 +76,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void editProfile() {
         Intent edit = new Intent(this, EditProfileActivity.class);
-        edit.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        Toast.makeText(this, "Editing time!", Toast.LENGTH_SHORT).show();
         startActivity(edit);
     }
 
@@ -75,8 +87,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(loggedOut);
     }
 
-    @Override
-    public void onBackPressed() {
-        moveTaskToBack(true);
-    }
+    //@Override
+    //public void onBackPressed() {
+    //    moveTaskToBack(true);
+    //}
 }

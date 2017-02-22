@@ -46,12 +46,13 @@ public class RegistrationActivity extends AppCompatActivity {
         email = (EditText) findViewById(R.id.email_input);
 
         // Populate user types spinner
-        List<UserType> userTypes = Arrays.asList(UserType.NONE, UserType.USER, UserType.WORKER,
+        List<UserType> userTypes = Arrays.asList(UserType.USER, UserType.WORKER,
                 UserType.MANAGER, UserType.ADMIN);
 
         ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, userTypes);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         typeSpinner.setAdapter(adapter);
+        typeSpinner.setPrompt("Select your user type");
 
 
         registerBtn.setOnClickListener(new View.OnClickListener() {

@@ -15,8 +15,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".controller.RegistrationActivity"
-            android:parentActivityName=".controller.WelcomeActivity">
-        </activity>
+            android:parentActivityName=".controller.WelcomeActivity"></activity>
         <activity
             android:name=".controller.LoginActivity"
             android:parentActivityName=".controller.WelcomeActivity">
@@ -30,18 +29,17 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".controller.MainActivity"
             android:label="@string/title_activity_welcome"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
-        <activity android:name=".controller.EditProfileActivity"
-            android:parentActivityName=".controller.MainActivity">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".controller.EditProfileActivity"
+            android:parentActivityName=".controller.MainActivity"></activity>
     </application>
 
 </manifest>
