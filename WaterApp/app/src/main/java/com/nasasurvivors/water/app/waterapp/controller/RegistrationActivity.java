@@ -71,6 +71,11 @@ public class RegistrationActivity extends AppCompatActivity {
                     // Create user
                     User newUser = new User(userStr, passStr, nameStr, emailStr, type);
 
+                    if (CredentialVerification.getInstance().getData().keySet().contains(userStr)) {
+                        Toast.makeText(getBaseContext(), "Username already in use!", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+
                     if (CredentialVerification.getInstance().addCreds(userStr, newUser)) {
                         Intent registered = new Intent(getBaseContext(), MainActivity.class);
 
