@@ -33,6 +33,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nasasurvivors.water.app.waterapp.R;
+import com.nasasurvivors.water.app.waterapp.model.AppSingleton;
 import com.nasasurvivors.water.app.waterapp.model.CredentialVerification;
 
 import java.util.ArrayList;
@@ -56,7 +57,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private UserLoginTask mAuthTask = null;
 
     // UI references.
-    private AutoCompleteTextView mEmailView;
+    private AutoCompleteTextView mUsernameView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
@@ -67,7 +68,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         setContentView(R.layout.activity_login);
 
         // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        mUsernameView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.password);
@@ -82,8 +83,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+        Button mUsernameSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        mUsernameSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptLogin();
@@ -110,7 +111,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             return true;
         }
         if (shouldShowRequestPermissionRationale(READ_CONTACTS)) {
-            Snackbar.make(mEmailView, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
+            Snackbar.make(mUsernameView, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
                     .setAction(android.R.string.ok, new View.OnClickListener() {
                         @Override
                         @TargetApi(Build.VERSION_CODES.M)
@@ -149,11 +150,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         // Reset errors.
-        mEmailView.setError(null);
+        mUsernameView.setError(null);
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
+        String email = mUsernameView.getText().toString();
         String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
@@ -168,12 +169,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
+            mUsernameView.setError(getString(R.string.error_field_required));
+            focusView = mUsernameView;
             cancel = true;
-        } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
+        } else if (!CredentialVerification.getInstance().validateUsername(mUsernameView, email)) {
             cancel = true;
         }
 
@@ -276,7 +275,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 new ArrayAdapter<>(LoginActivity.this,
                         android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
 
-        mEmailView.setAdapter(adapter);
+        mUsernameView.setAdapter(adapter);
     }
 
 
@@ -296,11 +295,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
-        private final String mEmail;
+        private final String mUsername;
         private final String mPassword;
 
         UserLoginTask(String email, String password) {
-            mEmail = email;
+            mUsername = email;
             mPassword = password;
         }
 
@@ -315,7 +314,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
 
-            if (CredentialVerification.getInstance().getData().containsKey(mEmail) && CredentialVerification.getInstance().getData().get(mEmail).equals(mPassword)) {
+            if (CredentialVerification.getInstance().getData().containsKey(mUsername)
+                    && CredentialVerification.getInstance().getData().get(mUsername).getPassword().equals(mPassword)) {
+                Log.e("TEST", CredentialVerification.getInstance().getData().get(mUsername).getUsername());
                 return true;
             }
 
@@ -331,8 +332,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             if (success) {
                 Toast.makeText(getBaseContext(), "Logged in!", Toast.LENGTH_SHORT).show();
-                AppSingleton.getInstance().setUsername(mEmail);
-                Intent loggedIn = new Intent(getBaseContext(), WelcomeActivity.class);
+                AppSingleton.getInstance().setCurrentUser(CredentialVerification.getInstance().getData().get(mUsername));
+                Intent loggedIn = new Intent(getBaseContext(), MainActivity.class);
                 loggedIn.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(loggedIn);
             } else {

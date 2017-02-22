@@ -1,4 +1,4 @@
-package com.nasasurvivors.water.app.waterapp.controller;
+package com.nasasurvivors.water.app.waterapp.model;
 
 import android.content.Context;
 import android.widget.Toast;
@@ -9,7 +9,7 @@ import android.widget.Toast;
 public class AppSingleton {
     private static AppSingleton currInstance = new AppSingleton();;
     private static Context currContext;
-    private static String username;
+    private static User currentUser;
 
     public static AppSingleton getInstance(Context c) {
         currContext = c;
@@ -28,11 +28,11 @@ public class AppSingleton {
         Toast.makeText(currContext, "Functionality not implemented (YET)", Toast.LENGTH_SHORT).show();
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public User getCurrentUser() {
+        return currentUser;
     }
 
-    public String getUsername() {
-        return username;
+    public void setCurrentUser(User user) {
+        currentUser = user;
     }
 }
