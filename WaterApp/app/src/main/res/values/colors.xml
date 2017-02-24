@@ -2,6 +2,6 @@
 <resources>
     <color name="colorPrimary">#DFDFDF</color>
     <color name="buttonText">#FFFFFF</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#6ea9df</color>
+    <color name="colorPrimaryDark">#003F93</color>
+    <color name="colorAccent">#6ea9df</color>"
 </resources>
