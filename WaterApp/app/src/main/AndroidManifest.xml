@@ -15,12 +15,15 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".controller.RegistrationActivity"
+            android:theme="@style/NasaTheme"
             android:parentActivityName=".controller.WelcomeActivity"></activity>
         <activity
             android:name=".controller.LoginActivity"
+            android:theme="@style/NasaTheme"
             android:parentActivityName=".controller.WelcomeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar"
                 android:value="com.nasasurvivors.water.app.waterapp.controller.WelcomeActivity" />
         </activity>
         <activity

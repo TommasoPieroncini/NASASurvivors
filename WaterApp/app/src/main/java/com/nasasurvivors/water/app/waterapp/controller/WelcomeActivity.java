@@ -16,7 +16,7 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("");
+        toolbar.setTitle("WELCOME");
         setSupportActionBar(toolbar);
 
         Button login = (Button) findViewById(R.id.login);
