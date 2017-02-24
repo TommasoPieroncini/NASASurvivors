@@ -13,31 +13,6 @@
     tools:context="com.nasasurvivors.water.app.waterapp.controller.WelcomeActivity"
     tools:showIn="@layout/activity_main">
 
-    <Button
-        android:text="Login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="153dp"
-        android:id="@+id/login"
-        android:layout_alignRight="@+id/signature"
-        android:layout_alignEnd="@+id/signature"
-        android:layout_alignLeft="@+id/signature"
-        android:layout_alignStart="@+id/signature"
-        android:visibility="visible" />
-
-    <Button
-        android:text="Register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_alignLeft="@+id/login"
-        android:layout_alignStart="@+id/login"
-        android:id="@+id/register"
-        android:layout_alignRight="@+id/login"
-        android:layout_alignEnd="@+id/login"
-        android:visibility="visible" />
-
     <TextView
         android:text="Water Sources"
         android:layout_width="wrap_content"
@@ -52,8 +27,52 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/Title"
-        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
         android:layout_marginTop="10dp"
         android:id="@+id/signature" />
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:srcCompat="@drawable/nasa_logo1"
+        android:id="@+id/imageView"
+        android:layout_below="@+id/signature"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="26dp" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_below="@id/imageView"
+        >
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <Button
+                style="@style/ButtonStyle"
+                android:text="Login"
+                android:id="@+id/login"
+                />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <Button
+                style="@style/ButtonStyle"
+                android:text="Register"
+                android:id="@+id/register"
+
+                />
+        </TableRow>
+
+    </LinearLayout>
+
 
 </RelativeLayout>
