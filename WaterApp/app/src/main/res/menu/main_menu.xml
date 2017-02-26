@@ -3,7 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:title="Edit Profile"
-        android:id="@+id/editProfile" />
+        android:id="@+id/editProfile"
+        />
     <item android:title="Logout"
-        android:id="@+id/logout" />
+        android:id="@+id/logout"
+        />
 </menu>
