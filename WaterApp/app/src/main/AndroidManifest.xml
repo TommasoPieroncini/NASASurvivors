@@ -10,38 +10,35 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="AQUA"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        android:theme="@style/NasaTheme">
         <activity
             android:name=".controller.RegistrationActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:parentActivityName=".controller.WelcomeActivity"></activity>
+            android:parentActivityName=".controller.WelcomeActivity"
+            android:label="REGISTRATION"></activity>
         <activity
             android:name=".controller.LoginActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:parentActivityName=".controller.WelcomeActivity">
+            android:label="AQUA"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:theme="@style/Theme.AppCompat.Light.NoActionBar"
                 android:value="com.nasasurvivors.water.app.waterapp.controller.WelcomeActivity" />
         </activity>
         <activity
             android:name=".controller.WelcomeActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:label="MAIN DASHBOARD">
         </activity>
         <activity
             android:name=".controller.MainActivity"
-            android:label="@string/title_activity_welcome"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:label="DASHBOARD"></activity>
         <activity
             android:name=".controller.EditProfileActivity"
+            android:label="EDIT PROFILE"
             android:parentActivityName=".controller.MainActivity"></activity>
     </application>
 

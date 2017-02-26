@@ -3,6 +3,7 @@ package com.nasasurvivors.water.app.waterapp.controller;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -10,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,9 +28,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//        setSupportActionBar(toolbar);
 
         Animation anim1 = AnimationUtils.loadAnimation(this, R.anim.slide_in_left);
         anim1.reset();
@@ -80,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void logout() {
-        Intent loggedOut = new Intent(this, WelcomeActivity.class);
+        Intent loggedOut = new Intent(this, LoginActivity.class);
         loggedOut.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         Toast.makeText(this, "Goodbye " + AppSingleton.getInstance().getCurrentUser().getUsername() + ".", Toast.LENGTH_SHORT).show();
         AppSingleton.getInstance().setCurrentUser(null);

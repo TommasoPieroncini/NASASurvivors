@@ -31,7 +31,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.nasasurvivors.water.app.waterapp.R;
 import com.nasasurvivors.water.app.waterapp.model.AppSingleton;
@@ -63,20 +62,26 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
 
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        setTitle("LOGIN");
+        setContentView(R.layout.activity_main);
+
+        Button registerBtn = (Button) findViewById(R.id.registerBtn);
+        TextView forgot = (TextView) findViewById(R.id.forgotPass);
         // Set up the login form.
-        mUsernameView = (AutoCompleteTextView) findViewById(R.id.email);
+        mUsernameView = (AutoCompleteTextView) findViewById(R.id.user_input);
         populateAutoComplete();
 
-        mPasswordView = (EditText) findViewById(R.id.password);
+        mPasswordView = (EditText) findViewById(R.id.pass_input);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
+                if (id == R.id.loginBtn || id == EditorInfo.IME_NULL) {
                     attemptLogin();
                     return true;
                 }
@@ -84,16 +89,34 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        Button mUsernameSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        Button mUsernameSignInButton = (Button) findViewById(R.id.loginBtn);
         mUsernameSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.e("REALITY_CHECK", "This line of code is being run");
                 attemptLogin();
             }
         });
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+        mProgressView.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+
+        registerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toRegister = new Intent(getBaseContext(), RegistrationActivity.class);
+                startActivity(toRegister);
+            }
+        });
+
+        forgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getBaseContext(), "Not implemented", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     private void populateAutoComplete() {

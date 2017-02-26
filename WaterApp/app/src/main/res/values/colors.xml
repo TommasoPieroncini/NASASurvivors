@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#DFDFDF</color>
+    <color name="colorPrimary">#dfdfdf</color>
     <color name="buttonText">#FFFFFF</color>
-    <color name="colorPrimaryDark">#003F93</color>
+    <color name="barText">#FFFFFF</color>
+    <color name="fieldText">#898989</color>
+    <color name="onScreenText">#8B8B8B</color>
+    <color name="colorPrimaryDark">#003f93</color>
     <color name="colorAccent">#6ea9df</color>"
 </resources>
