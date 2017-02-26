@@ -113,7 +113,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         forgot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getBaseContext(), "Not implemented", Toast.LENGTH_SHORT).show();
+                AppSingleton.getInstance(getBaseContext()).incompleteMethod();
             }
         });
 

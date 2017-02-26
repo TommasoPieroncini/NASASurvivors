@@ -90,6 +90,7 @@ public class EditProfileActivity extends AppCompatActivity {
                                     CredentialVerification.getInstance().removeCreds(user);
                                     User newProfile = new User(userStr, passStr, nameStr, emailStr, userType);
                                     CredentialVerification.getInstance().addCreds(userStr, newProfile);
+                                    AppSingleton.getInstance().setCurrentUser(newProfile);
 
                                     Toast.makeText(getBaseContext(), "You've edited your profile!", Toast.LENGTH_SHORT).show();
                                     Intent back = new Intent(getBaseContext(), MainActivity.class);
