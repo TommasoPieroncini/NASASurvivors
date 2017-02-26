@@ -32,6 +32,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.nasasurvivors.water.app.waterapp.R;
 import com.nasasurvivors.water.app.waterapp.model.AppSingleton;
 import com.nasasurvivors.water.app.waterapp.model.CredentialVerification;
@@ -40,6 +42,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.Manifest.permission.READ_CONTACTS;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 /**
  * A login screen that offers login via email/password.
@@ -61,10 +69,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -373,4 +377,3 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 }
-
