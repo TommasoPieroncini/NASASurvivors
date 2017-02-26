@@ -74,14 +74,14 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
         android:text="Latitude"
         android:ems="10"
         android:id="@+id/latInput"
         android:textSize="14sp"
         android:layout_below="@+id/longInput"
         android:layout_alignLeft="@+id/longInput"
-        android:layout_alignStart="@+id/longInput" />
+        android:layout_alignStart="@+id/longInput"
+        android:inputType="number" />
 
     <TextView
         android:text="Water Type"
@@ -128,7 +128,7 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
+        android:inputType="number"
         android:text="Longitude"
         android:ems="10"
         android:id="@+id/longInput"
