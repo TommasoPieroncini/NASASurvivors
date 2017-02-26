@@ -10,15 +10,16 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/title_activity_welcome"
+        android:label="AQUA"
         android:supportsRtl="true"
         android:theme="@style/NasaTheme">
         <activity
             android:name=".controller.RegistrationActivity"
-            android:parentActivityName=".controller.WelcomeActivity"></activity>
+            android:parentActivityName=".controller.WelcomeActivity"
+            android:label="REGISTRATION"></activity>
         <activity
             android:name=".controller.LoginActivity"
-            android:label="@string/title_activity_login"
+            android:label="AQUA"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,13 +31,14 @@
         </activity>
         <activity
             android:name=".controller.WelcomeActivity"
-            android:label="@string/title_activity_welcome">
+            android:label="MAIN DASHBOARD">
         </activity>
         <activity
             android:name=".controller.MainActivity"
-            android:label="@string/title_activity_welcome"></activity>
+            android:label="DASHBOARD"></activity>
         <activity
             android:name=".controller.EditProfileActivity"
+            android:label="EDIT PROFILE"
             android:parentActivityName=".controller.MainActivity"></activity>
     </application>
 

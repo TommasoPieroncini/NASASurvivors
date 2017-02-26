@@ -36,12 +36,12 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
 
-        submit = (Button) findViewById(R.id.edit_submit);
-        username = (EditText) findViewById(R.id.edit_username);
-        password = (EditText) findViewById(R.id.edit_password);
-        name = (EditText) findViewById(R.id.edit_name);
-        email = (EditText) findViewById(R.id.edit_email);
-        type = (Spinner) findViewById(R.id.edit_type);
+        submit = (Button) findViewById(R.id.submit);
+        username = (EditText) findViewById(R.id.username);
+        password = (EditText) findViewById(R.id.password);
+        name = (EditText) findViewById(R.id.name);
+        email = (EditText) findViewById(R.id.email);
+        type = (Spinner) findViewById(R.id.type);
 
         // Populate user types spinner
         List<UserType> userTypes = Arrays.asList(UserType.USER, UserType.WORKER,
