@@ -7,8 +7,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.nasasurvivors.water.app.waterapp.controller.WelcomeActivity"
@@ -70,21 +68,15 @@
                 android:background="@drawable/rounded_edittext"
                 />
 
-            <Button
-                style="@style/ButtonStyle"
-                android:text="Register"
-                android:id="@+id/register"
-
-                android:visibility="gone" />
         </TableRow>
 
     </LinearLayout>
 
-    <EditText
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:id="@+id/editText4"
+        android:id="@+id/forgotPass"
         android:layout_below="@+id/linearLayout"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -96,7 +88,7 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editText4"
+        android:layout_below="@+id/forgotPass"
         android:layout_centerHorizontal="true">
 
         <Button
@@ -104,9 +96,22 @@
             android:text="Login"
             android:id="@+id/login"
             android:visibility="visible"
-            android:layout_alignBottom="@+id/editText4"
             android:layout_centerHorizontal="true" />
     </RelativeLayout>
+
+    <Button
+        android:text="No account? Register!"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/register"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="?attr/colorControlNormal"
+        android:textSize="14sp"
+        android:background="@color/fieldText" />
 
 
 </RelativeLayout>

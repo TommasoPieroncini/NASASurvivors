@@ -9,8 +9,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nasasurvivors.water.app.waterapp.R;
+import com.nasasurvivors.water.app.waterapp.model.AppSingleton;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -21,6 +23,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         Button login = (Button) findViewById(R.id.login);
         Button register = (Button) findViewById(R.id.register);
+        TextView forgot = (TextView) findViewById(R.id.forgotPass);
 
 
         login.setOnClickListener(new View.OnClickListener() {
@@ -38,6 +41,14 @@ public class WelcomeActivity extends AppCompatActivity {
                 startActivity(toRegister);
             }
         });
+
+        forgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getBaseContext(), "Not implemented", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
 }
