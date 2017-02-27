@@ -39,8 +39,11 @@ public class WaitActivity extends AppCompatActivity {
             }
 
             public void onFinish() {
-                Toast.makeText(getBaseContext(), "Timeout!", Toast.LENGTH_SHORT).show();
-                finish();
+                if (progressDialog.isShowing()) {
+                    Toast.makeText(getBaseContext(), "Timeout!", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+
 
             }
         }.start();
