@@ -19,15 +19,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.nasasurvivors.water.app.waterapp.R;
-import com.nasasurvivors.water.app.waterapp.model.AppSingleton;
 import com.nasasurvivors.water.app.waterapp.model.CredentialVerification;
 import com.nasasurvivors.water.app.waterapp.model.User;
 import com.nasasurvivors.water.app.waterapp.model.UserType;
 
-import java.sql.Time;
 import java.util.Arrays;
 import java.util.List;
-import java.util.TimerTask;
 
 /**
  * Created by zachschlesinger on 2/19/17.
@@ -52,6 +49,7 @@ public class RegistrationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
+
 
         // UI Components
         typeSpinner = (Spinner) findViewById(R.id.type_spinner);
@@ -124,6 +122,7 @@ public class RegistrationActivity extends AppCompatActivity {
 //        Intent waitForRegister = new Intent(getBaseContext(), WaitActivity.class);
 //        startActivity(waitForRegister);
 
+
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -134,12 +133,11 @@ public class RegistrationActivity extends AppCompatActivity {
                             Toast.makeText(getBaseContext(), "Successful", Toast.LENGTH_SHORT).show();
                             startActivity(success);
                         } else {
-                            Log.e("firebase issue", task.getException().getMessage());
-                            Toast.makeText(getBaseContext(), "Not successful", Toast.LENGTH_SHORT).show();
+                            Log.e("firebase", task.getException().getMessage().toString());
+                            Toast.makeText(getBaseContext(), task.getException().getMessage().toString(), Toast.LENGTH_SHORT).show();
                             startActivity(failure);
                         }
 
-                       // progressDialog.dismiss();
                     }
                 });
     }

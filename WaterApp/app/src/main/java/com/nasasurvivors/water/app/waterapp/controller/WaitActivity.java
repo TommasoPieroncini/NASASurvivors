@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.webkit.WebView;
 import android.widget.Toast;
 import com.nasasurvivors.water.app.waterapp.R;
@@ -32,6 +33,7 @@ public class WaitActivity extends AppCompatActivity {
         webView.loadData(x, "text/html", "utf-8");
         progressDialog.setMessage("Putting you in the clouds");
         progressDialog.show();
+        progressDialog.getWindow().setGravity(Gravity.BOTTOM);
         CountDownTimer countDownTimer = new CountDownTimer(10000, 1000) {
 
             public void onTick(long millisUntilFinished) {
