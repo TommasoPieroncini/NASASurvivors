@@ -2,6 +2,7 @@ package com.nasasurvivors.water.app.waterapp.controller;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -23,8 +24,10 @@ import com.nasasurvivors.water.app.waterapp.model.CredentialVerification;
 import com.nasasurvivors.water.app.waterapp.model.User;
 import com.nasasurvivors.water.app.waterapp.model.UserType;
 
+import java.sql.Time;
 import java.util.Arrays;
 import java.util.List;
+import java.util.TimerTask;
 
 /**
  * Created by zachschlesinger on 2/19/17.
@@ -84,6 +87,8 @@ public class RegistrationActivity extends AppCompatActivity {
                 CredentialVerification.getInstance().validatePass(pass, passStr) &&
                 CredentialVerification.getInstance().validateEmail(email, emailStr)) {
                     registerUser(emailStr, passStr);
+                    Intent goToWait = new Intent(getBaseContext(), WaitActivity.class);
+                    startActivity(goToWait);
                     // Create user
                     User newUser = new User(userStr, passStr, nameStr, emailStr, type);
 
@@ -92,21 +97,21 @@ public class RegistrationActivity extends AppCompatActivity {
                         return;
                     }
 
-                    if (CredentialVerification.getInstance().addCreds(userStr, newUser)) {
-                        Intent registered = new Intent(getBaseContext(), MainActivity.class);
-
-                        // Set new user
-                        AppSingleton.getInstance().setCurrentUser(newUser);
-
-
-
-                        registered.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(registered);
-
-                        Toast.makeText(getBaseContext(), "You registered, " + userStr + "!", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getBaseContext(), "Something went wrong! Try again!", Toast.LENGTH_SHORT).show();
-                    }
+//                    if (CredentialVerification.getInstance().addCreds(userStr, newUser)) {
+//                        Intent registered = new Intent(getBaseContext(), MainActivity.class);
+//
+//                        // Set new user
+//                        AppSingleton.getInstance().setCurrentUser(newUser);
+//
+//
+//
+//                        registered.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                        startActivity(registered);
+//
+//                        Toast.makeText(getBaseContext(), "You registered, " + userStr + "!", Toast.LENGTH_SHORT).show();
+//                    } else {
+//                        Toast.makeText(getBaseContext(), "Something went wrong! Try again!", Toast.LENGTH_SHORT).show();
+//                    }
                 }
 
             }
@@ -114,20 +119,27 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     private void registerUser(String email, String password) {
-        progressDialog.setMessage("Registering...");
-        progressDialog.show();
+        // progressDialog.setMessage("Registering...");
+        // progressDialog.show();
+//        Intent waitForRegister = new Intent(getBaseContext(), WaitActivity.class);
+//        startActivity(waitForRegister);
 
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        Intent success = new Intent(getBaseContext(), MainActivity.class);
+                        Intent failure = new Intent(getBaseContext(), RegistrationActivity.class);
                         if (task.isSuccessful()) {
-                            progressDialog.dismiss();
                             Toast.makeText(getBaseContext(), "Successful", Toast.LENGTH_SHORT).show();
+                            startActivity(success);
                         } else {
                             Log.e("firebase issue", task.getException().getMessage());
                             Toast.makeText(getBaseContext(), "Not successful", Toast.LENGTH_SHORT).show();
+                            startActivity(failure);
                         }
+
+                       // progressDialog.dismiss();
                     }
                 });
     }

@@ -1,6 +1,5 @@
 package com.nasasurvivors.water.app.waterapp.controller;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;

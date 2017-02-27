@@ -41,6 +41,10 @@
             android:name=".controller.EditProfileActivity"
             android:label="EDIT PROFILE"
             android:parentActivityName=".controller.MainActivity"></activity>
+        <activity
+            android:name=".controller.WaitActivity"
+            android:label="FILLING THE CLOUD WITH WATER">
+        </activity>
     </application>
 
 </manifest>
