@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -22,6 +23,7 @@ public class WaterReportActivity extends AppCompatActivity {
     private EditText lat;
     private Spinner waterTypeSpinner;
     private Spinner condSpinner;
+    private Button submit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,38 +41,44 @@ public class WaterReportActivity extends AppCompatActivity {
             }
         });
 
-        date = (EditText) findViewById(R.id.dateInput);
-        time = (EditText) findViewById(R.id.timeInput);
-        longitude = (EditText) findViewById(R.id.longInput);
-        lat = (EditText) findViewById(R.id.latInput);
-        waterTypeSpinner = (Spinner) findViewById(R.id.typeSpinner);
-        condSpinner = (Spinner) findViewById(R.id.conditionSpinner);
+        submit = (Button) findViewById(R.id.submitButton);
 
-        ArrayAdapter<String> typeAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, WaterType.values());
-        typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        waterTypeSpinner.setAdapter(typeAdapter);
+        submit.setOnClickListener(new View.OnClickListener() {
+            public void onClick (View view) {
+                date = (EditText) findViewById(R.id.dateInput);
+                time = (EditText) findViewById(R.id.timeInput);
+                longitude = (EditText) findViewById(R.id.longInput);
+                lat = (EditText) findViewById(R.id.latInput);
+                waterTypeSpinner = (Spinner) findViewById(R.id.typeSpinner);
+                condSpinner = (Spinner) findViewById(R.id.conditionSpinner);
 
-        ArrayAdapter<String> condAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, WaterCondition.values());
-        condAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        condSpinner.setAdapter(condAdapter);
+                ArrayAdapter<String> typeAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, WaterType.values());
+                typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                waterTypeSpinner.setAdapter(typeAdapter);
 
-        int dateInput;
-        int timeInput;
-        int longInput;
-        int latInput;
-        WaterType typeInput;
-        WaterCondition condInput;
+                ArrayAdapter<String> condAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, WaterCondition.values());
+                condAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                condSpinner.setAdapter(condAdapter);
+
+                int dateInput;
+                int timeInput;
+                int longInput;
+                int latInput;
+                WaterType typeInput;
+                WaterCondition condInput;
 
 
-        dateInput = Integer.valueOf(date.getText().toString());
-        timeInput = Integer.valueOf(time.getText().toString());
-        longInput = Integer.valueOf(longitude.getText().toString());
-        latInput = Integer.valueOf(lat.getText().toString());
-        typeInput = (WaterType) waterTypeSpinner.getSelectedItem();
-        condInput = (WaterCondition) condSpinner.getSelectedItem();
+                dateInput = Integer.valueOf(date.getText().toString());
+                timeInput = Integer.valueOf(time.getText().toString());
+                longInput = Integer.valueOf(longitude.getText().toString());
+                latInput = Integer.valueOf(lat.getText().toString());
+                typeInput = (WaterType) waterTypeSpinner.getSelectedItem();
+                condInput = (WaterCondition) condSpinner.getSelectedItem();
 
-        WaterReportData report = new WaterReportData(dateInput, timeInput, AppSingleton.getInstance().getUsername(), longInput, latInput, typeInput, condInput);
-
+                WaterReportData report = new WaterReportData(dateInput, timeInput,
+                        AppSingleton.getInstance().getUsername(), longInput, latInput , typeInput, condInput);
+            }
+        });
 
 
 
