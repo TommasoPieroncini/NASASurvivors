@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         Animation anim1 = AnimationUtils.loadAnimation(this, R.anim.slide_in_left);
         anim1.reset();
         welcome = (TextView) findViewById(R.id.welcome);
-        // welcome.setText("Welcome, " + AppSingleton.getInstance().getCurrentUser().getUsername() + "!");
+        welcome.setText("Welcome, " + AppSingleton.getInstance().getCurrentUser().user + "!");
         welcome.setText("Welcome, " + "Zach" + "!");
 
         welcome.clearAnimation();
@@ -85,8 +85,8 @@ public class MainActivity extends AppCompatActivity {
     private void logout() {
         Intent loggedOut = new Intent(this, LoginActivity.class);
         loggedOut.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        // Toast.makeText(this, "Goodbye " + AppSingleton.getInstance().getCurrentUser().getUsername() + ".", Toast.LENGTH_SHORT).show();
-        Toast.makeText(this, "Goodbye " + "zach" + ".", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Goodbye " + AppSingleton.getInstance().getCurrentUser().user + ".", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Goodbye " + "zach" + ".", Toast.LENGTH_SHORT).show();
         AppSingleton.getInstance().setCurrentUser(null);
         startActivity(loggedOut);
     }

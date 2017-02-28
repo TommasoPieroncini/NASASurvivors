@@ -137,6 +137,7 @@ public class EditProfileActivity extends AppCompatActivity {
         final UserType type1 = UserType.valueOf(type.getSelectedItem().toString().toUpperCase());
 
         User user = new User(userStr, passStr, nameStr, emailStr, type1);
+        AppSingleton.getInstance().setCurrentUser(user);
 
         // Information from database
 
@@ -158,7 +159,7 @@ public class EditProfileActivity extends AppCompatActivity {
                         String dbEmail = userInfoHashMap.get("email");
                         String dbType = userInfoHashMap.get("type");
                         User newUser = new User(dbUser, dbPass, dbName, dbEmail, UserType.valueOf(dbType));
-                        AppSingleton.getInstance().setCurrentUser(newUser);
+                        //AppSingleton.getInstance().setCurrentUser(newUser);
                         Toast.makeText(getBaseContext(), "Information Saved...", Toast.LENGTH_SHORT).show();
                     }
                 }
