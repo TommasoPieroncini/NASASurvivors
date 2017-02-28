@@ -1,6 +1,5 @@
 package com.nasasurvivors.water.app.waterapp.controller;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -18,12 +17,20 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.nasasurvivors.water.app.waterapp.R;
+import com.nasasurvivors.water.app.waterapp.model.AppSingleton;
 import com.nasasurvivors.water.app.waterapp.model.CredentialVerification;
 import com.nasasurvivors.water.app.waterapp.model.User;
 import com.nasasurvivors.water.app.waterapp.model.UserType;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -32,18 +39,18 @@ import java.util.List;
 
 public class RegistrationActivity extends AppCompatActivity {
 
+    // Initialize UI variables
     private EditText user;
     private EditText pass;
     private EditText name;
     private EditText email;
     private Spinner typeSpinner;
     private Button registerBtn;
-    private ProgressDialog progressDialog;
 
+    // Initialize firebase variables
     private FirebaseAuth firebaseAuth;
-
-
-
+    private DatabaseReference databaseReference;
+    private FirebaseUser firebaseuser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +65,12 @@ public class RegistrationActivity extends AppCompatActivity {
         pass = (EditText) findViewById(R.id.password_input);
         name = (EditText) findViewById(R.id.name_input);
         email = (EditText) findViewById(R.id.email_input);
-        progressDialog = new ProgressDialog(this);
 
+        // Firebase components
         firebaseAuth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        firebaseuser = firebaseAuth.getCurrentUser();
+
 
         // Populate user types spinner
         List<UserType> userTypes = Arrays.asList(UserType.USER, UserType.WORKER,
@@ -71,58 +81,30 @@ public class RegistrationActivity extends AppCompatActivity {
         typeSpinner.setAdapter(adapter);
         typeSpinner.setPrompt("Select your user type");
 
+
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 UserType type = (UserType) typeSpinner.getSelectedItem();
                 String userStr = user.getText().toString();
                 String passStr = pass.getText().toString();
                 String nameStr = name.getText().toString();
                 String emailStr = email.getText().toString();
 
-                if (CredentialVerification.getInstance().validateUsername(user, userStr) &&
-                CredentialVerification.getInstance().validatePass(pass, passStr) &&
-                CredentialVerification.getInstance().validateEmail(email, emailStr)) {
-                    registerUser(emailStr, passStr);
-                    Intent goToWait = new Intent(getBaseContext(), WaitActivity.class);
-                    startActivity(goToWait);
-                    // Create user
-                    User newUser = new User(userStr, passStr, nameStr, emailStr, type);
+                registerUser(emailStr, passStr);
+                // adds info to database
+                saveUserInformation();
+                Intent goToWait = new Intent(getBaseContext(), WaitActivity.class);
+                startActivity(goToWait);
 
-                    if (CredentialVerification.getInstance().getData().keySet().contains(userStr)) {
-                        Toast.makeText(getBaseContext(), "Username already in use!", Toast.LENGTH_LONG).show();
-                        return;
-                    }
-
-//                    if (CredentialVerification.getInstance().addCreds(userStr, newUser)) {
-//                        Intent registered = new Intent(getBaseContext(), MainActivity.class);
-//
-//                        // Set new user
-//                        AppSingleton.getInstance().setCurrentUser(newUser);
-//
-//
-//
-//                        registered.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                        startActivity(registered);
-//
-//                        Toast.makeText(getBaseContext(), "You registered, " + userStr + "!", Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        Toast.makeText(getBaseContext(), "Something went wrong! Try again!", Toast.LENGTH_SHORT).show();
-//                    }
-                }
+                // Create user with database information
+//                User newUser = new User(userStr, passStr, nameStr, emailStr, type);
 
             }
         });
     }
 
     private void registerUser(String email, String password) {
-        // progressDialog.setMessage("Registering...");
-        // progressDialog.show();
-//        Intent waitForRegister = new Intent(getBaseContext(), WaitActivity.class);
-//        startActivity(waitForRegister);
-
-
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -137,8 +119,45 @@ public class RegistrationActivity extends AppCompatActivity {
                             Toast.makeText(getBaseContext(), task.getException().getMessage().toString(), Toast.LENGTH_SHORT).show();
                             startActivity(failure);
                         }
-
                     }
                 });
+    }
+
+    private void saveUserInformation() {
+        final String userStr = user.getText().toString();
+        final String passStr = pass.getText().toString();
+        final String nameStr = name.getText().toString();
+        final String emailStr = email.getText().toString();
+        final UserType type = UserType.valueOf(typeSpinner.getSelectedItem().toString().toUpperCase());
+
+        UserInformation userInformation = new UserInformation(userStr, passStr, nameStr, emailStr, type);
+
+
+        databaseReference.child(firebaseuser.getUid()).setValue(userInformation);
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+
+                for (DataSnapshot child : children) {
+                    HashMap<String, String> userInfoHashMap = (HashMap<String, String>) child.getValue();
+
+                    if (userInfoHashMap.get("email").equals(emailStr)) {
+                        String dbEmail = userInfoHashMap.get("email");
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(getBaseContext(), "Houston, we have a problem", Toast.LENGTH_SHORT).show();
+                Log.e("Database error", databaseError.getMessage().toString());
+            }
+        });
+
+        User newUser = new User(userStr, passStr, nameStr, emailStr, type);
+        AppSingleton.getInstance().setCurrentUser(newUser);
+        Toast.makeText(this, "Information Saved...", Toast.LENGTH_SHORT).show();
     }
 }

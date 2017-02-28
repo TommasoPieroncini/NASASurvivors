@@ -7,7 +7,7 @@ import android.widget.Toast;
  * Created by tommaso on 2/12/17.
  */
 public class AppSingleton {
-    private static AppSingleton currInstance = new AppSingleton();;
+    private static AppSingleton currInstance = new AppSingleton();
     private static Context currContext;
     private static User currentUser;
 

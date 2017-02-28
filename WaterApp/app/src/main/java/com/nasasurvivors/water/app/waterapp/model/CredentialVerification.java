@@ -14,16 +14,12 @@ import java.util.HashMap;
  */
 
 public class CredentialVerification {
-    // private ArrayList<String> creds = new ArrayList<String>();
     private HashMap<String, User> creds = new HashMap<>();
     private static final CredentialVerification credentials = new CredentialVerification();
 
     public boolean addCreds(String username, User user) {
         int size = creds.size();
         creds.put(username, user);
-        Log.i("Adding credentials", "Adding credentials");
-        // I don't know why this doesn't work well (tells me something went wrong no matter what
-        //return creds.size() == size + 1;
         return true;
     }
 
