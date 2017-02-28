@@ -130,10 +130,11 @@ public class RegistrationActivity extends AppCompatActivity {
         final String emailStr = email.getText().toString();
         final UserType type = UserType.valueOf(typeSpinner.getSelectedItem().toString().toUpperCase());
 
-        UserInformation userInformation = new UserInformation(userStr, passStr, nameStr, emailStr, type);
+        User user = new User(userStr, passStr, nameStr, emailStr, type);
 
+        // Information from database
 
-        databaseReference.child(firebaseuser.getUid()).setValue(userInformation);
+        databaseReference.child(firebaseuser.getUid()).setValue(user);
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -144,7 +145,14 @@ public class RegistrationActivity extends AppCompatActivity {
                     HashMap<String, String> userInfoHashMap = (HashMap<String, String>) child.getValue();
 
                     if (userInfoHashMap.get("email").equals(emailStr)) {
+                        String dbUser = userInfoHashMap.get("user");
+                        String dbPass = userInfoHashMap.get("password");
+                        String dbName = userInfoHashMap.get("name");
                         String dbEmail = userInfoHashMap.get("email");
+                        String dbType = userInfoHashMap.get("type");
+                        User newUser = new User(dbUser, dbPass, dbName, dbEmail, UserType.valueOf(dbType));
+                        AppSingleton.getInstance().setCurrentUser(newUser);
+                        Toast.makeText(getBaseContext(), "Information Saved...", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -156,8 +164,5 @@ public class RegistrationActivity extends AppCompatActivity {
             }
         });
 
-        User newUser = new User(userStr, passStr, nameStr, emailStr, type);
-        AppSingleton.getInstance().setCurrentUser(newUser);
-        Toast.makeText(this, "Information Saved...", Toast.LENGTH_SHORT).show();
     }
 }

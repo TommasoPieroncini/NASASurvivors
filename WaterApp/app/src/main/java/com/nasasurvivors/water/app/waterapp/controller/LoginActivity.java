@@ -365,8 +365,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
 
             if (CredentialVerification.getInstance().getData().containsKey(mUsername)
-                    && CredentialVerification.getInstance().getData().get(mUsername).getPassword().equals(mPassword)) {
-                Log.e("TEST", CredentialVerification.getInstance().getData().get(mUsername).getUsername());
+                    && CredentialVerification.getInstance().getData().get(mUsername).password.equals(mPassword)) {
+                Log.e("TEST", CredentialVerification.getInstance().getData().get(mUsername).user);
                 return true;
             }
 
