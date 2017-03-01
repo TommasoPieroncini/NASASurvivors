@@ -52,11 +52,11 @@ public class WaterReportActivity extends AppCompatActivity {
                 waterTypeSpinner = (Spinner) findViewById(R.id.typeSpinner);
                 condSpinner = (Spinner) findViewById(R.id.conditionSpinner);
 
-                ArrayAdapter<String> typeAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, WaterType.values());
+                ArrayAdapter<String> typeAdapter = new ArrayAdapter(getBaseContext(), android.R.layout.simple_spinner_item, WaterType.values());
                 typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 waterTypeSpinner.setAdapter(typeAdapter);
 
-                ArrayAdapter<String> condAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, WaterCondition.values());
+                ArrayAdapter<String> condAdapter = new ArrayAdapter(getBaseContext(), android.R.layout.simple_spinner_item, WaterCondition.values());
                 condAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 condSpinner.setAdapter(condAdapter);
 
