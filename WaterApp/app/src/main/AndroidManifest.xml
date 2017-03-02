@@ -44,7 +44,9 @@
             android:name=".controller.WaterReportActivity"
             android:label="WATER REPORT"
             android:parentActivityName=".controller.MainActivity"></activity>
-        <activity android:name=".controller.ViewReportsActivity"></activity>
+        <activity android:name=".controller.ViewReportsActivity"
+            android:label="VIEW REPORTS"
+            android:parentActivityName=".controller.MainActivity"></activity>
     </application>
 
 </manifest>

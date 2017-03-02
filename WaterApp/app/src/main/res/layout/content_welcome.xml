@@ -53,4 +53,13 @@
         android:layout_marginBottom="68dp"
         android:id="@+id/add_report_button" />
 
+    <Button
+        style="@style/ButtonStyle"
+        android:text="View Reports"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/add_report_button"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/view_reports_button" />
+
 </RelativeLayout>

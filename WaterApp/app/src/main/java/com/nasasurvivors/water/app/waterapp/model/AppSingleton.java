@@ -13,6 +13,7 @@ public class AppSingleton {
     private static Context currContext;
     private static User currentUser;
     private static ArrayList<WaterReportData> reports = new ArrayList<>();
+    int currentReportID = 0;
 
     public static AppSingleton getInstance(Context c) {
         currContext = c;
@@ -40,6 +41,8 @@ public class AppSingleton {
     }
 
     public void addReport(WaterReportData r) {
+        currentReportID++;
+        r.setId(currentReportID);
         reports.add(r);
     }
 

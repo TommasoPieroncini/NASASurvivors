@@ -7,15 +7,16 @@ import java.text.DateFormat;
  */
 
 public class WaterReportData {
-    private DateFormat date;
-    private DateFormat time;
+    private String date;
+    private String time;
     private String reporter;
     private Double longitude;
     private Double latitude;
     private WaterType type;
     private WaterCondition condition;
+    private int id;
 
-    public WaterReportData (DateFormat date, DateFormat time, String user, Double longi, Double lat, WaterType typ, WaterCondition con) {
+    public WaterReportData (String date, String time, String user, Double longi, Double lat, WaterType typ, WaterCondition con) {
 
         this.date = date;
         this.time = time;
@@ -26,11 +27,11 @@ public class WaterReportData {
         condition = con;
     }
 
-    public DateFormat getDate() {
+    public String getDate() {
         return date;
     }
 
-    public DateFormat getTime() {
+    public String getTime() {
         return time;
     }
 
@@ -52,5 +53,13 @@ public class WaterReportData {
 
     public WaterCondition getCondition() {
         return condition;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 }

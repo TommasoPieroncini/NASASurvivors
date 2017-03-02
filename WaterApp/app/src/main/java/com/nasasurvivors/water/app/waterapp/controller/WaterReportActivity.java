@@ -1,9 +1,12 @@
 package com.nasasurvivors.water.app.waterapp.controller;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -45,10 +48,8 @@ public class WaterReportActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             public void onClick (View view) {
 
-                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-
-                DateFormat date = df.getDateInstance();
-                DateFormat time = df.getTimeInstance();
+                String date = DateFormat.getDateInstance().format(new Date());
+                String time = DateFormat.getTimeInstance().format(new Date());
                 double longInput;
                 double latInput;
                 WaterType typeInput;
@@ -74,6 +75,9 @@ public class WaterReportActivity extends AppCompatActivity {
                         longInput, latInput , typeInput, condInput);
 
                 AppSingleton.getInstance().addReport(report);
+
+                Intent main = new Intent(getBaseContext(), MainActivity.class);
+                startActivity(main);
             }
         });
 
