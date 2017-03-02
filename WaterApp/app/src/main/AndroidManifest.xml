@@ -15,31 +15,36 @@
         android:theme="@style/NasaTheme">
         <activity
             android:name=".controller.RegistrationActivity"
-            android:parentActivityName=".controller.WelcomeActivity"
-            android:label="REGISTRATION"></activity>
+            android:label="REGISTRATION"
+            android:parentActivityName=".controller.WelcomeActivity" />
         <activity
             android:name=".controller.LoginActivity"
-            android:label="AQUA"
-            >
+            android:label="AQUA">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nasasurvivors.water.app.waterapp.controller.WelcomeActivity" />
         </activity>
         <activity
             android:name=".controller.WelcomeActivity"
-            android:label="MAIN DASHBOARD">
-        </activity>
+            android:label="MAIN DASHBOARD"></activity>
         <activity
             android:name=".controller.MainActivity"
-            android:label="DASHBOARD"></activity>
+            android:label="DASHBOARD" />
         <activity
             android:name=".controller.EditProfileActivity"
             android:label="EDIT PROFILE"
             android:parentActivityName=".controller.MainActivity"></activity>
+        <activity
+            android:name=".controller.WaterReportActivity"
+            android:label="WATER REPORT"
+            android:parentActivityName=".controller.MainActivity"></activity>
+        <activity android:name=".controller.ViewReportsActivity"></activity>
     </application>
 
 </manifest>

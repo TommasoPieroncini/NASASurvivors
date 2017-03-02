@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -17,17 +18,21 @@ import android.widget.Toast;
 
 import com.nasasurvivors.water.app.waterapp.R;
 import com.nasasurvivors.water.app.waterapp.model.AppSingleton;
+import com.nasasurvivors.water.app.waterapp.model.WaterReportData;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private TextView welcome;
     private TextView project;
+    private Button addReport;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+
+        addReport = (Button) findViewById(R.id.add_report_button);
 
         Animation anim1 = AnimationUtils.loadAnimation(this, R.anim.slide_in_left);
         anim1.reset();
@@ -41,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
         project = (TextView) findViewById(R.id.project_text);
         project.clearAnimation();
         project.startAnimation(anim2);
-
         /*Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -49,6 +53,14 @@ public class MainActivity extends AppCompatActivity {
                 welcome.setText("NASASurvivors Project");
             }
         }, 3000);*/
+
+        addReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toReport = new Intent(getBaseContext(), WaterReportActivity.class);
+                startActivity(toReport);
+            }
+        });
     }
 
     @Override

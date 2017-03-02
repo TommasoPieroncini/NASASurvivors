@@ -13,19 +13,8 @@
     tools:context="com.nasasurvivors.water.app.waterapp.controller.WaterReportActivity"
     tools:showIn="@layout/activity_water_report">
 
-    <TextView
-        android:text="Create New Water Report"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="23dp"
-        android:id="@+id/titleText"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:textSize="18sp"
-        android:fontFamily="sans-serif-smallcaps" />
-
     <Button
+        style="@style/ButtonStyle"
         android:text="Submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,107 +23,69 @@
         android:layout_marginBottom="27dp"
         android:id="@+id/submitButton" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="date"
-        android:ems="10"
-        android:id="@+id/dateInput"
-        android:text="Date"
-        android:layout_below="@+id/titleText"
-        android:layout_alignLeft="@+id/locationText"
-        android:layout_alignStart="@+id/locationText" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="time"
-        android:ems="10"
-        android:layout_below="@+id/dateInput"
-        android:layout_alignLeft="@+id/dateInput"
-        android:layout_alignStart="@+id/dateInput"
-        android:id="@+id/timeInput"
-        android:text="Time" />
-
     <TextView
-        android:text="Location"
+        android:text="Create New Water Report"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginStart="15dp"
-        android:id="@+id/locationText"
-        android:textAppearance="@style/TextAppearance.AppCompat"
-        android:textSize="16sp"
-        android:fontFamily="sans-serif-smallcaps"
-        android:layout_below="@+id/timeInput"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Latitude"
-        android:ems="10"
-        android:id="@+id/latInput"
-        android:textSize="14sp"
-        android:layout_below="@+id/longInput"
-        android:layout_alignLeft="@+id/longInput"
-        android:layout_alignStart="@+id/longInput"
-        android:inputType="number" />
-
-    <TextView
-        android:text="Water Type"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/typeLabel"
-        android:textAppearance="@style/TextAppearance.AppCompat"
-        android:fontFamily="sans-serif-smallcaps"
-        android:textSize="16sp"
-        android:layout_below="@+id/latInput"
-        android:layout_alignLeft="@+id/latInput"
-        android:layout_alignStart="@+id/latInput"
-        android:layout_marginTop="12dp" />
-
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/typeSpinner"
-        android:layout_below="@+id/typeLabel"
-        android:layout_alignLeft="@+id/typeLabel"
-        android:layout_alignStart="@+id/typeLabel"
-        android:spinnerMode="dropdown" />
-
-    <TextView
-        android:text="Water Condition"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/conditionLabel"
-        android:textAppearance="@style/TextAppearance.AppCompat"
-        android:fontFamily="sans-serif-smallcaps"
-        android:textSize="16sp"
-        android:layout_below="@+id/typeSpinner"
-        android:layout_alignLeft="@+id/typeSpinner"
-        android:layout_alignStart="@+id/typeSpinner" />
+        android:id="@+id/titleText"
+        android:textAppearance="@android:style/TextAppearance.Material.Large"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/onScreenText" />
 
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/conditionSpinner"
-        android:layout_below="@+id/conditionLabel"
-        android:layout_alignLeft="@+id/conditionLabel"
-        android:layout_alignStart="@+id/conditionLabel" />
+        style="@style/EditTextStyle"
+        android:background="@drawable/rounded_edittext"
+        android:layout_below="@+id/typeSpinner"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="10dp" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/typeSpinner"
+        android:spinnerMode="dropdown"
+        style="@style/EditTextStyle"
+        android:background="@drawable/rounded_edittext"
+        android:layout_below="@+id/longInput"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="20dp" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="number"
-        android:text="Longitude"
+        android:ems="10"
+        android:id="@+id/latInput"
+        android:textSize="14sp"
+        style="@style/EditTextStyle"
+        android:hint="Latitude"
+        android:background="@drawable/rounded_edittext"
+        android:inputType="numberSigned|numberDecimal"
+        android:layout_marginTop="89dp"
+        android:layout_below="@+id/titleText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberSigned|numberDecimal"
         android:ems="10"
         android:id="@+id/longInput"
         android:textSize="14sp"
         android:fontFamily="sans-serif"
-        android:layout_below="@+id/locationText"
-        android:layout_alignLeft="@+id/locationText"
-        android:layout_alignStart="@+id/locationText" />
+        style="@style/EditTextStyle"
+        android:hint="Longitude"
+        android:background="@drawable/rounded_edittext"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/latInput"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>

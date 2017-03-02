@@ -1,19 +1,21 @@
 package com.nasasurvivors.water.app.waterapp.model;
 
+import java.text.DateFormat;
+
 /**
  * Created by elf82 on 2/25/2017.
  */
 
 public class WaterReportData {
-    private int date;
-    private int time;
+    private DateFormat date;
+    private DateFormat time;
     private String reporter;
-    private int longitude;
-    private int latitude;
+    private Double longitude;
+    private Double latitude;
     private WaterType type;
     private WaterCondition condition;
 
-    public WaterReportData (int date, int time, String user, int longi, int lat, WaterType typ, WaterCondition con) {
+    public WaterReportData (DateFormat date, DateFormat time, String user, Double longi, Double lat, WaterType typ, WaterCondition con) {
 
         this.date = date;
         this.time = time;
@@ -24,11 +26,11 @@ public class WaterReportData {
         condition = con;
     }
 
-    public int getDate() {
+    public DateFormat getDate() {
         return date;
     }
 
-    public int getTime() {
+    public DateFormat getTime() {
         return time;
     }
 
@@ -36,11 +38,11 @@ public class WaterReportData {
         return reporter;
     }
 
-    public int getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
-    public int getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 

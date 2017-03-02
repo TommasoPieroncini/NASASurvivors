@@ -5,5 +5,15 @@ package com.nasasurvivors.water.app.waterapp.model;
  */
 
 public enum WaterType {
-    BOTTLED, WELL, STREAM, LAKE, SPRING, OTHER
+    BOTTLED ("Bottled"), WELL ("Well"), STREAM ("Stream"), LAKE ("Lake"), SPRING ("Spring"), OTHER ("Other");
+
+    private String value;
+
+    WaterType(String v) {
+        value = v;
+    }
+
+    public String toString() {
+        return value;
+    }
 }

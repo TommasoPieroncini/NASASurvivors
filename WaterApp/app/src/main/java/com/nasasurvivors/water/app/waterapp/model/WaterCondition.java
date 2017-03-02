@@ -5,5 +5,15 @@ package com.nasasurvivors.water.app.waterapp.model;
  */
 
 public enum WaterCondition {
-        WASTE, TREATABLECLEAR, TREATABLEMUDDY, POTABLE
+        WASTE ("Waste"), TREATABLECLEAR ("Treatable Clear"), TREATABLEMUDDY ("Treatable Muddy"), POTABLE ("Potable");
+
+        private String value;
+
+        WaterCondition(String v) {
+                value = v;
+        }
+
+        public String toString() {
+                return value;
+        }
 }
