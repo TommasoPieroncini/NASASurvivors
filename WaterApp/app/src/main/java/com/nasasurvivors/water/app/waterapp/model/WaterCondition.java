@@ -9,10 +9,18 @@ public enum WaterCondition {
 
         private String value;
 
+        /**
+         * contructor which sets value
+         * @param v value to assign
+         */
         WaterCondition(String v) {
                 value = v;
         }
 
+        /**
+        * overriding tostring method
+        * @return return value
+        */
         public String toString() {
                 return value;
         }

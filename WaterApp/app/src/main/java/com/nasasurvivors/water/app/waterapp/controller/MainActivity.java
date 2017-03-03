@@ -95,11 +95,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * move to edit profile activity
+     */
     private void editProfile() {
         Intent edit = new Intent(this, EditProfileActivity.class);
         startActivity(edit);
     }
 
+    /**
+     * logout and set user to null
+     */
     private void logout() {
         Intent loggedOut = new Intent(this, LoginActivity.class);
         loggedOut.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

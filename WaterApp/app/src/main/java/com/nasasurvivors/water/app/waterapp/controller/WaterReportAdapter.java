@@ -18,10 +18,21 @@ import java.util.List;
 
 public class WaterReportAdapter extends ArrayAdapter<WaterReportData> {
 
+    /**
+     * constructor with a textview
+     * @param context current context
+     * @param textViewResourceId textview resource
+     */
     public WaterReportAdapter(Context context, int textViewResourceId) {
         super(context, textViewResourceId);
     }
 
+    /**
+     * constructor with layout resource and list of items
+     * @param context current context
+     * @param resource layout resource
+     * @param items list of items
+     */
     public WaterReportAdapter(Context context, int resource, List<WaterReportData> items) {
         super(context, resource, items);
     }

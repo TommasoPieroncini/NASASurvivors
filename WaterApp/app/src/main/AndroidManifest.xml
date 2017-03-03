@@ -16,7 +16,7 @@
         <activity
             android:name=".controller.RegistrationActivity"
             android:label="REGISTRATION"
-            android:parentActivityName=".controller.WelcomeActivity" />
+            android:parentActivityName=".controller.LoginActivity" />
         <activity
             android:name=".controller.LoginActivity"
             android:label="AQUA">
@@ -25,14 +25,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.nasasurvivors.water.app.waterapp.controller.WelcomeActivity" />
         </activity>
-        <activity
-            android:name=".controller.WelcomeActivity"
-            android:label="MAIN DASHBOARD"></activity>
         <activity
             android:name=".controller.MainActivity"
             android:label="DASHBOARD" />

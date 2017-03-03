@@ -12,6 +12,14 @@ public class User {
     private String email;
     private UserType userType;
 
+    /**
+     *
+     * @param username
+     * @param password
+     * @param name
+     * @param email
+     * @param userType
+     */
     public User(String username, String password, String name, String email, UserType userType) {
         this.username = username;
         this.password = password;
