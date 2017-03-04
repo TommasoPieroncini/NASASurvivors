@@ -13,6 +13,12 @@
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
     </style>
 
+    <style name="MyAlertDialogTheme" parent="@style/AlertDialog.AppCompat.Light">
+        <item name="android:textColorPrimary">@color/dialogText</item>
+        <item name="android:textColor">@color/dialogText</item>
+        <item name="android:titleTextColor">@color/dialogText</item>
+    </style>
+
     <style name="NasaTheme" parent="AppTheme">
         <item name="colorPrimary">@color/colorPrimaryDark</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>

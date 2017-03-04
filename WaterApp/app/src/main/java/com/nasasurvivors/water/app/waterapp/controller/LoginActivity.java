@@ -36,9 +36,7 @@ import com.nasasurvivors.water.app.waterapp.R;
 import com.nasasurvivors.water.app.waterapp.model.AppSingleton;
 import com.nasasurvivors.water.app.waterapp.model.CredentialVerification;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -71,7 +69,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         Button registerBtn = (Button) findViewById(R.id.registerBtn);
         TextView forgot = (TextView) findViewById(R.id.forgotPass);
@@ -316,6 +314,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
 
+    /**
+     * interface for profile query
+     */
     private interface ProfileQuery {
         String[] PROJECTION = {
                 ContactsContract.CommonDataKinds.Email.ADDRESS,

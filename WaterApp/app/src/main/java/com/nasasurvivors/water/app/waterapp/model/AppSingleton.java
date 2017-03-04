@@ -63,8 +63,8 @@ public class AppSingleton {
      * @param r water report
      */
     public void addReport(WaterReportData r) {
-        currentReportID++;
         r.setId(currentReportID);
+        currentReportID++;
         reports.add(r);
     }
 

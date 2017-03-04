@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView project;
     private Button addReport;
     private Button viewReports;
+    private Button viewMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         addReport = (Button) findViewById(R.id.add_report_button);
         viewReports = (Button) findViewById(R.id.view_reports_button);
+        viewMap = (Button) findViewById(R.id.view_water_map);
 
         Animation anim1 = AnimationUtils.loadAnimation(this, R.anim.slide_in_left);
         anim1.reset();
@@ -69,6 +71,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent toViewReports = new Intent(getBaseContext(), ViewReportsActivity.class);
                 startActivity(toViewReports);
+            }
+        });
+
+        viewMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toMap = new Intent(getBaseContext(), WaterSourcesMapActivity.class);
+                startActivity(toMap);
             }
         });
     }

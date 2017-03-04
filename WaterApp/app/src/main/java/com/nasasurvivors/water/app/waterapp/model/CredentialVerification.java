@@ -15,7 +15,7 @@ import java.util.HashMap;
  */
 public class CredentialVerification {
     // private ArrayList<String> creds = new ArrayList<String>();
-    private HashMap<String, User> creds = new HashMap<>();
+    private static HashMap<String, User> creds = new HashMap<>();
     private static final CredentialVerification credentials = new CredentialVerification();
 
     /**
@@ -56,6 +56,7 @@ public class CredentialVerification {
      * @return instance of class
      */
     public static CredentialVerification getInstance() {
+        creds.put("tommi", new User("tommi", "tommi", "tommi", "tommi@", UserType.USER));
         return credentials;
     }
 

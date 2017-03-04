@@ -28,42 +28,82 @@ public class User {
         this.userType = userType;
     }
 
+    /**
+     * getter for username
+     * @return username
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     * setter for username
+     * @param u username
+     */
     public void setUsername(String u) {
         this.username = u;
     }
 
+    /**
+     * getter for password
+     * @return password
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     * setter for password
+     * @param p password
+     */
     public void setPassword(String p) {
         this.password = p;
     }
 
+    /**
+     * getter for name
+     * @return name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * setter for name
+     * @param n name
+     */
     public void setName(String n) {
         this.name = n;
     }
 
+    /**
+     * getter for email
+     * @return email
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * setter for email
+     * @param e email
+     */
     public void setEmail(String e) {
         this.email = e;
     }
 
+    /**
+     * getter for user type
+     * @return user type
+     */
     public UserType getUserType() {
         return userType;
     }
 
+    /**
+     * setter for user type
+     * @param u user type
+     */
     public void setUserType(UserType u) {
         this.userType = u;
     }
