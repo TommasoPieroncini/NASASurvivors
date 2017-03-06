@@ -76,11 +76,6 @@ public class WaterReportActivity extends AppCompatActivity {
         locationManager.requestLocationUpdates(
                 LocationManager.GPS_PROVIDER, 3000, 10, locationListener);
         Location location = null;
-        try {
-            location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        } catch (SecurityException e1) {
-            Log.e("ERROR", "Failed to get current location: " + e1);
-        }
 
         submit = (Button) findViewById(R.id.submitButton);
         longitude = (EditText) findViewById(R.id.longInput);
@@ -95,9 +90,14 @@ public class WaterReportActivity extends AppCompatActivity {
         condAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         condSpinner.setAdapter(condAdapter);
 
-        while(location == null) {
-
+        while (location == null) {
+            try {
+                location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            } catch (SecurityException e1) {
+                Log.e("ERROR", "Failed to get current location: " + e1);
+            }
         }
+
         lat.setText(String.valueOf(location.getLatitude()));
         longitude.setText(String.valueOf(location.getLongitude()));
 
