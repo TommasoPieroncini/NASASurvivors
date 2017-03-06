@@ -74,7 +74,7 @@ public class WaterReportActivity extends AppCompatActivity {
             return;
         }
         locationManager.requestLocationUpdates(
-                LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
+                LocationManager.GPS_PROVIDER, 3000, 10, locationListener);
         Location location = null;
         try {
             location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
@@ -95,6 +95,9 @@ public class WaterReportActivity extends AppCompatActivity {
         condAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         condSpinner.setAdapter(condAdapter);
 
+        while(location == null) {
+
+        }
         lat.setText(String.valueOf(location.getLatitude()));
         longitude.setText(String.valueOf(location.getLongitude()));
 
@@ -131,10 +134,6 @@ public class WaterReportActivity extends AppCompatActivity {
                 startActivity(main);
             }
         });
-
-
-
-
     }
 
 }
