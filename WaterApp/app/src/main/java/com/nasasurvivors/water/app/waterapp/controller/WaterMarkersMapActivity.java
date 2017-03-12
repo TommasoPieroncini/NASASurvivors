@@ -24,7 +24,7 @@ import java.util.HashMap;
 /**
  * Map of water reports class
  */
-public class WaterSourcesMapActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class WaterMarkersMapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private HashMap<Integer, Marker> markers;
@@ -73,7 +73,7 @@ public class WaterSourcesMapActivity extends AppCompatActivity implements OnMapR
      * @param marker clicked marker
      */
     private void createDialog(Marker marker) {
-        AlertDialog dialog = new AlertDialog.Builder(new ContextThemeWrapper(WaterSourcesMapActivity.this,R.style.MyAlertDialogTheme))
+        AlertDialog dialog = new AlertDialog.Builder(new ContextThemeWrapper(WaterMarkersMapActivity.this,R.style.MyAlertDialogTheme))
                 .setTitle(marker.getTitle())
                 .setMessage(marker.getSnippet())
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {

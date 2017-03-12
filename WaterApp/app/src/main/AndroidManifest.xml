@@ -44,11 +44,11 @@
             android:parentActivityName=".controller.MainActivity" />
         <activity
             android:name=".controller.WaterSourceReportActivity"
-            android:label="WATER REPORT"
+            android:label="WATER SOURCE REPORT"
             android:parentActivityName=".controller.MainActivity" />
         <activity
             android:name=".controller.ViewSourceReportsActivity"
-            android:label="VIEW REPORTS"
+            android:label="VIEW WATER SOURCE REPORTS"
             android:parentActivityName=".controller.MainActivity" />
 
         <!--
@@ -64,15 +64,21 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".controller.WaterSourcesMapActivity"
+            android:name=".controller.WaterMarkersMapActivity"
             android:label="@string/title_activity_water_sources_map"
             android:theme="@style/NasaTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nasasurvivors.water.app.waterapp.controller.MainActivity" />
         </activity>
-        <activity android:name=".controller.WaterPurityReportActivity" />
-        <activity android:name=".controller.ViewPurityReportsActivity"></activity>
+        <activity
+            android:name=".controller.WaterPurityReportActivity"
+            android:label="WATER PURITY REPORT"
+            android:parentActivityName=".controller.MainActivity" />
+        <activity
+            android:name=".controller.ViewPurityReportsActivity"
+            android:label="VIEW WATER PURITY REPORTS"
+            android:parentActivityName=".controller.MainActivity" />
     </application>
 
 </manifest>
