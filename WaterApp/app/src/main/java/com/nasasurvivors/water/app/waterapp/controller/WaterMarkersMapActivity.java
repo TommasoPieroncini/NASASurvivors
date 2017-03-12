@@ -11,10 +11,12 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.nasasurvivors.water.app.waterapp.R;
 import com.nasasurvivors.water.app.waterapp.model.AppSingleton;
+import com.nasasurvivors.water.app.waterapp.model.UserType;
 import com.nasasurvivors.water.app.waterapp.model.WaterPurityReport;
 import com.nasasurvivors.water.app.waterapp.model.WaterSourceReport;
 
@@ -30,11 +32,13 @@ public class WaterMarkersMapActivity extends AppCompatActivity implements OnMapR
     private HashMap<Integer, Marker> markers;
     private ArrayList<WaterSourceReport> sourceData;
     private ArrayList<WaterPurityReport> purityData;
+    private UserType currUserType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_water_sources_map);
+        currUserType = AppSingleton.getInstance().getCurrentUser().getUserType();
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -94,36 +98,43 @@ public class WaterMarkersMapActivity extends AppCompatActivity implements OnMapR
         for (WaterSourceReport swr : sourceData) {
             Marker marker = mMap.addMarker(new MarkerOptions()
                     .position(swr.getLocation())
-                    .title("Source Report #" + (swr.getId() + 1))
+                    .title("Source Report #" + (swr.getId()))
                     .snippet(swr.getMonthDayYear()
                             + "\nCreated: " + swr.getTime()
                             + "\nBy: " + swr.getReporter()
                             + "\nType: " + swr.getType()
                             + "\nCondition: " + swr.getCondition())
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
                     //.icon(BitmapDescriptorFactory.fromResource(R.drawable.nasa_logo1))
             );
 
             markers.put(swr.getId(), marker);
         }
 
-        for (WaterPurityReport pwr : purityData) {
-            Marker marker = mMap.addMarker(new MarkerOptions()
-                            .position(pwr.getLocation())
-                            .title("Purity Report #" + (pwr.getId()))
-                            .snippet(pwr.getMonthDayYear()
-                                    + "\nCreated: " + pwr.getTime()
-                                    + "\nBy: " + pwr.getAuthor()
-                                    + "\nType: " + pwr.getOverallCondition()
-                                    + "\nVirusPPM: " + pwr.getVirusPPM()
-                                    + "\nContaminantPPM: " + pwr.getContaminantPPM())
-                    //.icon(BitmapDescriptorFactory.fromResource(R.drawable.nasa_logo1))
-            );
+        if (currUserType.equals(UserType.MANAGER) || currUserType.equals(UserType.ADMIN)) {
+            for (WaterPurityReport pwr : purityData) {
+                Marker marker = mMap.addMarker(new MarkerOptions()
+                                .position(pwr.getLocation())
+                                .title("Purity Report #" + (pwr.getId()))
+                                .snippet(pwr.getMonthDayYear()
+                                        + "\nCreated: " + pwr.getTime()
+                                        + "\nBy: " + pwr.getAuthor()
+                                        + "\nType: " + pwr.getOverallCondition()
+                                        + "\nVirusPPM: " + pwr.getVirusPPM()
+                                        + "\nContaminantPPM: " + pwr.getContaminantPPM())
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+                        //.icon(BitmapDescriptorFactory.fromResource(R.drawable.nasa_logo1))
+                );
 
-            markers.put(sourceData.size() + pwr.getId(), marker);
+                markers.put(sourceData.size() + pwr.getId(), marker);
+            }
         }
 
-        if (sourceData.size() != 0 || purityData.size() != 0) {
+        if (sourceData.size() != 0) {
             mMap.moveCamera(CameraUpdateFactory.newLatLng(sourceData.get(0).getLocation()));
+        } else if (purityData.size() != 0
+                && (currUserType.equals(UserType.MANAGER) || currUserType.equals(UserType.ADMIN))) {
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(purityData.get(0).getLocation()));
         } else {
             Toast.makeText(getBaseContext(), "No water reports yet!", Toast.LENGTH_SHORT).show();
         }

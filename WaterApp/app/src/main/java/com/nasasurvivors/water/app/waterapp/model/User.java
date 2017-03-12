@@ -110,4 +110,8 @@ public class User {
     public void setUserType(UserType u) {
         this.userType = u;
     }
+
+    public String toString() {
+        return username + ", " + userType;
+    }
 }

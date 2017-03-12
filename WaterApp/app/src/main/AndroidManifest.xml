@@ -48,7 +48,7 @@
             android:parentActivityName=".controller.MainActivity" />
         <activity
             android:name=".controller.ViewSourceReportsActivity"
-            android:label="VIEW WATER SOURCE REPORTS"
+            android:label="WATER SOURCE REPORTS"
             android:parentActivityName=".controller.MainActivity" />
 
         <!--
@@ -77,7 +77,7 @@
             android:parentActivityName=".controller.MainActivity" />
         <activity
             android:name=".controller.ViewPurityReportsActivity"
-            android:label="VIEW WATER PURITY REPORTS"
+            android:label="WATER PURITY REPORTS"
             android:parentActivityName=".controller.MainActivity" />
     </application>
 

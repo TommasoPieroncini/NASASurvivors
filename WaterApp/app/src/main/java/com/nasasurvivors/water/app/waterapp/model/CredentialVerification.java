@@ -56,7 +56,10 @@ public class CredentialVerification {
      * @return instance of class
      */
     public static CredentialVerification getInstance() {
-        creds.put("tommi", new User("tommi", "tommi", "tommi", "tommi@", UserType.USER));
+        creds.put("usertype", new User("usertype", "usertype", "usertype", "usertype@", UserType.USER));
+        creds.put("workertype", new User("workertype", "workertype", "workertype", "workertype@", UserType.WORKER));
+        creds.put("managertype", new User("managertype", "managertype", "managertype", "managertype@", UserType.MANAGER));
+        creds.put("admintype", new User("admintype", "admintype", "admintype", "admintype@", UserType.ADMIN));
         return credentials;
     }
 
