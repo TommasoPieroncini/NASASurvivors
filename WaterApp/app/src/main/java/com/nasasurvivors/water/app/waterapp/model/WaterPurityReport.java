@@ -105,6 +105,10 @@ public class WaterPurityReport {
         return contaminantPPM;
     }
 
+    /**
+     * setter for report id
+     * @param id report id
+     */
     public void setId(int id) {
         this.id = id;
     }

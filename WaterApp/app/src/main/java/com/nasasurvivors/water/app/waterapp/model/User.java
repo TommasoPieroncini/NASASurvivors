@@ -111,6 +111,10 @@ public class User {
         this.userType = u;
     }
 
+    /**
+     * overwritten toString method
+     * @return string representation of user
+     */
     public String toString() {
         return username + ", " + userType;
     }

@@ -7,6 +7,9 @@ import android.widget.ListView;
 import com.nasasurvivors.water.app.waterapp.R;
 import com.nasasurvivors.water.app.waterapp.model.AppSingleton;
 
+/**
+ * activity with purity reports listview
+ */
 public class ViewPurityReportsActivity extends AppCompatActivity {
 
     private ListView reportsList;

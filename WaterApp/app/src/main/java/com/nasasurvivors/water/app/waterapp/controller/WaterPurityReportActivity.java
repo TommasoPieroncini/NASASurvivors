@@ -20,6 +20,9 @@ import com.nasasurvivors.water.app.waterapp.model.WaterType;
 
 import java.util.Date;
 
+/**
+ * create and submit a new report through this activity
+ */
 public class WaterPurityReportActivity extends AppCompatActivity {
 
     private EditText latInput;
