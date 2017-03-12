@@ -22,6 +22,9 @@ import com.nasasurvivors.water.app.waterapp.model.UserType;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Edit profile class
+ */
 public class EditProfileActivity extends AppCompatActivity {
 
     private Button submit;

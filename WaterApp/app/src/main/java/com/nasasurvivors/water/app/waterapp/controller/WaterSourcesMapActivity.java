@@ -1,10 +1,9 @@
 package com.nasasurvivors.water.app.waterapp.controller;
 
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ContextThemeWrapper;
 import android.widget.Toast;
 
@@ -12,22 +11,25 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.nasasurvivors.water.app.waterapp.R;
 import com.nasasurvivors.water.app.waterapp.model.AppSingleton;
-import com.nasasurvivors.water.app.waterapp.model.WaterReportData;
+import com.nasasurvivors.water.app.waterapp.model.WaterPurityReport;
+import com.nasasurvivors.water.app.waterapp.model.WaterSourceReport;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class WaterSourcesMapActivity extends FragmentActivity implements OnMapReadyCallback {
+/**
+ * Map of water reports class
+ */
+public class WaterSourcesMapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private HashMap<Integer, Marker> markers;
-    private ArrayList<WaterReportData> data;
+    private ArrayList<WaterSourceReport> sourceData;
+    private ArrayList<WaterPurityReport> purityData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +39,9 @@ public class WaterSourcesMapActivity extends FragmentActivity implements OnMapRe
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
         markers = new HashMap<>();
-        data = AppSingleton.getInstance().getReports();
+        sourceData = AppSingleton.getInstance().getSourceReports();
+        purityData = AppSingleton.getInstance().getPurityReports();
     }
 
 
@@ -89,23 +91,39 @@ public class WaterSourcesMapActivity extends FragmentActivity implements OnMapRe
      */
     private void addMarkers() {
 
-        for (WaterReportData wr : data) {
+        for (WaterSourceReport swr : sourceData) {
             Marker marker = mMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(wr.getLatitude(), wr.getLongitude()))
-                    .title("Report #" + (wr.getId() + 1))
-                    .snippet(wr.getDate()
-                            + "\nCreated: " + wr.getTime()
-                            + "\nBy: " + wr.getReporter()
-                            + "\nType: " + wr.getType()
-                            + "\nCondition: " + wr.getCondition())
+                    .position(swr.getLocation())
+                    .title("Source Report #" + (swr.getId() + 1))
+                    .snippet(swr.getMonthDayYear()
+                            + "\nCreated: " + swr.getTime()
+                            + "\nBy: " + swr.getReporter()
+                            + "\nType: " + swr.getType()
+                            + "\nCondition: " + swr.getCondition())
                     //.icon(BitmapDescriptorFactory.fromResource(R.drawable.nasa_logo1))
             );
 
-            markers.put(wr.getId(), marker);
+            markers.put(swr.getId(), marker);
         }
 
-        if (data.size() != 0) {
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(data.get(0).getLatitude(), data.get(0).getLongitude())));
+        for (WaterPurityReport pwr : purityData) {
+            Marker marker = mMap.addMarker(new MarkerOptions()
+                            .position(pwr.getLocation())
+                            .title("Purity Report #" + (pwr.getId()))
+                            .snippet(pwr.getMonthDayYear()
+                                    + "\nCreated: " + pwr.getTime()
+                                    + "\nBy: " + pwr.getAuthor()
+                                    + "\nType: " + pwr.getOverallCondition()
+                                    + "\nVirusPPM: " + pwr.getVirusPPM()
+                                    + "\nContaminantPPM: " + pwr.getContaminantPPM())
+                    //.icon(BitmapDescriptorFactory.fromResource(R.drawable.nasa_logo1))
+            );
+
+            markers.put(sourceData.size() + pwr.getId(), marker);
+        }
+
+        if (sourceData.size() != 0 || purityData.size() != 0) {
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(sourceData.get(0).getLocation()));
         } else {
             Toast.makeText(getBaseContext(), "No water reports yet!", Toast.LENGTH_SHORT).show();
         }

@@ -43,11 +43,11 @@
             android:label="EDIT PROFILE"
             android:parentActivityName=".controller.MainActivity" />
         <activity
-            android:name=".controller.WaterReportActivity"
+            android:name=".controller.WaterSourceReportActivity"
             android:label="WATER REPORT"
             android:parentActivityName=".controller.MainActivity" />
         <activity
-            android:name=".controller.ViewReportsActivity"
+            android:name=".controller.ViewSourceReportsActivity"
             android:label="VIEW REPORTS"
             android:parentActivityName=".controller.MainActivity" />
 
@@ -71,6 +71,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nasasurvivors.water.app.waterapp.controller.MainActivity" />
         </activity>
+        <activity android:name=".controller.WaterPurityReportActivity" />
+        <activity android:name=".controller.ViewPurityReportsActivity"></activity>
     </application>
 
 </manifest>

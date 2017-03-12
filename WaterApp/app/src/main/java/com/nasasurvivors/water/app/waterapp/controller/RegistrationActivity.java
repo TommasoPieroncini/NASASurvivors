@@ -23,6 +23,9 @@ import java.util.List;
  * Created by zachschlesinger on 2/19/17.
  */
 
+/**
+ * Registration class
+ */
 public class RegistrationActivity extends AppCompatActivity {
 
     private EditText user;

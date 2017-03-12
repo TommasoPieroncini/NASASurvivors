@@ -26,5 +26,7 @@
         <item name="android:colorForeground">@color/colorPrimaryDark</item>
         <item name="android:navigationBarColor">@color/colorPrimaryDark</item>
         <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="android:actionMenuTextColor">@color/dialogText</item>
+        <item name="actionMenuTextColor">@color/dialogText</item>
     </style>
 </resources>

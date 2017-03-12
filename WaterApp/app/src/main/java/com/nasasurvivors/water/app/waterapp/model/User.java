@@ -4,6 +4,9 @@ package com.nasasurvivors.water.app.waterapp.model;
  * Created by tommaso on 2/21/17.
  */
 
+/**
+ * User model class
+ */
 public class User {
 
     private String username;

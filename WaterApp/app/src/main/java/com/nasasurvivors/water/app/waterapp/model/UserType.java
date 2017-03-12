@@ -4,6 +4,9 @@ package com.nasasurvivors.water.app.waterapp.model;
  * Created by tommaso on 2/21/17.
  */
 
+/**
+ * User Type model class
+ */
 public enum UserType {
     NONE("Select a user type"), USER("User"), WORKER("Worker"), MANAGER("Manager"), ADMIN("Admin");
 

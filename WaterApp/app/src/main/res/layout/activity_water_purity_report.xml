@@ -10,8 +10,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.nasasurvivors.water.app.waterapp.controller.WaterSourceReportActivity"
-    tools:showIn="@layout/activity_water_report">
+    tools:context="com.nasasurvivors.water.app.waterapp.controller.WaterPurityReportActivity">
 
     <Button
         style="@style/ButtonStyle"
@@ -24,7 +23,7 @@
         android:id="@+id/puritySubmit" />
 
     <TextView
-        android:text="Create Water Source Report"
+        android:text="Create Water Purity Report"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/titleText2"
@@ -34,57 +33,17 @@
         android:layout_marginTop="15dp"
         android:textColor="@color/onScreenText" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:id="@+id/purityLong"
-        android:textSize="14sp"
-        style="@style/EditTextStyle"
-        android:hint="Latitude"
-        android:background="@drawable/rounded_edittext"
-        android:inputType="numberSigned|numberDecimal"
-        android:layout_marginTop="89dp"
-        android:layout_below="@+id/titleText2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
     <TextView
         android:text="Current Location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/titleText2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_marginTop="53dp"
-        android:id="@+id/current_location_text_2" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="numberSigned|numberDecimal"
-        android:ems="10"
-        android:id="@+id/longInput"
-        android:textSize="14sp"
-        android:fontFamily="sans-serif"
-        style="@style/EditTextStyle"
-        android:hint="Longitude"
-        android:background="@drawable/rounded_edittext"
-        android:layout_alignBaseline="@+id/purityLong"
-        android:layout_alignBottom="@+id/purityLong"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/conditionSpinner"
-        style="@style/EditTextStyle"
-        android:background="@drawable/rounded_edittext"
-        android:layout_below="@+id/overallCondSpinner"
+        android:id="@+id/current_location_text_2"
+        android:layout_above="@+id/puritySubmit"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="41dp" />
+        android:layout_marginBottom="13dp" />
 
     <Spinner
         android:layout_width="match_parent"
@@ -93,8 +52,62 @@
         android:spinnerMode="dropdown"
         style="@style/EditTextStyle"
         android:background="@drawable/rounded_edittext"
-        android:layout_below="@+id/purityLong"
+        android:layout_alignBottom="@+id/current_location_text_2"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="62dp" />
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/purityLong"
+        android:textSize="14sp"
+        style="@style/EditTextStyle"
+        android:hint="Longitude"
+        android:background="@drawable/rounded_edittext"
+        android:inputType="numberSigned|numberDecimal"
+        android:layout_marginTop="41dp"
+        android:layout_alignTop="@+id/current_location_text_2"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberSigned|numberDecimal"
+        android:ems="10"
+        android:id="@+id/purityLat"
+        android:textSize="14sp"
+        android:fontFamily="sans-serif"
+        style="@style/EditTextStyle"
+        android:hint="Latitude"
+        android:background="@drawable/rounded_edittext"
+        android:layout_alignBaseline="@+id/purityLong"
+        android:layout_alignBottom="@+id/purityLong"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:background="@drawable/rounded_edittext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/virusPPM"
+        android:hint="virus PPM"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:background="@drawable/rounded_edittext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/contaminantPPM"
+        android:hint="contaminant PPM"
+        android:layout_below="@+id/virusPPM"
+        android:layout_alignLeft="@+id/virusPPM"
+        android:layout_alignStart="@+id/virusPPM"
+        android:layout_marginTop="27dp" />
 </RelativeLayout>

@@ -1,6 +1,7 @@
 package com.nasasurvivors.water.app.waterapp.model;
 
 import android.content.Context;
+import android.location.Location;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -14,8 +15,11 @@ public class AppSingleton {
     private static AppSingleton currInstance = new AppSingleton();;
     private static Context currContext;
     private static User currentUser;
-    private static ArrayList<WaterReportData> reports = new ArrayList<>();
-    int currentReportID = 0;
+    private static ArrayList<WaterSourceReport> sourceReports = new ArrayList<>();
+    private static ArrayList<WaterPurityReport> purityReports = new ArrayList<>();
+    private static Location currentLocation;
+    int currSourceReportID = 0;
+    int currPurityReportID = 0;
 
     /**
      * getter with current context
@@ -59,20 +63,54 @@ public class AppSingleton {
     }
 
     /**
-     * method to add a new water report to the list
-     * @param r water report
+     * method to add a new water source report to the list
+     * @param r water source report
      */
-    public void addReport(WaterReportData r) {
-        r.setId(currentReportID);
-        currentReportID++;
-        reports.add(r);
+    public void addSourceReport(WaterSourceReport r) {
+        currSourceReportID++;
+        r.setId(currSourceReportID);
+        sourceReports.add(r);
+    }
+
+    /**
+     * method to add a new water purity report to the list
+     * @param r water purity report
+     */
+    public void addPurityReport(WaterPurityReport r) {
+        currPurityReportID++;
+        r.setId(currPurityReportID);
+        purityReports.add(r);
     }
 
     /**
      * getter for the water reports
      * @return list of water reports
      */
-    public ArrayList<WaterReportData> getReports() {
-        return reports;
+    public ArrayList<WaterSourceReport> getSourceReports() {
+        return sourceReports;
+    }
+
+    /**
+     * getter for the water reports
+     * @return list of water reports
+     */
+    public ArrayList<WaterPurityReport> getPurityReports() {
+        return purityReports;
+    }
+
+    /**
+     * setter for location
+     * @param l current location
+     */
+    public static void setLocation(Location l) {
+        currentLocation = l;
+    }
+
+    /**
+     * gett for location
+     * @return current location
+     */
+    public static Location getLocation() {
+        return currentLocation;
     }
 }

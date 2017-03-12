@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.nasasurvivors.water.app.waterapp.R;
-import com.nasasurvivors.water.app.waterapp.model.WaterReportData;
+import com.nasasurvivors.water.app.waterapp.model.WaterSourceReport;
 
 import java.util.List;
 
@@ -16,14 +16,17 @@ import java.util.List;
  * Created by tommaso on 3/1/17.
  */
 
-public class WaterReportAdapter extends ArrayAdapter<WaterReportData> {
+/**
+ * Custom list view for water reports class
+ */
+public class WaterSourceReportAdapter extends ArrayAdapter<WaterSourceReport> {
 
     /**
      * constructor with a textview
      * @param context current context
      * @param textViewResourceId textview resource
      */
-    public WaterReportAdapter(Context context, int textViewResourceId) {
+    public WaterSourceReportAdapter(Context context, int textViewResourceId) {
         super(context, textViewResourceId);
     }
 
@@ -33,7 +36,7 @@ public class WaterReportAdapter extends ArrayAdapter<WaterReportData> {
      * @param resource layout resource
      * @param items list of items
      */
-    public WaterReportAdapter(Context context, int resource, List<WaterReportData> items) {
+    public WaterSourceReportAdapter(Context context, int resource, List<WaterSourceReport> items) {
         super(context, resource, items);
     }
 
@@ -48,7 +51,7 @@ public class WaterReportAdapter extends ArrayAdapter<WaterReportData> {
             v = vi.inflate(R.layout.adapter_view, null);
         }
 
-        WaterReportData r = getItem(position);
+        WaterSourceReport r = getItem(position);
 
         if (r != null) {
             TextView title = (TextView) v.findViewById(R.id.adaptTitle);
@@ -65,11 +68,11 @@ public class WaterReportAdapter extends ArrayAdapter<WaterReportData> {
             }
 
             if (lat != null) {
-                lat.setText("Latitude: " + String.valueOf(r.getLatitude()));
+                lat.setText("Latitude: " + String.valueOf(r.getLocation().latitude));
             }
 
             if (lon != null) {
-                lon.setText("Longitude: " +String.valueOf(r.getLongitude()));
+                lon.setText("Longitude: " +String.valueOf(r.getLocation().longitude));
             }
 
             if (type != null) {

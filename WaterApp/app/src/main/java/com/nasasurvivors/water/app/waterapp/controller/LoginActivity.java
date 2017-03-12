@@ -57,7 +57,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private UserLoginTask mAuthTask = null;
 
     // UI references.
-    private AutoCompleteTextView mUsernameView;
+    private EditText mUsernameView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
@@ -74,7 +74,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         Button registerBtn = (Button) findViewById(R.id.registerBtn);
         TextView forgot = (TextView) findViewById(R.id.forgotPass);
         // Set up the login form.
-        mUsernameView = (AutoCompleteTextView) findViewById(R.id.user_input);
+        mUsernameView = (EditText) findViewById(R.id.user_input);
         populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.pass_input);
@@ -291,26 +291,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             emails.add(cursor.getString(ProfileQuery.ADDRESS));
             cursor.moveToNext();
         }
-
-        addEmailsToAutoComplete(emails);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
 
-    }
-
-    /**
-     * add username to autocomplete
-     * @param emailAddressCollection list of usernames for autocomplete
-     */
-    private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
-        //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
-        ArrayAdapter<String> adapter =
-                new ArrayAdapter<>(LoginActivity.this,
-                        android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
-
-        mUsernameView.setAdapter(adapter);
     }
 
 
@@ -369,7 +354,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
-                Toast.makeText(getBaseContext(), "Logged in!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getBaseContext(), "Logged in!", Toast.LENGTH_SHORT).show();
                 AppSingleton.getInstance().setCurrentUser(CredentialVerification.getInstance().getData().get(mUsername));
                 Intent loggedIn = new Intent(getBaseContext(), MainActivity.class);
                 loggedIn.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
