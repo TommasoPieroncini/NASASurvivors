@@ -268,7 +268,7 @@ public class MainActivity extends AppCompatActivity {
     private void logout() {
         Intent loggedOut = new Intent(this, LoginActivity.class);
         loggedOut.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        Toast.makeText(this, "Goodbye " + usernameStr + ".", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Goodbye " + AppSingleton.getInstance().getCurrentUser().getUsername() + ".", Toast.LENGTH_SHORT).show();
 //        AppSingleton.getInstance().setCurrentUser(null);
         mAuth.signOut();
         startActivity(loggedOut);
