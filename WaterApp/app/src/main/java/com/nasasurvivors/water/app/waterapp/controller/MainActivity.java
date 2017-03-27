@@ -23,8 +23,16 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.nasasurvivors.water.app.waterapp.R;
 import com.nasasurvivors.water.app.waterapp.model.AppSingleton;
+import com.nasasurvivors.water.app.waterapp.model.User;
 import com.nasasurvivors.water.app.waterapp.model.UserType;
 
 
@@ -32,6 +40,8 @@ import com.nasasurvivors.water.app.waterapp.model.UserType;
  * Main page
  */
 public class MainActivity extends AppCompatActivity {
+
+    private String usernameStr;
 
     private TextView welcome;
     private TextView project;
@@ -41,12 +51,17 @@ public class MainActivity extends AppCompatActivity {
     private LocationManager locationManager;
     private Location currentLocation;
 
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Toast.makeText(getBaseContext(), "on the main activity", Toast.LENGTH_LONG).show();
         setContentView(R.layout.activity_welcome);
 
+        mAuth = FirebaseAuth.getInstance();
         final UserType currUserType = UserType.USER;
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -101,7 +116,35 @@ public class MainActivity extends AppCompatActivity {
         Animation anim1 = AnimationUtils.loadAnimation(this, R.anim.slide_in_left);
         anim1.reset();
         welcome = (TextView) findViewById(R.id.welcome);
-//        welcome.setText("Welcome, " + AppSingleton.getInstance().getCurrentUser().getUsername() + "!");
+
+        final FirebaseUser firebaseUser = mAuth.getCurrentUser();
+        DatabaseReference myRef = database.getReference();
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot o : dataSnapshot.getChildren()) {
+                    if (o.getKey().equals(firebaseUser.getUid())) {
+                        if (o.getKey().equals(firebaseUser.getUid())) {
+                            String emailStr = (String) o.child("email").getValue();
+                            String nameStr = (String) o.child("name").getValue();
+                            String passwordStr = (String) o.child("password").getValue();
+                            String userTypeStr = (String) o.child("userType").getValue();
+                            String usernameStr = (String) o.child("username").getValue();
+                            User u = new User(usernameStr, passwordStr, nameStr, emailStr, UserType.USER);
+                            AppSingleton.getInstance().setCurrentUser(u);
+                            welcome.setText("Welcome, " + AppSingleton.getInstance().getCurrentUser().getUsername() + "!");
+                            // need to set the type selection
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         welcome.clearAnimation();
         welcome.startAnimation(anim1);
 
@@ -225,8 +268,9 @@ public class MainActivity extends AppCompatActivity {
     private void logout() {
         Intent loggedOut = new Intent(this, LoginActivity.class);
         loggedOut.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        Toast.makeText(this, "Goodbye " + AppSingleton.getInstance().getCurrentUser().getUsername() + ".", Toast.LENGTH_SHORT).show();
-        AppSingleton.getInstance().setCurrentUser(null);
+        Toast.makeText(this, "Goodbye " + usernameStr + ".", Toast.LENGTH_SHORT).show();
+//        AppSingleton.getInstance().setCurrentUser(null);
+        mAuth.signOut();
         startActivity(loggedOut);
     }
 

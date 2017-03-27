@@ -109,6 +109,7 @@ public class WaterSourceReportActivity extends AppCompatActivity {
                 WaterType typeInput = (WaterType) waterTypeSpinner.getSelectedItem();
                 WaterCondition condInput = (WaterCondition) condSpinner.getSelectedItem();
 
+
                 WaterSourceReport report = new WaterSourceReport(date,
                         AppSingleton.getInstance().getCurrentUser().getUsername(),
                         position, typeInput, condInput);
