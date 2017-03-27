@@ -1,0 +1,71 @@
+{
+  "project_info": {
+    "project_number": "1023378064033",
+    "firebase_url": "https://waterapp-d9dd7.firebaseio.com",
+    "project_id": "waterapp-d9dd7",
+    "storage_bucket": "waterapp-d9dd7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1023378064033:android:c5d056bed6753606",
+        "android_client_info": {
+          "package_name": "com.nasasurvivors.water.app.waterapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1023378064033-n8f20i0g5gbbsvf5f8urphjqeiroj8i6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nasasurvivors.water.app.waterapp",
+            "certificate_hash": "09e71213020fe8928515017936f9afcba97e23d8"
+          }
+        },
+        {
+          "client_id": "1023378064033-ba5u17a9a0skvkg9mqplkpql4ctlvu5j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nasasurvivors.water.app.waterapp",
+            "certificate_hash": "639dfca80496372a75ab8696fa84c26e3be5cd5f"
+          }
+        },
+        {
+          "client_id": "1023378064033-nac5c7c2fg648t2iqs85iqpc5dn14fdb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nasasurvivors.water.app.waterapp",
+            "certificate_hash": "11d46d7adbbba27fb8c02c5ff9b378f8f8e2e298"
+          }
+        },
+        {
+          "client_id": "1023378064033-4am5bmj4krc583d3irhkrfh60nr9of2i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSJRGH5hP624sKUxbl1uSkGYcQJk2bNSc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1023378064033-4am5bmj4krc583d3irhkrfh60nr9of2i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

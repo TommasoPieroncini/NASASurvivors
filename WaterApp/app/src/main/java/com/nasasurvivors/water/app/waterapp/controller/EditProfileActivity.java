@@ -72,14 +72,13 @@ public class EditProfileActivity extends AppCompatActivity {
                 final String nameStr = name.getText().toString();
                 final String emailStr = email.getText().toString();
 
-                if (CredentialVerification.getInstance().validateUsername(username, userStr) &&
-                        CredentialVerification.getInstance().validatePass(password, passStr) &&
-                        CredentialVerification.getInstance().validateEmail(email, emailStr)) {
+                if (CredentialVerification.verifyEmail(emailStr) &&
+                        CredentialVerification.verifyPassword(passStr).equals("")) {
 
-                    if (!userStr.equals(currUser.getUsername()) && CredentialVerification.getInstance().getData().keySet().contains(userStr)) {
-                        Toast.makeText(getBaseContext(), "Username already in use!", Toast.LENGTH_LONG).show();
-                        return;
-                    }
+//                    if (!userStr.equals(currUser.getUsername()) && CredentialVerification.getInstance().getData().keySet().contains(userStr)) {
+//                        Toast.makeText(getBaseContext(), "Username already in use!", Toast.LENGTH_LONG).show();
+//                        return;
+//                    }
 
                     // Alert user and modify data
                     AlertDialog dialog = new AlertDialog.Builder(EditProfileActivity.this)
@@ -90,9 +89,7 @@ public class EditProfileActivity extends AppCompatActivity {
                                 public void onClick(DialogInterface dialog, int which) {
                                     String user = currUser.getUsername();
 
-                                    CredentialVerification.getInstance().removeCreds(user);
                                     User newProfile = new User(userStr, passStr, nameStr, emailStr, userType);
-                                    CredentialVerification.getInstance().addCreds(userStr, newProfile);
                                     AppSingleton.getInstance().setCurrentUser(newProfile);
 
                                     Toast.makeText(getBaseContext(), "You've edited your profile!", Toast.LENGTH_SHORT).show();
