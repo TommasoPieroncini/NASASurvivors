@@ -43,9 +43,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Toast.makeText(getBaseContext(), "on the main activity", Toast.LENGTH_LONG).show();
         setContentView(R.layout.activity_welcome);
 
-        final UserType currUserType = AppSingleton.getInstance().getCurrentUser().getUserType();
+        final UserType currUserType = UserType.USER;
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
