@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
                     2);
+            Log.e("TESTING", "RETURNING");
             return;
         }
         locationManager.requestLocationUpdates(
@@ -100,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         Animation anim1 = AnimationUtils.loadAnimation(this, R.anim.slide_in_left);
         anim1.reset();
         welcome = (TextView) findViewById(R.id.welcome);
-        welcome.setText("Welcome, " + AppSingleton.getInstance().getCurrentUser().getUsername() + "!");
+//        welcome.setText("Welcome, " + AppSingleton.getInstance().getCurrentUser().getUsername() + "!");
         welcome.clearAnimation();
         welcome.startAnimation(anim1);
 
