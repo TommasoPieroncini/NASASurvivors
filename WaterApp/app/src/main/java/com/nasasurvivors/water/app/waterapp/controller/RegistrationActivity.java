@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -23,6 +24,9 @@ import com.nasasurvivors.water.app.waterapp.R;
 import com.nasasurvivors.water.app.waterapp.model.CredentialVerification;
 import com.nasasurvivors.water.app.waterapp.model.User;
 import com.nasasurvivors.water.app.waterapp.model.UserType;
+
+import java.util.Arrays;
+import java.util.List;
 
 
 /**
@@ -55,6 +59,14 @@ public class RegistrationActivity extends AppCompatActivity {
         editTextFirst = (EditText) findViewById(R.id.name_input);
         registerBtn = (Button) findViewById(R.id.register_btn);
         spinnerType = (Spinner) findViewById(R.id.type_spinner);
+
+        List<UserType> userTypes = Arrays.asList(UserType.USER, UserType.WORKER,
+                UserType.MANAGER, UserType.ADMIN);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, userTypes);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerType.setAdapter(adapter);
+        spinnerType.setPrompt("Select your user type");
 
         mAuth = FirebaseAuth.getInstance();
 
