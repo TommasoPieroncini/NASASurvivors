@@ -8,7 +8,7 @@ package com.nasasurvivors.water.app.waterapp.model;
  * User Type model class
  */
 public enum UserType {
-    NONE("Select a user type"), USER("User"), WORKER("Worker"), MANAGER("Manager"), ADMIN("Admin");
+    USER("User"), WORKER("Worker"), MANAGER("Manager"), ADMIN("Admin");
 
     private String value;
 
