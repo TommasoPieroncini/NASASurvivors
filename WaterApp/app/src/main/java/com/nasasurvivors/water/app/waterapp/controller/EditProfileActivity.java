@@ -93,6 +93,15 @@ public class EditProfileActivity extends AppCompatActivity {
                         password.setText(passwordStr);
                         name.setText(nameStr);
                         email.setText(emailStr);
+                        UserType userType = UserType.valueOf(userTypeStr);
+                        int position = 0;
+                        for (UserType t : UserType.values()) {
+                            if (t.equals(userType)) {
+                                break;
+                            }
+                            position++;
+                        }
+                        type.setSelection(position);
                         // need to set the type selection
                     }
                 }
