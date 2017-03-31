@@ -68,11 +68,11 @@ public class WaterSourceReportAdapter extends ArrayAdapter<WaterSourceReport> {
             }
 
             if (lat != null) {
-                lat.setText("Latitude: " + String.valueOf(r.getLocation().latitude));
+                lat.setText("Latitude: " + String.valueOf(r.getLocation().getLatitude()));
             }
 
             if (lon != null) {
-                lon.setText("Longitude: " +String.valueOf(r.getLocation().longitude));
+                lon.setText("Longitude: " +String.valueOf(r.getLocation().getLongitude()));
             }
 
             if (type != null) {

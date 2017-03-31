@@ -10,7 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.google.android.gms.maps.model.LatLng;
+import com.nasasurvivors.water.app.waterapp.model.LatLng;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.nasasurvivors.water.app.waterapp.R;
 import com.nasasurvivors.water.app.waterapp.model.AppSingleton;
 import com.nasasurvivors.water.app.waterapp.model.WaterCondition;
@@ -31,6 +33,8 @@ public class WaterPurityReportActivity extends AppCompatActivity {
     private EditText contaminantInput;
     private Spinner safetySpinner;
     private Location currentLocation;
+
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,9 +96,13 @@ public class WaterPurityReportActivity extends AppCompatActivity {
 
                 WaterPurityReport report = new WaterPurityReport(date,
                         AppSingleton.getInstance().getCurrentUser(),
-                        position, safetyType, virus, contaminant);
+                        position, safetyType, virus, contaminant, WaterPurityReport.currPurityReportID++);
 
                 AppSingleton.getInstance().addPurityReport(report);
+
+                final DatabaseReference myRef = database.getReference();
+                myRef.child("WaterPurityReports").push();
+                myRef.child("WaterPurityReports").child("Report " + report.getId()).setValue(report);
 
                 Intent main = new Intent(getBaseContext(), MainActivity.class);
                 startActivity(main);

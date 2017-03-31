@@ -16,6 +16,12 @@ public class User {
     private UserType userType;
 
     /**
+     * Constructor with no arguments
+     */
+    public User() {
+    }
+
+    /**
      *
      * @param username
      * @param password

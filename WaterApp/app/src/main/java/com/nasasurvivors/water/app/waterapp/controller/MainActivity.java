@@ -34,6 +34,8 @@ import com.nasasurvivors.water.app.waterapp.R;
 import com.nasasurvivors.water.app.waterapp.model.AppSingleton;
 import com.nasasurvivors.water.app.waterapp.model.User;
 import com.nasasurvivors.water.app.waterapp.model.UserType;
+import com.nasasurvivors.water.app.waterapp.model.WaterPurityReport;
+import com.nasasurvivors.water.app.waterapp.model.WaterSourceReport;
 
 
 /**
@@ -52,17 +54,15 @@ public class MainActivity extends AppCompatActivity {
     private Location currentLocation;
 
     private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
+    // private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Toast.makeText(getBaseContext(), "on the main activity", Toast.LENGTH_LONG).show();
         setContentView(R.layout.activity_welcome);
 
         mAuth = FirebaseAuth.getInstance();
-        final UserType currUserType = UserType.USER;
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this,
@@ -82,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
                     2);
-            Log.e("TESTING", "RETURNING");
             return;
         }
         locationManager.requestLocationUpdates(
@@ -118,25 +117,36 @@ public class MainActivity extends AppCompatActivity {
         welcome = (TextView) findViewById(R.id.welcome);
 
         final FirebaseUser firebaseUser = mAuth.getCurrentUser();
-        DatabaseReference myRef = database.getReference();
-        myRef.addValueEventListener(new ValueEventListener() {
+        DatabaseReference myRef = database.getReference(firebaseUser.getUid());
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot o : dataSnapshot.getChildren()) {
+                User u = dataSnapshot.getValue(User.class);
+                AppSingleton.getInstance().setCurrentUser(u);
+                welcome.setText("Welcome, " + AppSingleton.getInstance().getCurrentUser().getUsername() + "!");
+                /*for (DataSnapshot o : dataSnapshot.getChildren()) {
                     if (o.getKey().equals(firebaseUser.getUid())) {
-                        if (o.getKey().equals(firebaseUser.getUid())) {
-                            String emailStr = (String) o.child("email").getValue();
-                            String nameStr = (String) o.child("name").getValue();
-                            String passwordStr = (String) o.child("password").getValue();
-                            String userTypeStr = (String) o.child("userType").getValue();
-                            String usernameStr = (String) o.child("username").getValue();
-                            User u = new User(usernameStr, passwordStr, nameStr, emailStr, UserType.USER);
-                            AppSingleton.getInstance().setCurrentUser(u);
-                            welcome.setText("Welcome, " + AppSingleton.getInstance().getCurrentUser().getUsername() + "!");
-                            // need to set the type selection
+                        String emailStr = (String) o.child("email").getValue();
+                        String nameStr = (String) o.child("name").getValue();
+                        String passwordStr = (String) o.child("password").getValue();
+                        String userTypeStr = (String) o.child("userType").getValue();
+                        String usernameStr = (String) o.child("username").getValue();
+
+                        Toast.makeText(getBaseContext(), u.getUserType().toString(), Toast.LENGTH_LONG).show();
+                    }
+                    if (o.getKey().equals("WaterSourceReports")) {
+                        for (DataSnapshot r : o.getChildren()) {
+                            WaterSourceReport report = r.getValue(WaterSourceReport.class);
+                            AppSingleton.getInstance().addSourceReport(report);
                         }
                     }
-                }
+                    if (o.getKey().equals("WaterPurityReports")) {
+                        for (DataSnapshot r : o.getChildren()) {
+                            WaterPurityReport report = r.getValue(WaterPurityReport.class);
+                            AppSingleton.getInstance().addPurityReport(report);
+                        }
+                    }
+                }*/
             }
 
             @Override
@@ -162,10 +172,10 @@ public class MainActivity extends AppCompatActivity {
                 welcome.setText("NASASurvivors Project");
             }
         }, 3000);*/
-
         addReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                UserType currUserType = AppSingleton.getInstance().getCurrentUser().getUserType();
                 if (!currUserType.equals(UserType.USER)) {
                     AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
                             .setTitle("Add Report")
@@ -196,6 +206,7 @@ public class MainActivity extends AppCompatActivity {
         viewReports.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                UserType currUserType = AppSingleton.getInstance().getCurrentUser().getUserType();
                 if (currUserType.equals(UserType.MANAGER) || currUserType.equals(UserType.ADMIN)) {
                     AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
                             .setTitle("View Reports")

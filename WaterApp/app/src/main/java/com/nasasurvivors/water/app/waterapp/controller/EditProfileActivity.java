@@ -95,11 +95,13 @@ public class EditProfileActivity extends AppCompatActivity {
                         email.setText(emailStr);
                         UserType userType = UserType.valueOf(userTypeStr);
                         int position = 0;
-                        for (UserType t : UserType.values()) {
-                            if (t.equals(userType)) {
-                                break;
+                        boolean found = false;
+                        while (!found) {
+                            if (UserType.values()[position].equals(userType)) {
+                                found = true;
+                            } else {
+                                position++;
                             }
-                            position++;
                         }
                         type.setSelection(position);
                         // need to set the type selection

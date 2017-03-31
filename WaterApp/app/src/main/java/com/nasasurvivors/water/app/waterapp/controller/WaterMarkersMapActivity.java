@@ -12,8 +12,14 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.nasasurvivors.water.app.waterapp.R;
 import com.nasasurvivors.water.app.waterapp.model.AppSingleton;
 import com.nasasurvivors.water.app.waterapp.model.UserType;
@@ -34,11 +40,45 @@ public class WaterMarkersMapActivity extends AppCompatActivity implements OnMapR
     private ArrayList<WaterPurityReport> purityData;
     private UserType currUserType;
 
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_water_sources_map);
         currUserType = AppSingleton.getInstance().getCurrentUser().getUserType();
+
+        DatabaseReference myRef = database.getReference();
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // AppSingleton.getInstance().getPurityReports().clear();
+                // AppSingleton.getInstance().getSourceReports().clear();
+                if (dataSnapshot.getKey() != null) {
+                    if (dataSnapshot.getKey().equals("WaterSourceReports")) {
+                        AppSingleton.getInstance().getSourceReports().clear();
+                        for (DataSnapshot r : dataSnapshot.getChildren()) {
+                            WaterSourceReport report = r.getValue(WaterSourceReport.class);
+                            AppSingleton.getInstance().addSourceReport(report);
+                        }
+                    }
+                    if (dataSnapshot.getKey().equals("WaterPurityReports")) {
+                        AppSingleton.getInstance().getPurityReports().clear();
+                        for (DataSnapshot r : dataSnapshot.getChildren()) {
+                            WaterPurityReport report = r.getValue(WaterPurityReport.class);
+                            AppSingleton.getInstance().addPurityReport(report);
+                        }
+                    }
+                }
+                addMarkers();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -94,10 +134,11 @@ public class WaterMarkersMapActivity extends AppCompatActivity implements OnMapR
      * helper method to add markers to map
      */
     private void addMarkers() {
+        mMap.clear();
 
         for (WaterSourceReport swr : sourceData) {
             Marker marker = mMap.addMarker(new MarkerOptions()
-                    .position(swr.getLocation())
+                    .position(new LatLng(swr.getLocation().getLatitude(), swr.getLocation().getLongitude()))
                     .title("Source Report #" + (swr.getId()))
                     .snippet(swr.getMonthDayYear()
                             + "\nCreated: " + swr.getTime()
@@ -114,7 +155,7 @@ public class WaterMarkersMapActivity extends AppCompatActivity implements OnMapR
         if (currUserType.equals(UserType.MANAGER) || currUserType.equals(UserType.ADMIN)) {
             for (WaterPurityReport pwr : purityData) {
                 Marker marker = mMap.addMarker(new MarkerOptions()
-                                .position(pwr.getLocation())
+                                .position(new LatLng(pwr.getLocation().getLatitude(), pwr.getLocation().getLongitude()))
                                 .title("Purity Report #" + (pwr.getId()))
                                 .snippet(pwr.getMonthDayYear()
                                         + "\nCreated: " + pwr.getTime()
@@ -131,10 +172,12 @@ public class WaterMarkersMapActivity extends AppCompatActivity implements OnMapR
         }
 
         if (sourceData.size() != 0) {
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(sourceData.get(0).getLocation()));
+            com.nasasurvivors.water.app.waterapp.model.LatLng loc = sourceData.get(0).getLocation();
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(loc.getLatitude(), loc.getLongitude())));
         } else if (purityData.size() != 0
                 && (currUserType.equals(UserType.MANAGER) || currUserType.equals(UserType.ADMIN))) {
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(purityData.get(0).getLocation()));
+            com.nasasurvivors.water.app.waterapp.model.LatLng loc = purityData.get(0).getLocation();
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(loc.getLatitude(), loc.getLongitude())));
         } else {
             Toast.makeText(getBaseContext(), "No water reports yet!", Toast.LENGTH_SHORT).show();
         }

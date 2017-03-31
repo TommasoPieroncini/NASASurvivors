@@ -4,7 +4,7 @@ package com.nasasurvivors.water.app.waterapp.model;
  * Created by tommaso on 3/12/17.
  */
 
-import com.google.android.gms.maps.model.LatLng;
+import com.nasasurvivors.water.app.waterapp.model.LatLng;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -22,15 +22,24 @@ public class WaterPurityReport {
     private int virusPPM;
     private int contaminantPPM;
 
+    public static int currPurityReportID = 0;
+
+    /**
+     * Constructor with no arguments
+     */
+    public WaterPurityReport() {
+    }
+
     public WaterPurityReport(Date date, User worker,
                              LatLng location, WaterSafetyCondition overallCondition,
-                             int virusPPM, int contaminantPPM) {
+                             int virusPPM, int contaminantPPM, int id) {
         this.date = date;
         this.worker = worker;
         this.location = location;
         this.overallCondition = overallCondition;
         this.virusPPM = virusPPM;
         this.contaminantPPM = contaminantPPM;
+        this.id = id;
     }
 
     /**

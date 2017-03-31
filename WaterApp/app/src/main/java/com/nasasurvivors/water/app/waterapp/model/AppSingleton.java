@@ -4,6 +4,8 @@ import android.content.Context;
 import android.location.Location;
 import android.widget.Toast;
 
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 
 /**
@@ -18,8 +20,6 @@ public class AppSingleton {
     private static ArrayList<WaterSourceReport> sourceReports = new ArrayList<>();
     private static ArrayList<WaterPurityReport> purityReports = new ArrayList<>();
     private static Location currentLocation;
-    int currSourceReportID = 0;
-    int currPurityReportID = 0;
 
     /**
      * getter with current context
@@ -67,8 +67,6 @@ public class AppSingleton {
      * @param r water source report
      */
     public void addSourceReport(WaterSourceReport r) {
-        currSourceReportID++;
-        r.setId(currSourceReportID);
         sourceReports.add(r);
     }
 
@@ -77,8 +75,6 @@ public class AppSingleton {
      * @param r water purity report
      */
     public void addPurityReport(WaterPurityReport r) {
-        currPurityReportID++;
-        r.setId(currPurityReportID);
         purityReports.add(r);
     }
 
