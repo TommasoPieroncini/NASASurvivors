@@ -64,7 +64,7 @@ public class WaterPurityReportAdapter extends ArrayAdapter<WaterPurityReport> {
                 title.setText("Report ID: " + r.getId()
                         + "\n\nDate: " + r.getDate()
                         + "\n\nTime: " + r.getTime().toString()
-                        + "\n\nAuthor: " + r.getAuthor());
+                        + "\n\nAuthor: " + r.getReporter());
             }
 
             if (lat != null) {

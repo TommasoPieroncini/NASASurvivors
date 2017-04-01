@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ContextThemeWrapper;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -48,44 +49,12 @@ public class WaterMarkersMapActivity extends AppCompatActivity implements OnMapR
         setContentView(R.layout.activity_water_sources_map);
         currUserType = AppSingleton.getInstance().getCurrentUser().getUserType();
 
-        DatabaseReference myRef = database.getReference();
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // AppSingleton.getInstance().getPurityReports().clear();
-                // AppSingleton.getInstance().getSourceReports().clear();
-                if (dataSnapshot.getKey() != null) {
-                    if (dataSnapshot.getKey().equals("WaterSourceReports")) {
-                        AppSingleton.getInstance().getSourceReports().clear();
-                        for (DataSnapshot r : dataSnapshot.getChildren()) {
-                            WaterSourceReport report = r.getValue(WaterSourceReport.class);
-                            AppSingleton.getInstance().addSourceReport(report);
-                        }
-                    }
-                    if (dataSnapshot.getKey().equals("WaterPurityReports")) {
-                        AppSingleton.getInstance().getPurityReports().clear();
-                        for (DataSnapshot r : dataSnapshot.getChildren()) {
-                            WaterPurityReport report = r.getValue(WaterPurityReport.class);
-                            AppSingleton.getInstance().addPurityReport(report);
-                        }
-                    }
-                }
-                addMarkers();
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        markers = new HashMap<>();
-        sourceData = AppSingleton.getInstance().getSourceReports();
-        purityData = AppSingleton.getInstance().getPurityReports();
     }
 
 
@@ -108,6 +77,45 @@ public class WaterMarkersMapActivity extends AppCompatActivity implements OnMapR
             @Override
             public void onInfoWindowClick(Marker marker) {
                 createDialog(marker);
+            }
+        });
+
+        DatabaseReference myRef = database.getReference();
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // AppSingleton.getInstance().getPurityReports().clear();
+                // AppSingleton.getInstance().getSourceReports().clear();
+                //Log.e("TESTING", "MAPACTIVTIY1");
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        //Log.e("TESTING", "MAPACTIVTIY2");
+                        if (ds.getKey().equals("WaterSourceReports")) {
+                            AppSingleton.getInstance().getSourceReports().clear();
+                            for (DataSnapshot r : ds.getChildren()) {
+                                if (!r.getKey().equals("id")) {
+                                    WaterSourceReport report = r.getValue(WaterSourceReport.class);
+                                    Log.e("TESTING", r.getKey() + "  " + String.valueOf(report.getId()));
+                                    AppSingleton.getInstance().addSourceReport(report);
+                                }
+                            }
+                        }
+                        if (ds.getKey().equals("WaterPurityReports")) {
+                            AppSingleton.getInstance().getPurityReports().clear();
+                            for (DataSnapshot r : ds.getChildren()) {
+                                if (!r.getKey().equals("id")) {
+                                    WaterPurityReport report = r.getValue(WaterPurityReport.class);
+                                    Log.e("TESTING", r.getKey() + "  " + String.valueOf(report.getId()));
+                                    AppSingleton.getInstance().addPurityReport(report);
+                                }
+                            }
+                        }
+                }
+                addMarkers();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
     }
@@ -134,7 +142,12 @@ public class WaterMarkersMapActivity extends AppCompatActivity implements OnMapR
      * helper method to add markers to map
      */
     private void addMarkers() {
-        mMap.clear();
+        markers = new HashMap<>();
+        sourceData = AppSingleton.getInstance().getSourceReports();
+        purityData = AppSingleton.getInstance().getPurityReports();
+        if (mMap != null) {
+            mMap.clear();
+        }
 
         for (WaterSourceReport swr : sourceData) {
             Marker marker = mMap.addMarker(new MarkerOptions()
@@ -159,7 +172,7 @@ public class WaterMarkersMapActivity extends AppCompatActivity implements OnMapR
                                 .title("Purity Report #" + (pwr.getId()))
                                 .snippet(pwr.getMonthDayYear()
                                         + "\nCreated: " + pwr.getTime()
-                                        + "\nBy: " + pwr.getAuthor()
+                                        + "\nBy: " + pwr.getReporter()
                                         + "\nType: " + pwr.getOverallCondition()
                                         + "\nVirusPPM: " + pwr.getVirusPPM()
                                         + "\nContaminantPPM: " + pwr.getContaminantPPM())

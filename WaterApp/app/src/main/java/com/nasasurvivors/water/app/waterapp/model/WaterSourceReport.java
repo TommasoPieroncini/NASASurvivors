@@ -1,7 +1,5 @@
 package com.nasasurvivors.water.app.waterapp.model;
 
-import com.nasasurvivors.water.app.waterapp.model.LatLng;
-
 import java.text.DateFormat;
 import java.util.Date;
 
@@ -88,6 +86,7 @@ public class WaterSourceReport {
     public LatLng getLocation() {
         return location;
     }
+
     /**
      * getter for water type
      * @return water type

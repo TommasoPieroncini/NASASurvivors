@@ -39,12 +39,14 @@ public class ViewSourceReportsActivity extends AppCompatActivity {
                 AppSingleton.getInstance().getSourceReports().clear();
                 for (DataSnapshot r : dataSnapshot.getChildren()) {
                     //Log.e("TESTING", r.toString());
-                    WaterSourceReport report = r.getValue(WaterSourceReport.class);
-                    AppSingleton.getInstance().addSourceReport(report);
-                    WaterSourceReportAdapter adapter = new WaterSourceReportAdapter(getBaseContext(), R.layout.adapter_view,
-                            AppSingleton.getInstance().getSourceReports());
-                    reportsList.setAdapter(adapter);
+                    if (!r.getKey().equals("id")) {
+                        WaterSourceReport report = r.getValue(WaterSourceReport.class);
+                        AppSingleton.getInstance().addSourceReport(report);
+                    }
                 }
+                WaterSourceReportAdapter adapter = new WaterSourceReportAdapter(getBaseContext(), R.layout.adapter_view,
+                        AppSingleton.getInstance().getSourceReports());
+                reportsList.setAdapter(adapter);
             }
 
             @Override

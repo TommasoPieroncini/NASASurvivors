@@ -38,12 +38,14 @@ public class ViewPurityReportsActivity extends AppCompatActivity {
                 AppSingleton.getInstance().getPurityReports().clear();
                 for (DataSnapshot r : dataSnapshot.getChildren()) {
                     //Log.e("TESTING", r.toString());
-                    WaterPurityReport report = r.getValue(WaterPurityReport.class);
-                    AppSingleton.getInstance().addPurityReport(report);
-                    WaterPurityReportAdapter adapter = new WaterPurityReportAdapter(getBaseContext(),
-                            R.layout.adapter_view, AppSingleton.getInstance().getPurityReports());
-                    reportsList.setAdapter(adapter);
+                    if (!r.getKey().equals("id")) {
+                        WaterPurityReport report = r.getValue(WaterPurityReport.class);
+                        AppSingleton.getInstance().addPurityReport(report);
+                    }
                 }
+                WaterPurityReportAdapter adapter = new WaterPurityReportAdapter(getBaseContext(),
+                        R.layout.adapter_view, AppSingleton.getInstance().getPurityReports());
+                reportsList.setAdapter(adapter);
             }
 
             @Override

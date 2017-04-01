@@ -8,6 +8,7 @@ import java.text.DateFormat;
 import java.util.Date;
 
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -25,6 +26,7 @@ import com.nasasurvivors.water.app.waterapp.model.AppSingleton;
 import com.nasasurvivors.water.app.waterapp.model.User;
 import com.nasasurvivors.water.app.waterapp.model.UserType;
 import com.nasasurvivors.water.app.waterapp.model.WaterCondition;
+import com.nasasurvivors.water.app.waterapp.model.WaterPurityReport;
 import com.nasasurvivors.water.app.waterapp.model.WaterSourceReport;
 import com.nasasurvivors.water.app.waterapp.model.WaterType;
 
@@ -39,11 +41,24 @@ public class WaterSourceReportActivity extends AppCompatActivity {
     private Button submit;
     private Location currentLocation;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private final DatabaseReference myRef = database.getReference("WaterSourceReports");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_water_report);
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                WaterSourceReport.currSourceReportID = dataSnapshot.child("id").getValue(Integer.class);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         currentLocation = AppSingleton.getLocation();
 
@@ -119,12 +134,13 @@ public class WaterSourceReportActivity extends AppCompatActivity {
 
                 WaterSourceReport report = new WaterSourceReport(date,
                         AppSingleton.getInstance().getCurrentUser().getUsername(),
-                        position, typeInput, condInput, WaterSourceReport.currSourceReportID++);
+                        position, typeInput, condInput, WaterSourceReport.currSourceReportID);
+                WaterSourceReport.currSourceReportID++;
 
                 AppSingleton.getInstance().addSourceReport(report);
-                final DatabaseReference myRef = database.getReference();
-                myRef.child("WaterSourceReports").push();
-                myRef.child("WaterSourceReports").child("Report " + report.getId()).setValue(report);
+
+                myRef.child("Report " + report.getId()).setValue(report);
+                myRef.child("id").setValue(WaterSourceReport.currSourceReportID);
 
                 Intent main = new Intent(getBaseContext(), MainActivity.class);
                 startActivity(main);
