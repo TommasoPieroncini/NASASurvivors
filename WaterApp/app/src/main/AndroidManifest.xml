@@ -76,7 +76,10 @@
             android:name=".controller.ViewPurityReportsActivity"
             android:label="WATER PURITY REPORTS"
             android:parentActivityName=".controller.MainActivity" />
-        <activity android:name=".controller.GraphActivity" />
+        <activity
+            android:name=".controller.GraphActivity"
+            android:label="GENERATE GRAPH"
+            android:parentActivityName=".controller.MainActivity"/>
     </application>
 
 </manifest>

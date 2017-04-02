@@ -9,19 +9,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/puritySubmit"
-        android:layout_below="@id/yearInput"
+        android:layout_below="@+id/yearInput"
         android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:text="Create Graph"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/titleText2"
-        android:textAppearance="@android:style/TextAppearance.Material.Large"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:textColor="@color/onScreenText" />
 
     <EditText
         android:id="@+id/purityLong"
@@ -35,31 +24,6 @@
         android:hint="Latitude"
         android:inputType="numberSigned|numberDecimal"
         android:textSize="14sp" />
-
-    <TextView
-        android:text="Location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/titleText2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="53dp"
-        android:id="@+id/current_location_text_2" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="numberSigned|numberDecimal"
-        android:ems="10"
-        android:id="@+id/longInput"
-        android:textSize="14sp"
-        android:fontFamily="sans-serif"
-        style="@style/EditTextStyle"
-        android:hint="Longitude"
-        android:layout_margin="5dp"
-        android:background="@drawable/rounded_edittext"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/current_location_text_2"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -75,5 +39,31 @@
         android:hint="Year"
         android:background="@drawable/rounded_edittext"
        android:layout_below="@id/purityLong" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberSigned|numberDecimal"
+        android:ems="10"
+        android:id="@+id/longInput"
+        android:textSize="14sp"
+        android:fontFamily="sans-serif"
+        style="@style/EditTextStyle"
+        android:hint="Longitude"
+        android:background="@drawable/rounded_edittext"
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/purityLong"
+        android:layout_alignStart="@+id/purityLong" />
+
+    <TextView
+        android:text="Create Graph"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/titleText2"
+        android:textAppearance="@android:style/TextAppearance.Material.Large"
+        android:textColor="@color/onScreenText"
+        android:layout_above="@+id/longInput"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="124dp" />
 
 </RelativeLayout>
