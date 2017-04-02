@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -72,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User u = dataSnapshot.getValue(User.class);
                 AppSingleton.getInstance().setCurrentUser(u);
+                while (AppSingleton.getInstance().getCurrentUser() == null) {
+                }
                 welcome.setText("Welcome, " + AppSingleton.getInstance().getCurrentUser().getUsername() + "!");
             }
 
