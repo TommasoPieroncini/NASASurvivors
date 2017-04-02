@@ -50,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (user != null) {
                     // User is signed in
                     Log.d("Pickup", "onAuthStateChanged:signed_in:" + user.getUid());
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 } else {
                     // User is signed out
                     Log.d("Pickup", "onAuthStateChanged:signed_out");
