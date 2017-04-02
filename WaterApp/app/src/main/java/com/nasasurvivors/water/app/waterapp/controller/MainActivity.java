@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private Button addReport;
     private Button viewReports;
     private Button viewMap;
+    private Button viewGraph;
     private LocationManager locationManager;
     private Location currentLocation;
 
@@ -127,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
         addReport = (Button) findViewById(R.id.add_report_button);
         viewReports = (Button) findViewById(R.id.view_reports_button);
         viewMap = (Button) findViewById(R.id.view_water_map);
+        viewGraph = (Button) findViewById(R.id.view_graph);
 
         Animation anim1 = AnimationUtils.loadAnimation(this, R.anim.slide_in_left);
         anim1.reset();
@@ -222,6 +224,14 @@ public class MainActivity extends AppCompatActivity {
                     Intent toMap = new Intent(getBaseContext(), WaterMarkersMapActivity.class);
                     startActivity(toMap);
                 }
+            }
+        });
+
+        viewGraph.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toGraph = new Intent(getBaseContext(), GraphActivity.class);
+                startActivity(toGraph);
             }
         });
     }
