@@ -120,6 +120,11 @@ public class RegistrationActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * registers account with firebase
+     * @param email email to register
+     * @param password password to register
+     */
     private void createAccount(String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -149,6 +154,11 @@ public class RegistrationActivity extends AppCompatActivity {
                 });
     }
 
+    /**
+     * sign in with firebase
+     * @param email email to sign in
+     * @param password password to sign in
+     */
     private void signIn(String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {

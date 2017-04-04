@@ -192,7 +192,6 @@ public class WaterMarkersMapActivity extends AppCompatActivity implements OnMapR
             com.nasasurvivors.water.app.waterapp.model.LatLng loc = purityData.get(0).getLocation();
             mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(loc.getLatitude(), loc.getLongitude())));
         } else {
-            Toast.makeText(getBaseContext(), "No water reports yet!", Toast.LENGTH_SHORT).show();
         }
     }
 }

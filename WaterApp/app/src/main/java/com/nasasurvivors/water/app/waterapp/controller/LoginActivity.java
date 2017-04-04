@@ -95,6 +95,11 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * firebase signIn method
+     * @param email email to sign in
+     * @param password password to sign in
+     */
     private void signIn(String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {

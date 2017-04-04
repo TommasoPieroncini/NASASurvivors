@@ -33,16 +33,12 @@ import com.nasasurvivors.water.app.waterapp.R;
 import com.nasasurvivors.water.app.waterapp.model.AppSingleton;
 import com.nasasurvivors.water.app.waterapp.model.User;
 import com.nasasurvivors.water.app.waterapp.model.UserType;
-import com.nasasurvivors.water.app.waterapp.model.WaterPurityReport;
-import com.nasasurvivors.water.app.waterapp.model.WaterSourceReport;
 
 
 /**
  * Main page
  */
 public class MainActivity extends AppCompatActivity {
-
-    private String usernameStr;
 
     private TextView welcome;
     private TextView project;
@@ -64,6 +60,16 @@ public class MainActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
+        addReport = (Button) findViewById(R.id.add_report_button);
+        viewReports = (Button) findViewById(R.id.view_reports_button);
+        viewMap = (Button) findViewById(R.id.view_water_map);
+        viewGraph = (Button) findViewById(R.id.view_graph);
+
+        addReport.setVisibility(View.INVISIBLE);
+        viewReports.setVisibility(View.INVISIBLE);
+        viewMap.setVisibility(View.INVISIBLE);
+        viewGraph.setVisibility(View.INVISIBLE);
+
         final FirebaseUser firebaseUser = mAuth.getCurrentUser();
         DatabaseReference myRef = database.getReference(firebaseUser.getUid());
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -74,6 +80,16 @@ public class MainActivity extends AppCompatActivity {
                 while (AppSingleton.getInstance().getCurrentUser() == null) {
                 }
                 welcome.setText("Welcome, " + AppSingleton.getInstance().getCurrentUser().getUsername() + "!");
+
+
+
+                addReport.setVisibility(View.VISIBLE);
+                viewReports.setVisibility(View.VISIBLE);
+                viewMap.setVisibility(View.VISIBLE);
+                if (AppSingleton.getInstance().getCurrentUser().getUserType().equals(UserType.MANAGER)
+                        || AppSingleton.getInstance().getCurrentUser().getUserType().equals(UserType.ADMIN)) {
+                    viewGraph.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
@@ -81,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
@@ -126,10 +141,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-        addReport = (Button) findViewById(R.id.add_report_button);
-        viewReports = (Button) findViewById(R.id.view_reports_button);
-        viewMap = (Button) findViewById(R.id.view_water_map);
-        viewGraph = (Button) findViewById(R.id.view_graph);
+
 
         Animation anim1 = AnimationUtils.loadAnimation(this, R.anim.slide_in_left);
         anim1.reset();
@@ -231,8 +243,10 @@ public class MainActivity extends AppCompatActivity {
         viewGraph.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent toGraph = new Intent(getBaseContext(), GraphActivity.class);
-                startActivity(toGraph);
+                if (AppSingleton.getInstance().getCurrentUser() != null) {
+                    Intent toGraph = new Intent(getBaseContext(), GraphGenerateActivity.class);
+                    startActivity(toGraph);
+                }
             }
         });
     }

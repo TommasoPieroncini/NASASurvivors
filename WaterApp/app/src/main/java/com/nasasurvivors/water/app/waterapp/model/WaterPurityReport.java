@@ -119,4 +119,12 @@ public class WaterPurityReport {
     public void setId(int id) {
         this.id = id;
     }
+
+    /**
+     * overrides toString method
+     * @return string representation of purity report
+     */
+    public String toString() {
+        return id + ", " + reporter + ", " + date.toString() + ", " + location.toString() + ", contaminant: " + contaminantPPM + ", virus: " + virusPPM;
+    }
 }

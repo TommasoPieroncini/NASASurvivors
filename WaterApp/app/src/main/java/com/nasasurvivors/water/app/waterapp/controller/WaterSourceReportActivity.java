@@ -4,11 +4,9 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 
-import java.text.DateFormat;
 import java.util.Date;
 
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -23,10 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.nasasurvivors.water.app.waterapp.R;
 import com.nasasurvivors.water.app.waterapp.model.AppSingleton;
-import com.nasasurvivors.water.app.waterapp.model.User;
-import com.nasasurvivors.water.app.waterapp.model.UserType;
 import com.nasasurvivors.water.app.waterapp.model.WaterCondition;
-import com.nasasurvivors.water.app.waterapp.model.WaterPurityReport;
 import com.nasasurvivors.water.app.waterapp.model.WaterSourceReport;
 import com.nasasurvivors.water.app.waterapp.model.WaterType;
 
@@ -63,7 +58,7 @@ public class WaterSourceReportActivity extends AppCompatActivity {
         currentLocation = AppSingleton.getLocation();
 
         submit = (Button) findViewById(R.id.puritySubmit);
-        longitude = (EditText) findViewById(R.id.longInput);
+        longitude = (EditText) findViewById(R.id.latInput);
         lat = (EditText) findViewById(R.id.purityLong);
         waterTypeSpinner = (Spinner) findViewById(R.id.overallCondSpinner);
         condSpinner = (Spinner) findViewById(R.id.conditionSpinner);
