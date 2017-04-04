@@ -62,13 +62,14 @@
         android:id="@+id/view_reports_button" />
 
     <Button
+        android:id="@+id/view_water_map"
         style="@style/ButtonStyle"
-        android:text="View Map"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/project_text"
         android:layout_centerHorizontal="true"
-        android:id="@+id/view_water_map" />
+        android:layout_marginTop="10dp"
+        android:text="View Map" />
 
     <Button
         android:layout_width="wrap_content"
