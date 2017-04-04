@@ -90,6 +90,7 @@ public class GraphGenerateActivity extends AppCompatActivity {
 
                     ArrayList<DataPoint> virusData = new ArrayList<>();
                     ArrayList<DataPoint> contaminantData = new ArrayList<>();
+                    ArrayList<WaterPurityReport> selectedReports = new ArrayList<>();
                     int i = 0;
 
                     for (WaterPurityReport p : AppSingleton.getInstance().getPurityReports()) {
@@ -99,6 +100,7 @@ public class GraphGenerateActivity extends AppCompatActivity {
                             // contaminantData.add(new DataPoint((int) p.getDate().getTime(), p.getContaminantPPM()));
                             virusData.add(new DataPoint(i, p.getVirusPPM()));
                             contaminantData.add(new DataPoint(i, p.getContaminantPPM()));
+                            selectedReports.add(p);
                             i++;
                         }
                     }
@@ -109,6 +111,9 @@ public class GraphGenerateActivity extends AppCompatActivity {
                         series = new PointsGraphSeries<>(virusData.toArray(data));
                     } else if (type.equals("Contaminant")) {
                         series = new PointsGraphSeries<>(contaminantData.toArray(data));
+                    }
+                    for (WaterPurityReport r : selectedReports) {
+                        Toast.makeText(getBaseContext(), r.toString(), Toast.LENGTH_SHORT).show();
                     }
                     Log.e("TESTING", series.toString());
                     graph.addSeries(series);
