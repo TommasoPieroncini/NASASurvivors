@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,8 +22,16 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.nasasurvivors.water.app.waterapp.R;
 import com.nasasurvivors.water.app.waterapp.model.AppSingleton;
+import com.nasasurvivors.water.app.waterapp.model.User;
 import com.nasasurvivors.water.app.waterapp.model.UserType;
 
 
@@ -38,16 +45,58 @@ public class MainActivity extends AppCompatActivity {
     private Button addReport;
     private Button viewReports;
     private Button viewMap;
+    private Button viewGraph;
     private LocationManager locationManager;
     private Location currentLocation;
+
+    private FirebaseAuth mAuth;
+    // private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
-        final UserType currUserType = AppSingleton.getInstance().getCurrentUser().getUserType();
+        mAuth = FirebaseAuth.getInstance();
 
+        addReport = (Button) findViewById(R.id.add_report_button);
+        viewReports = (Button) findViewById(R.id.view_reports_button);
+        viewMap = (Button) findViewById(R.id.view_water_map);
+        viewGraph = (Button) findViewById(R.id.view_graph);
+
+        addReport.setVisibility(View.INVISIBLE);
+        viewReports.setVisibility(View.INVISIBLE);
+        viewMap.setVisibility(View.INVISIBLE);
+        viewGraph.setVisibility(View.INVISIBLE);
+
+        final FirebaseUser firebaseUser = mAuth.getCurrentUser();
+        DatabaseReference myRef = database.getReference(firebaseUser.getUid());
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User u = dataSnapshot.getValue(User.class);
+                AppSingleton.getInstance().setCurrentUser(u);
+                while (AppSingleton.getInstance().getCurrentUser() == null) {
+                }
+                welcome.setText("Welcome, " + AppSingleton.getInstance().getCurrentUser().getUsername() + "!");
+
+
+
+                addReport.setVisibility(View.VISIBLE);
+                viewReports.setVisibility(View.VISIBLE);
+                viewMap.setVisibility(View.VISIBLE);
+                if (AppSingleton.getInstance().getCurrentUser().getUserType().equals(UserType.MANAGER)
+                        || AppSingleton.getInstance().getCurrentUser().getUserType().equals(UserType.ADMIN)) {
+                    viewGraph.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
@@ -92,14 +141,12 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-        addReport = (Button) findViewById(R.id.add_report_button);
-        viewReports = (Button) findViewById(R.id.view_reports_button);
-        viewMap = (Button) findViewById(R.id.view_water_map);
+
 
         Animation anim1 = AnimationUtils.loadAnimation(this, R.anim.slide_in_left);
         anim1.reset();
         welcome = (TextView) findViewById(R.id.welcome);
-        welcome.setText("Welcome, " + AppSingleton.getInstance().getCurrentUser().getUsername() + "!");
+
         welcome.clearAnimation();
         welcome.startAnimation(anim1);
 
@@ -117,33 +164,35 @@ public class MainActivity extends AppCompatActivity {
                 welcome.setText("NASASurvivors Project");
             }
         }, 3000);*/
-
         addReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!currUserType.equals(UserType.USER)) {
-                    AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
-                            .setTitle("Add Report")
-                            .setMessage("Choose which report you want to create.")
-                            .setPositiveButton("Water Source Report", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Intent toSourceReport = new Intent(getBaseContext(), WaterSourceReportActivity.class);
-                                    startActivity(toSourceReport);
-                                }
-                            })
-                            .setNegativeButton("Water Purity Report", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Intent toPurityReport = new Intent(getBaseContext(), WaterPurityReportActivity.class);
-                                    startActivity(toPurityReport);
-                                }
-                            }).create();
+                if (AppSingleton.getInstance().getCurrentUser() != null) {
+                    UserType currUserType = AppSingleton.getInstance().getCurrentUser().getUserType();
+                    if (!currUserType.equals(UserType.USER)) {
+                        AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
+                                .setTitle("Add Report")
+                                .setMessage("Choose which report you want to create.")
+                                .setPositiveButton("Water Source Report", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Intent toSourceReport = new Intent(getBaseContext(), WaterSourceReportActivity.class);
+                                        startActivity(toSourceReport);
+                                    }
+                                })
+                                .setNegativeButton("Water Purity Report", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Intent toPurityReport = new Intent(getBaseContext(), WaterPurityReportActivity.class);
+                                        startActivity(toPurityReport);
+                                    }
+                                }).create();
 
-                    dialog.show();
-                } else {
-                    Intent toSourceReport = new Intent(getBaseContext(), WaterSourceReportActivity.class);
-                    startActivity(toSourceReport);
+                        dialog.show();
+                    } else {
+                        Intent toSourceReport = new Intent(getBaseContext(), WaterSourceReportActivity.class);
+                        startActivity(toSourceReport);
+                    }
                 }
             }
         });
@@ -151,29 +200,32 @@ public class MainActivity extends AppCompatActivity {
         viewReports.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (currUserType.equals(UserType.MANAGER) || currUserType.equals(UserType.ADMIN)) {
-                    AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
-                            .setTitle("View Reports")
-                            .setMessage("Choose which reports you want to view.")
-                            .setPositiveButton("Water Source Reports", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Intent toSourceReport = new Intent(getBaseContext(), ViewSourceReportsActivity.class);
-                                    startActivity(toSourceReport);
-                                }
-                            })
-                            .setNegativeButton("Water Purity Reports", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Intent toPurityReport = new Intent(getBaseContext(), ViewPurityReportsActivity.class);
-                                    startActivity(toPurityReport);
-                                }
-                            }).create();
+                if (AppSingleton.getInstance().getCurrentUser() != null) {
+                    UserType currUserType = AppSingleton.getInstance().getCurrentUser().getUserType();
+                    if (currUserType.equals(UserType.MANAGER) || currUserType.equals(UserType.ADMIN)) {
+                        AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
+                                .setTitle("View Reports")
+                                .setMessage("Choose which reports you want to view.")
+                                .setPositiveButton("Water Source Reports", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Intent toSourceReport = new Intent(getBaseContext(), ViewSourceReportsActivity.class);
+                                        startActivity(toSourceReport);
+                                    }
+                                })
+                                .setNegativeButton("Water Purity Reports", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Intent toPurityReport = new Intent(getBaseContext(), ViewPurityReportsActivity.class);
+                                        startActivity(toPurityReport);
+                                    }
+                                }).create();
 
-                    dialog.show();
-                } else {
-                    Intent toViewReports = new Intent(getBaseContext(), ViewSourceReportsActivity.class);
-                    startActivity(toViewReports);
+                        dialog.show();
+                    } else {
+                        Intent toViewReports = new Intent(getBaseContext(), ViewSourceReportsActivity.class);
+                        startActivity(toViewReports);
+                    }
                 }
             }
         });
@@ -181,8 +233,20 @@ public class MainActivity extends AppCompatActivity {
         viewMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent toMap = new Intent(getBaseContext(), WaterMarkersMapActivity.class);
-                startActivity(toMap);
+                if (AppSingleton.getInstance().getCurrentUser() != null) {
+                    Intent toMap = new Intent(getBaseContext(), WaterMarkersMapActivity.class);
+                    startActivity(toMap);
+                }
+            }
+        });
+
+        viewGraph.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (AppSingleton.getInstance().getCurrentUser() != null) {
+                    Intent toGraph = new Intent(getBaseContext(), GraphGenerateActivity.class);
+                    startActivity(toGraph);
+                }
             }
         });
     }
@@ -224,7 +288,8 @@ public class MainActivity extends AppCompatActivity {
         Intent loggedOut = new Intent(this, LoginActivity.class);
         loggedOut.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         Toast.makeText(this, "Goodbye " + AppSingleton.getInstance().getCurrentUser().getUsername() + ".", Toast.LENGTH_SHORT).show();
-        AppSingleton.getInstance().setCurrentUser(null);
+//        AppSingleton.getInstance().setCurrentUser(null);
+        mAuth.signOut();
         startActivity(loggedOut);
     }
 

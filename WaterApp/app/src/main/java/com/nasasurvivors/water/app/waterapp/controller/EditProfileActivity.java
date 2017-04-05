@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -13,6 +14,14 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.nasasurvivors.water.app.waterapp.R;
 import com.nasasurvivors.water.app.waterapp.model.AppSingleton;
 import com.nasasurvivors.water.app.waterapp.model.CredentialVerification;
@@ -27,6 +36,14 @@ import java.util.List;
  */
 public class EditProfileActivity extends AppCompatActivity {
 
+    //declare firebase components
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private FirebaseUser fbuser;
+
+
+    // declare UI components
     private Button submit;
     private EditText username;
     private EditText password;
@@ -46,6 +63,9 @@ public class EditProfileActivity extends AppCompatActivity {
         email = (EditText) findViewById(R.id.email);
         type = (Spinner) findViewById(R.id.type);
 
+        mAuth = FirebaseAuth.getInstance();
+
+
         // Populate user types spinner
         List<UserType> userTypes = Arrays.asList(UserType.USER, UserType.WORKER,
                 UserType.MANAGER, UserType.ADMIN);
@@ -55,13 +75,47 @@ public class EditProfileActivity extends AppCompatActivity {
         type.setAdapter(adapter);
 
 
-        final User currUser = AppSingleton.getInstance().getCurrentUser();
+//        final User currUser = AppSingleton.getInstance().getCurrentUser();
+        fbuser = mAuth.getCurrentUser();
+//        email.setText(fbuser.getEmail());
+        DatabaseReference myRef = database.getReference();
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot o : dataSnapshot.getChildren()) {
+                    if (o.getKey().equals(fbuser.getUid())) {
+                        String emailStr = (String) o.child("email").getValue();
+                        String nameStr = (String) o.child("name").getValue();
+                        String passwordStr = (String) o.child("password").getValue();
+                        String userTypeStr = (String) o.child("userType").getValue();
+                        String usernameStr = (String) o.child("username").getValue();
+                        username.setText(usernameStr);
+                        password.setText(passwordStr);
+                        name.setText(nameStr);
+                        email.setText(emailStr);
+                        UserType userType = UserType.valueOf(userTypeStr);
+                        int position = 0;
+                        boolean found = false;
+                        while (!found) {
+                            if (UserType.values()[position].equals(userType)) {
+                                found = true;
+                            } else {
+                                position++;
+                            }
+                        }
+                        type.setSelection(position);
+                        // need to set the type selection
+                    }
+                }
+            }
 
-        username.setText(currUser.getUsername());
-        password.setText(currUser.getPassword());
-        name.setText(currUser.getName());
-        email.setText(currUser.getEmail());
-        type.setSelection(userTypes.indexOf(currUser.getUserType()));
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,14 +126,14 @@ public class EditProfileActivity extends AppCompatActivity {
                 final String nameStr = name.getText().toString();
                 final String emailStr = email.getText().toString();
 
-                if (CredentialVerification.getInstance().validateUsername(username, userStr) &&
-                        CredentialVerification.getInstance().validatePass(password, passStr) &&
-                        CredentialVerification.getInstance().validateEmail(email, emailStr)) {
+                if (CredentialVerification.verifyEmail(emailStr) &&
+                        CredentialVerification.verifyPassword(passStr).equals("")) {
 
-                    if (!userStr.equals(currUser.getUsername()) && CredentialVerification.getInstance().getData().keySet().contains(userStr)) {
-                        Toast.makeText(getBaseContext(), "Username already in use!", Toast.LENGTH_LONG).show();
-                        return;
-                    }
+//                    if (!userStr.equals(currUser.getUsername()) && CredentialVerification.getInstance().getData().keySet().contains(userStr)) {
+//                        Toast.makeText(getBaseContext(), "Username already in use!", Toast.LENGTH_LONG).show();
+//                        return;
+//                    }
+
 
                     // Alert user and modify data
                     AlertDialog dialog = new AlertDialog.Builder(EditProfileActivity.this)
@@ -88,12 +142,13 @@ public class EditProfileActivity extends AppCompatActivity {
                             .setPositiveButton("Yes, I'm sure.", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    String user = currUser.getUsername();
+//                                    String user = currUser.getUsername();
 
-                                    CredentialVerification.getInstance().removeCreds(user);
                                     User newProfile = new User(userStr, passStr, nameStr, emailStr, userType);
-                                    CredentialVerification.getInstance().addCreds(userStr, newProfile);
-                                    AppSingleton.getInstance().setCurrentUser(newProfile);
+//                                    AppSingleton.getInstance().setCurrentUser(newProfile);
+                                    User u = new User(userStr, passStr, nameStr, emailStr, userType);
+                                    DatabaseReference ref = database.getReference(fbuser.getUid());
+                                    ref.setValue(u);
 
                                     Toast.makeText(getBaseContext(), "You've edited your profile!", Toast.LENGTH_SHORT).show();
                                     Intent back = new Intent(getBaseContext(), MainActivity.class);
@@ -107,8 +162,9 @@ public class EditProfileActivity extends AppCompatActivity {
                                     dialog.cancel();
                                 }
                             }).create();
-
                     dialog.show();
+                } else {
+                    Toast.makeText(getBaseContext(), "Something is invalid! Check again.", Toast.LENGTH_SHORT).show();
                 }
             }
         });

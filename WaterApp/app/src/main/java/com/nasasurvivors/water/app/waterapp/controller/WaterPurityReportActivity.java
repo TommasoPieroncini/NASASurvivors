@@ -4,13 +4,19 @@ import android.content.Intent;
 import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+import com.nasasurvivors.water.app.waterapp.model.LatLng;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.nasasurvivors.water.app.waterapp.R;
 import com.nasasurvivors.water.app.waterapp.model.AppSingleton;
 import com.nasasurvivors.water.app.waterapp.model.WaterCondition;
@@ -31,11 +37,26 @@ public class WaterPurityReportActivity extends AppCompatActivity {
     private EditText contaminantInput;
     private Spinner safetySpinner;
     private Location currentLocation;
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private final DatabaseReference myRef = database.getReference("WaterPurityReports");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_water_purity_report);
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                WaterPurityReport.currPurityReportID = dataSnapshot.child("id").getValue(Integer.class);
+                //Log.e("TESTING", "GETTING ID " + WaterPurityReport.currPurityReportID);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         Button submit = (Button) findViewById(R.id.puritySubmit);
         latInput = (EditText) findViewById(R.id.purityLat);
@@ -91,10 +112,13 @@ public class WaterPurityReportActivity extends AppCompatActivity {
                 int contaminant = Integer.valueOf(contaminantInput.getText().toString());
 
                 WaterPurityReport report = new WaterPurityReport(date,
-                        AppSingleton.getInstance().getCurrentUser(),
-                        position, safetyType, virus, contaminant);
+                        AppSingleton.getInstance().getCurrentUser().getUsername(),
+                        position, safetyType, virus, contaminant, WaterPurityReport.currPurityReportID++);
 
                 AppSingleton.getInstance().addPurityReport(report);
+
+                myRef.child("Report " + report.getId()).setValue(report);
+                myRef.child("id").setValue(WaterPurityReport.currPurityReportID);
 
                 Intent main = new Intent(getBaseContext(), MainActivity.class);
                 startActivity(main);

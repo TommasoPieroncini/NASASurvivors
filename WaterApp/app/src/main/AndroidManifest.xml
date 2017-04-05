@@ -22,10 +22,12 @@
         <activity
             android:name=".controller.RegistrationActivity"
             android:label="REGISTRATION"
+            android:screenOrientation="portrait"
             android:parentActivityName=".controller.LoginActivity" />
         <activity
             android:name=".controller.LoginActivity"
-            android:label="AQUA">
+            android:label="AQUA"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -34,18 +36,22 @@
         </activity>
         <activity
             android:name=".controller.MainActivity"
-            android:label="DASHBOARD" />
+            android:label="DASHBOARD"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".controller.EditProfileActivity"
             android:label="EDIT PROFILE"
+            android:screenOrientation="portrait"
             android:parentActivityName=".controller.MainActivity" />
         <activity
             android:name=".controller.WaterSourceReportActivity"
             android:label="WATER SOURCE REPORT"
+            android:screenOrientation="portrait"
             android:parentActivityName=".controller.MainActivity" />
         <activity
             android:name=".controller.ViewSourceReportsActivity"
             android:label="WATER SOURCE REPORTS"
+            android:screenOrientation="portrait"
             android:parentActivityName=".controller.MainActivity" />
 
         <!--
@@ -63,6 +69,7 @@
         <activity
             android:name=".controller.WaterMarkersMapActivity"
             android:label="@string/title_activity_water_sources_map"
+            android:screenOrientation="portrait"
             android:theme="@style/NasaTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -71,11 +78,18 @@
         <activity
             android:name=".controller.WaterPurityReportActivity"
             android:label="WATER PURITY REPORT"
-            android:parentActivityName=".controller.MainActivity" />
+            android:parentActivityName=".controller.MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".controller.ViewPurityReportsActivity"
             android:label="WATER PURITY REPORTS"
-            android:parentActivityName=".controller.MainActivity" />
+            android:parentActivityName=".controller.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".controller.GraphGenerateActivity"
+            android:label="GENERATE GRAPH"
+            android:parentActivityName=".controller.MainActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

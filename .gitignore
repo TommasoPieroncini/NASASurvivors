@@ -7,3 +7,5 @@ WaterApp/.DS_Store
 WaterApp/build
 WaterApp/captures
 WaterApp/externalNativeBuild
+WaterApp/app/google-services.json
+WaterApp/app/*.iml

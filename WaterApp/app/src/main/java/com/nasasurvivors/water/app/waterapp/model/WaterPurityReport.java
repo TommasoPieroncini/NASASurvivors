@@ -4,8 +4,6 @@ package com.nasasurvivors.water.app.waterapp.model;
  * Created by tommaso on 3/12/17.
  */
 
-import com.google.android.gms.maps.model.LatLng;
-
 import java.text.DateFormat;
 import java.util.Date;
 
@@ -16,21 +14,30 @@ public class WaterPurityReport {
 
     private Date date;
     private int id;
-    private User worker;
+    private String reporter;
     private LatLng location;
     private WaterSafetyCondition overallCondition;
     private int virusPPM;
     private int contaminantPPM;
 
-    public WaterPurityReport(Date date, User worker,
+    public static int currPurityReportID = 0;
+
+    /**
+     * Constructor with no arguments
+     */
+    public WaterPurityReport() {
+    }
+
+    public WaterPurityReport(Date date, String reporter,
                              LatLng location, WaterSafetyCondition overallCondition,
-                             int virusPPM, int contaminantPPM) {
+                             int virusPPM, int contaminantPPM, int id) {
         this.date = date;
-        this.worker = worker;
+        this.reporter = reporter;
         this.location = location;
         this.overallCondition = overallCondition;
         this.virusPPM = virusPPM;
         this.contaminantPPM = contaminantPPM;
+        this.id = id;
     }
 
     /**
@@ -74,11 +81,11 @@ public class WaterPurityReport {
     }
 
     /**
-     * getter for worker
-     * @return worker
+     * getter for reporter
+     * @return reporter
      */
-    public User getAuthor() {
-        return worker;
+    public String getReporter() {
+        return reporter;
     }
 
     /**
@@ -111,5 +118,13 @@ public class WaterPurityReport {
      */
     public void setId(int id) {
         this.id = id;
+    }
+
+    /**
+     * overrides toString method
+     * @return string representation of purity report
+     */
+    public String toString() {
+        return id + ", " + reporter + ", " + date.toString() + ", " + location.toString() + ", contaminant: " + contaminantPPM + ", virus: " + virusPPM;
     }
 }

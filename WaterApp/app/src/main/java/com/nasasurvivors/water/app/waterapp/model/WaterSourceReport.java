@@ -1,7 +1,5 @@
 package com.nasasurvivors.water.app.waterapp.model;
 
-import com.google.android.gms.maps.model.LatLng;
-
 import java.text.DateFormat;
 import java.util.Date;
 
@@ -20,8 +18,16 @@ public class WaterSourceReport {
     private WaterCondition condition;
     private int id;
 
+    public static int currSourceReportID = 0;
+
     // future improvement - purity report for each source report
     private boolean hasPurityReport;
+
+    /**
+     * Constructor with no arguments
+     */
+    public WaterSourceReport() {
+    }
 
     /**
      * constructor with all water data
@@ -31,13 +37,14 @@ public class WaterSourceReport {
      * @param typ water source type
      * @param con water source condition
      */
-    public WaterSourceReport(Date date, String user, LatLng location, WaterType typ, WaterCondition con) {
+    public WaterSourceReport(Date date, String user, LatLng location, WaterType typ, WaterCondition con, int id) {
 
         this.date = date;
         reporter = user;
         this.location = location;
         type = typ;
         condition = con;
+        this.id = id;
     }
 
     /**
@@ -79,6 +86,7 @@ public class WaterSourceReport {
     public LatLng getLocation() {
         return location;
     }
+
     /**
      * getter for water type
      * @return water type

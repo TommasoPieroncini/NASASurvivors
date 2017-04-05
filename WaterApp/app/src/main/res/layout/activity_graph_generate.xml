@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:text="Create Graph"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/titleText2"
+        android:textAppearance="@android:style/TextAppearance.Material.Large"
+        android:textColor="@color/onScreenText"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="20dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberSigned|numberDecimal"
+        android:ems="10"
+        android:id="@+id/graphLat"
+        android:textSize="14sp"
+        android:fontFamily="sans-serif"
+        style="@style/EditTextStyle"
+        android:hint="Latitude"
+        android:background="@drawable/rounded_edittext"
+        android:layout_below="@+id/titleText2"
+        android:layout_alignLeft="@+id/graphLong"
+        android:layout_alignStart="@+id/graphLong"
+        android:layout_marginBottom="7dp" />
+
+    <EditText
+        android:id="@+id/graphLong"
+        style="@style/EditTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/graphLat"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/rounded_edittext"
+        android:ems="10"
+        android:hint="Longitude"
+        android:inputType="numberSigned|numberDecimal"
+        android:textSize="14sp"
+        android:layout_marginBottom="7dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberSigned|numberDecimal"
+        android:ems="10"
+        android:id="@+id/yearInput"
+        android:textSize="14sp"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="sans-serif"
+        style="@style/EditTextStyle"
+        android:hint="Year"
+        android:background="@drawable/rounded_edittext"
+       android:layout_below="@id/graphLong"
+        android:layout_marginBottom="12dp" />
+
+    <Button
+        style="@style/ButtonStyle"
+        android:text="Generate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/generateGraphButton"
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/yearInput"
+        android:layout_alignStart="@+id/yearInput" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/generateGraphButton"
+        android:layout_marginTop="17dp"
+        android:layout_above="@+id/graph"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:orientation="horizontal"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
+
+        <RadioButton
+            android:text="Virus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/virus"
+            android:layout_weight="1"
+            android:layout_marginLeft="20dp"
+            android:textSize="15dp"
+            android:textColor="@color/onScreenText" />
+
+        <RadioButton
+            android:text="Contaminant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/contaminant"
+            android:textSize="15dp"
+            android:layout_weight="1"
+            android:textColor="@color/onScreenText" />
+
+    </RadioGroup>
+
+    <com.jjoe64.graphview.GraphView
+        android:layout_width="match_parent"
+        android:layout_height="200dip"
+        android:id="@+id/graph"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
+</RelativeLayout>

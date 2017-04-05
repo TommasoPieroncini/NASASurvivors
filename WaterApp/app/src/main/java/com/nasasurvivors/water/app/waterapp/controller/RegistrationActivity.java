@@ -2,16 +2,25 @@ package com.nasasurvivors.water.app.waterapp.controller;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.nasasurvivors.water.app.waterapp.R;
-import com.nasasurvivors.water.app.waterapp.model.AppSingleton;
 import com.nasasurvivors.water.app.waterapp.model.CredentialVerification;
 import com.nasasurvivors.water.app.waterapp.model.User;
 import com.nasasurvivors.water.app.waterapp.model.UserType;
@@ -19,83 +28,159 @@ import com.nasasurvivors.water.app.waterapp.model.UserType;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Created by zachschlesinger on 2/19/17.
- */
 
 /**
- * Registration class
+ * Created by zachschlesinger on 3/10/17.
  */
+
 public class RegistrationActivity extends AppCompatActivity {
 
-    private EditText user;
-    private EditText pass;
-    private EditText name;
-    private EditText email;
-    private Spinner typeSpinner;
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+    // declare UI components
+    private EditText editTextEmail;
+    private EditText editTextPassword;
+    private EditText editTextDisplayName;
+    private EditText editTextFirst;
+    private EditText editTextLast;
     private Button registerBtn;
+    private Spinner spinnerType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
-        // UI Components
-        typeSpinner = (Spinner) findViewById(R.id.type_spinner);
+        editTextEmail = (EditText) findViewById(R.id.email_input);
+        editTextPassword = (EditText) findViewById(R.id.password_input);
+        editTextDisplayName = (EditText) findViewById(R.id.username_input);
+        editTextFirst = (EditText) findViewById(R.id.name_input);
         registerBtn = (Button) findViewById(R.id.register_btn);
-        user = (EditText) findViewById(R.id.username_input);
-        pass = (EditText) findViewById(R.id.password_input);
-        name = (EditText) findViewById(R.id.name_input);
-        email = (EditText) findViewById(R.id.email_input);
+        spinnerType = (Spinner) findViewById(R.id.type_spinner);
 
-        // Populate user types spinner
         List<UserType> userTypes = Arrays.asList(UserType.USER, UserType.WORKER,
                 UserType.MANAGER, UserType.ADMIN);
 
         ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, userTypes);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        typeSpinner.setAdapter(adapter);
-        typeSpinner.setPrompt("Select your user type");
+        spinnerType.setAdapter(adapter);
+        spinnerType.setPrompt("Select your user type");
 
+        mAuth = FirebaseAuth.getInstance();
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    Log.d("Pickup", "onAuthStateChanged:signed_in:" + user.getUid());
+                } else {
+                    // User is signed out
+                    Log.d("Pickup", "onAuthStateChanged:signed_out");
+                }
+            }
+        };
 
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                UserType type = (UserType) typeSpinner.getSelectedItem();
-                String userStr = user.getText().toString();
-                String passStr = pass.getText().toString();
-                String nameStr = name.getText().toString();
-                String emailStr = email.getText().toString();
-
-                if (CredentialVerification.getInstance().validateUsername(user, userStr) &&
-                CredentialVerification.getInstance().validatePass(pass, passStr) &&
-                CredentialVerification.getInstance().validateEmail(email, emailStr)) {
-
-                    // Create user
-                    User newUser = new User(userStr, passStr, nameStr, emailStr, type);
-
-                    if (CredentialVerification.getInstance().getData().keySet().contains(userStr)) {
-                        Toast.makeText(getBaseContext(), "Username already in use!", Toast.LENGTH_LONG).show();
-                        return;
-                    }
-
-                    if (CredentialVerification.getInstance().addCreds(userStr, newUser)) {
-                        Intent registered = new Intent(getBaseContext(), MainActivity.class);
-
-                        // Set new user
-                        AppSingleton.getInstance().setCurrentUser(newUser);
-
-                        registered.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(registered);
-
-                        Toast.makeText(getBaseContext(), "You registered, " + userStr + "!", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getBaseContext(), "Something went wrong! Try again!", Toast.LENGTH_SHORT).show();
-                    }
+                String email = editTextEmail.getText().toString();
+                String password = editTextPassword.getText().toString();
+                if (!CredentialVerification.verifyEmail(email)) {
+                    Toast.makeText(getBaseContext(), "Invalid Email",
+                            Toast.LENGTH_SHORT).show();
+                    return;
                 }
-
+                String message = CredentialVerification.verifyPassword(password);
+                if (!message.isEmpty()) {
+                    Toast.makeText(getBaseContext(), message, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                createAccount(email, password);
+                signIn(email,password);
             }
         });
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
+    }
+
+    /**
+     * registers account with firebase
+     * @param email email to register
+     * @param password password to register
+     */
+    private void createAccount(String email, String password) {
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d("Pickup", "createUserWithEmail:onComplete:" + task.isSuccessful());
+
+                        if (task.isSuccessful()) {
+                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                            if (user != null) {
+                                DatabaseReference myRef = database.getReference(user.getUid());
+                                //User u = new User("trollmaster6969","Alexandre","Locquet", new ArrayList<>(Arrays.asList("basketball", "baseball")));
+                                UserType type = (UserType) spinnerType.getSelectedItem();
+                                User u = new User(editTextDisplayName.getText().toString(), editTextPassword.getText().toString(), editTextFirst.getText().toString(), editTextEmail.getText().toString(), type);
+                                myRef.setValue(u);
+                            }
+                            Toast.makeText(getBaseContext(), "Authentication succeeded",
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            Log.d("Firebase",task.getException().getMessage().toString());
+                            Toast.makeText(getBaseContext(), "Authentication failed",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                        // ...
+                    }
+                });
+    }
+
+    /**
+     * sign in with firebase
+     * @param email email to sign in
+     * @param password password to sign in
+     */
+    private void signIn(String email, String password) {
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d("Pickup", "signInWithEmail:onComplete:" + task.isSuccessful());
+
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (task.isSuccessful()) {
+                            Toast.makeText(getBaseContext(), "Authentication succeeded",
+                                    Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
+                        } else {
+                            Log.w("Pickup", "signInWithEmail:failed", task.getException());
+                            Toast.makeText(getBaseContext(), "Authentication failed",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                        // ...
+                    }
+                });
     }
 }
