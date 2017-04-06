@@ -10,7 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -30,7 +29,7 @@ import java.util.List;
 
 
 /**
- * Created by zachschlesinger on 3/10/17.
+ * Created by zachschlesinger on 3/10/17
  */
 
 public class RegistrationActivity extends AppCompatActivity {
@@ -45,7 +44,6 @@ public class RegistrationActivity extends AppCompatActivity {
     private EditText editTextDisplayName;
     private EditText editTextFirst;
     private EditText editTextLast;
-    private Button registerBtn;
     private Spinner spinnerType;
 
     @Override
@@ -57,7 +55,7 @@ public class RegistrationActivity extends AppCompatActivity {
         editTextPassword = (EditText) findViewById(R.id.password_input);
         editTextDisplayName = (EditText) findViewById(R.id.username_input);
         editTextFirst = (EditText) findViewById(R.id.name_input);
-        registerBtn = (Button) findViewById(R.id.register_btn);
+        Button registerBtn = (Button) findViewById(R.id.register_btn);
         spinnerType = (Spinner) findViewById(R.id.type_spinner);
 
         List<UserType> userTypes = Arrays.asList(UserType.USER, UserType.WORKER,
@@ -144,7 +142,7 @@ public class RegistrationActivity extends AppCompatActivity {
                             Toast.makeText(getBaseContext(), "Authentication succeeded",
                                     Toast.LENGTH_SHORT).show();
                         } else {
-                            Log.d("Firebase",task.getException().getMessage().toString());
+                            //Log.d("Firebase", task.getException().getMessage());
                             Toast.makeText(getBaseContext(), "Authentication failed",
                                     Toast.LENGTH_SHORT).show();
                         }

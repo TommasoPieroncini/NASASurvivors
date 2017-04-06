@@ -1,6 +1,7 @@
 package com.nasasurvivors.water.app.waterapp.controller;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +14,13 @@ import com.nasasurvivors.water.app.waterapp.model.WaterSourceReport;
 import java.util.List;
 
 /**
- * Created by tommaso on 3/1/17.
+ * Created by tommaso on 3/1/17
  */
 
 /**
  * Custom list view for water reports class
  */
-public class WaterSourceReportAdapter extends ArrayAdapter<WaterSourceReport> {
+class WaterSourceReportAdapter extends ArrayAdapter<WaterSourceReport> {
 
     /**
      * constructor with a textview
@@ -40,8 +41,9 @@ public class WaterSourceReportAdapter extends ArrayAdapter<WaterSourceReport> {
         super(context, resource, items);
     }
 
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
 
         View v = convertView;
 
@@ -63,7 +65,7 @@ public class WaterSourceReportAdapter extends ArrayAdapter<WaterSourceReport> {
             if (title != null) {
                 title.setText("Report ID: " + r.getId()
                         + "\n\nDate: " + r.getDate()
-                        + "\n\nTime: " + r.getTime().toString()
+                        + "\n\nTime: " + r.getTime()
                         + "\n\nAuthor: " + r.getReporter());
             }
 

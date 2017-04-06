@@ -4,8 +4,6 @@ import android.content.Context;
 import android.location.Location;
 import android.widget.Toast;
 
-import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.ArrayList;
 
 /**
@@ -14,7 +12,7 @@ import java.util.ArrayList;
  * a list of water reports and global methods for the app
  */
 public class AppSingleton {
-    private static AppSingleton currInstance = new AppSingleton();;
+    private static AppSingleton currInstance = new AppSingleton();
     private static Context currContext;
     private static User currentUser;
     private static ArrayList<WaterSourceReport> sourceReports = new ArrayList<>();
@@ -103,7 +101,7 @@ public class AppSingleton {
     }
 
     /**
-     * gett for location
+     * get for location
      * @return current location
      */
     public static Location getLocation() {

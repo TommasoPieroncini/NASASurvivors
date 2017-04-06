@@ -2,7 +2,6 @@ package com.nasasurvivors.water.app.waterapp.controller;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ListView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -15,7 +14,7 @@ import com.nasasurvivors.water.app.waterapp.model.AppSingleton;
 import com.nasasurvivors.water.app.waterapp.model.WaterPurityReport;
 
 /**
- * activity with purity reports listview
+ * activity with purity reports list view
  */
 public class ViewPurityReportsActivity extends AppCompatActivity {
 

@@ -1,6 +1,5 @@
 package com.nasasurvivors.water.app.waterapp.controller;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -30,7 +29,6 @@ import java.util.ArrayList;
  */
 public class GraphGenerateActivity extends AppCompatActivity {
 
-    private Button generate;
     private GraphView graph;
     private EditText latInput;
     private EditText longInput;
@@ -45,7 +43,7 @@ public class GraphGenerateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph_generate);
 
-        generate = (Button) findViewById(R.id.generateGraphButton);
+        Button generate = (Button) findViewById(R.id.generateGraphButton);
         graph = (GraphView) findViewById(R.id.graph);
         latInput = (EditText) findViewById(R.id.graphLat);
         longInput = (EditText) findViewById(R.id.graphLong);
@@ -56,10 +54,10 @@ public class GraphGenerateActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds: dataSnapshot.getChildren()) {
-                    if (ds.getKey().toString().equals("WaterPurityReports")) {
+                    if (ds.getKey().equals("WaterPurityReports")) {
                         AppSingleton.getInstance().getPurityReports().clear();
                         for (DataSnapshot r: ds.getChildren()) {
-                            if (!r.getKey().toString().equals("id")) {
+                            if (!r.getKey().equals("id")) {
                                 WaterPurityReport report = r.getValue(WaterPurityReport.class);
                                 AppSingleton.getInstance().addPurityReport(report);
                             }
@@ -83,7 +81,7 @@ public class GraphGenerateActivity extends AppCompatActivity {
                     graph.removeAllSeries();
                     int lat = Double.valueOf(latInput.getText().toString()).intValue();
                     int lng = Double.valueOf(longInput.getText().toString()).intValue();
-                    String year = yearInput.getText().toString();
+                    //String year = yearInput.getText().toString();
                     int id = virOrCont.getCheckedRadioButtonId();
                     RadioButton rb = (RadioButton) findViewById(id);
                     String type = rb.getText().toString();
@@ -115,7 +113,8 @@ public class GraphGenerateActivity extends AppCompatActivity {
                     for (WaterPurityReport r : selectedReports) {
                         Toast.makeText(getBaseContext(), r.toString(), Toast.LENGTH_SHORT).show();
                     }
-                    Log.e("TESTING", series.toString());
+                    //Log.e("TESTING", series.toString());
+                    assert series != null;
                     graph.addSeries(series);
                     //graph.getLegendRenderer().setVisible(true);
                 } else {

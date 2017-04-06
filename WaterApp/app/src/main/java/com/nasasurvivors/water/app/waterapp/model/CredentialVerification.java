@@ -1,12 +1,10 @@
 package com.nasasurvivors.water.app.waterapp.model;
 
-import android.widget.Toast;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by zachschlesinger on 3/4/17.
+ * Created by zachschlesinger on 3/4/17
  */
 
 public class CredentialVerification {

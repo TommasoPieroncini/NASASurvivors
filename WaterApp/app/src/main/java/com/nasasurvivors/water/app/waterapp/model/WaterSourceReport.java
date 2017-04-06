@@ -4,7 +4,7 @@ import java.text.DateFormat;
 import java.util.Date;
 
 /**
- * Created by elf82 on 2/25/2017.
+ * Created by elf82 on 2/25/2017
  */
 
 /**
@@ -19,9 +19,6 @@ public class WaterSourceReport {
     private int id;
 
     public static int currSourceReportID = 0;
-
-    // future improvement - purity report for each source report
-    private boolean hasPurityReport;
 
     /**
      * Constructor with no arguments
@@ -121,9 +118,7 @@ public class WaterSourceReport {
 
     /**
      * setter for hasPurityReport
-     * @param hasPurityReport whether a purity report has been submitted for this source report
      */
-    public void setHasPurityReport(boolean hasPurityReport) {
-        this.hasPurityReport = hasPurityReport;
+    public void setHasPurityReport() {
     }
 }

@@ -6,7 +6,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ContextThemeWrapper;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -36,9 +35,6 @@ import java.util.HashMap;
 public class WaterMarkersMapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private HashMap<Integer, Marker> markers;
-    private ArrayList<WaterSourceReport> sourceData;
-    private ArrayList<WaterPurityReport> purityData;
     private UserType currUserType;
 
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -142,9 +138,9 @@ public class WaterMarkersMapActivity extends AppCompatActivity implements OnMapR
      * helper method to add markers to map
      */
     private void addMarkers() {
-        markers = new HashMap<>();
-        sourceData = AppSingleton.getInstance().getSourceReports();
-        purityData = AppSingleton.getInstance().getPurityReports();
+        HashMap<Integer, Marker> markers = new HashMap<>();
+        ArrayList<WaterSourceReport> sourceData = AppSingleton.getInstance().getSourceReports();
+        ArrayList<WaterPurityReport> purityData = AppSingleton.getInstance().getPurityReports();
         if (mMap != null) {
             mMap.clear();
         }
@@ -191,7 +187,7 @@ public class WaterMarkersMapActivity extends AppCompatActivity implements OnMapR
                 && (currUserType.equals(UserType.MANAGER) || currUserType.equals(UserType.ADMIN))) {
             com.nasasurvivors.water.app.waterapp.model.LatLng loc = purityData.get(0).getLocation();
             mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(loc.getLatitude(), loc.getLongitude())));
-        } else {
-        }
+        } //else {
+        //}
     }
 }

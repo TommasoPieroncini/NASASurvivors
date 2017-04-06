@@ -1,7 +1,7 @@
 package com.nasasurvivors.water.app.waterapp.model;
 
 /**
- * Created by tommaso on 2/21/17.
+ * Created by tommaso on 2/21/17
  */
 
 /**
@@ -23,11 +23,11 @@ public class User {
 
     /**
      *
-     * @param username
-     * @param password
-     * @param name
-     * @param email
-     * @param userType
+     * @param username user name
+     * @param password password
+     * @param name name
+     * @param email email
+     * @param userType user type
      */
     public User(String username, String password, String name, String email, UserType userType) {
         this.username = username;

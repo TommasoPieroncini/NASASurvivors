@@ -41,12 +41,10 @@ import com.nasasurvivors.water.app.waterapp.model.UserType;
 public class MainActivity extends AppCompatActivity {
 
     private TextView welcome;
-    private TextView project;
     private Button addReport;
     private Button viewReports;
     private Button viewMap;
     private Button viewGraph;
-    private LocationManager locationManager;
     private Location currentLocation;
 
     private FirebaseAuth mAuth;
@@ -71,14 +69,15 @@ public class MainActivity extends AppCompatActivity {
         viewGraph.setVisibility(View.INVISIBLE);
 
         final FirebaseUser firebaseUser = mAuth.getCurrentUser();
+        assert firebaseUser != null;
         DatabaseReference myRef = database.getReference(firebaseUser.getUid());
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User u = dataSnapshot.getValue(User.class);
                 AppSingleton.getInstance().setCurrentUser(u);
-                while (AppSingleton.getInstance().getCurrentUser() == null) {
-                }
+                //while (AppSingleton.getInstance().getCurrentUser() == null) {
+                //}
                 welcome.setText("Welcome, " + AppSingleton.getInstance().getCurrentUser().getUsername() + "!");
 
 
@@ -97,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -152,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
 
         Animation anim2 = AnimationUtils.loadAnimation(this, R.anim.slide_in_right);
         anim2.reset();
-        project = (TextView) findViewById(R.id.project_text);
+        TextView project = (TextView) findViewById(R.id.project_text);
         project.clearAnimation();
         project.startAnimation(anim2);
 

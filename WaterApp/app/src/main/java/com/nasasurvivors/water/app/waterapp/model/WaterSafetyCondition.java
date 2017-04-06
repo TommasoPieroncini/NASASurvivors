@@ -1,7 +1,7 @@
 package com.nasasurvivors.water.app.waterapp.model;
 
 /**
- * Created by tommaso on 3/12/17.
+ * Created by tommaso on 3/12/17
  */
 
 /**

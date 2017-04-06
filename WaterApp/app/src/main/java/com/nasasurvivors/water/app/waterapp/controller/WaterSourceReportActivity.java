@@ -33,8 +33,6 @@ public class WaterSourceReportActivity extends AppCompatActivity {
     private EditText lat;
     private Spinner waterTypeSpinner;
     private Spinner condSpinner;
-    private Button submit;
-    private Location currentLocation;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private final DatabaseReference myRef = database.getReference("WaterSourceReports");
 
@@ -55,9 +53,9 @@ public class WaterSourceReportActivity extends AppCompatActivity {
             }
         });
 
-        currentLocation = AppSingleton.getLocation();
+        Location currentLocation = AppSingleton.getLocation();
 
-        submit = (Button) findViewById(R.id.puritySubmit);
+        Button submit = (Button) findViewById(R.id.puritySubmit);
         longitude = (EditText) findViewById(R.id.latInput);
         lat = (EditText) findViewById(R.id.purityLong);
         waterTypeSpinner = (Spinner) findViewById(R.id.overallCondSpinner);

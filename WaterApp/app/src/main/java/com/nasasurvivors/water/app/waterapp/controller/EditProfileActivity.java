@@ -1,12 +1,10 @@
 package com.nasasurvivors.water.app.waterapp.controller;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -20,10 +18,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.nasasurvivors.water.app.waterapp.R;
-import com.nasasurvivors.water.app.waterapp.model.AppSingleton;
 import com.nasasurvivors.water.app.waterapp.model.CredentialVerification;
 import com.nasasurvivors.water.app.waterapp.model.User;
 import com.nasasurvivors.water.app.waterapp.model.UserType;
@@ -36,15 +32,11 @@ import java.util.List;
  */
 public class EditProfileActivity extends AppCompatActivity {
 
-    //declare firebase components
-    private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private FirebaseUser fbuser;
 
 
-    // declare UI components
-    private Button submit;
     private EditText username;
     private EditText password;
     private EditText name;
@@ -56,14 +48,14 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
 
-        submit = (Button) findViewById(R.id.submit);
+        Button submit = (Button) findViewById(R.id.submit);
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
         name = (EditText) findViewById(R.id.name);
         email = (EditText) findViewById(R.id.email);
         type = (Spinner) findViewById(R.id.type);
 
-        mAuth = FirebaseAuth.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
 
         // Populate user types spinner
@@ -144,7 +136,7 @@ public class EditProfileActivity extends AppCompatActivity {
                                 public void onClick(DialogInterface dialog, int which) {
 //                                    String user = currUser.getUsername();
 
-                                    User newProfile = new User(userStr, passStr, nameStr, emailStr, userType);
+                                    //User newProfile = new User(userStr, passStr, nameStr, emailStr, userType);
 //                                    AppSingleton.getInstance().setCurrentUser(newProfile);
                                     User u = new User(userStr, passStr, nameStr, emailStr, userType);
                                     DatabaseReference ref = database.getReference(fbuser.getUid());

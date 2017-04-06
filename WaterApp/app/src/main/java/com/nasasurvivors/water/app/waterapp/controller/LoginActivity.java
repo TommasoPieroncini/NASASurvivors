@@ -17,8 +17,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.nasasurvivors.water.app.waterapp.R;
-import com.nasasurvivors.water.app.waterapp.model.AppSingleton;
-import com.nasasurvivors.water.app.waterapp.model.CredentialVerification;
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -28,8 +26,6 @@ public class LoginActivity extends AppCompatActivity {
     // declare UI components
     private EditText editTextEmail;
     private EditText editTextPassword;
-    private Button loginBtn;
-    private TextView registerBtn;
     private TextView textViewForgot;
 
     @Override
@@ -40,8 +36,8 @@ public class LoginActivity extends AppCompatActivity {
 
         editTextEmail = (EditText) findViewById(R.id.user_input);
         editTextPassword = (EditText) findViewById(R.id.pass_input);
-        loginBtn = (Button) findViewById(R.id.loginBtn);
-        registerBtn = (TextView) findViewById(R.id.registerBtn);
+        Button loginBtn = (Button) findViewById(R.id.loginBtn);
+        TextView registerBtn = (TextView) findViewById(R.id.registerBtn);
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override

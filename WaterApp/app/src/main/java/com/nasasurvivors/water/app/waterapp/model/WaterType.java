@@ -1,7 +1,7 @@
 package com.nasasurvivors.water.app.waterapp.model;
 
 /**
- * Created by elf82 on 2/25/2017.
+ * Created by elf82 on 2/25/2017
  */
 
 /**
@@ -13,7 +13,7 @@ public enum WaterType {
     private String value;
 
     /**
-     * contructor which sets value
+     * constructor which sets value
      * @param v value to assign
      */
     WaterType(String v) {
@@ -21,7 +21,7 @@ public enum WaterType {
     }
 
     /**
-     * overriding tostring method
+     * overriding toString method
      * @return return value
      */
     public String toString() {
