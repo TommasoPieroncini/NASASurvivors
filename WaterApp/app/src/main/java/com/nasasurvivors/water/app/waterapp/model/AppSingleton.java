@@ -20,6 +20,7 @@ public class AppSingleton {
     private static ArrayList<WaterSourceReport> sourceReports = new ArrayList<>();
     private static ArrayList<WaterPurityReport> purityReports = new ArrayList<>();
     private static Location currentLocation;
+    public static boolean loggedOut = true;
 
     /**
      * getter with current context
@@ -108,5 +109,30 @@ public class AppSingleton {
      */
     public static Location getLocation() {
         return currentLocation;
+    }
+
+    /**
+     * set loggedOut bit
+     * @param logOut
+     */
+    public void setLoggedOut(boolean logOut) {
+        loggedOut = logOut;
+    }
+
+    /**
+     * return whether user is loggedOut
+     * @return loggedOut boolean
+     */
+    public boolean getLoggedOut() {
+        return loggedOut;
+    }
+
+    public static boolean logout() {
+        AppSingleton.getInstance().setCurrentUser(null);
+        AppSingleton.getInstance().setLoggedOut(true);
+        AppSingleton.getInstance().getSourceReports().clear();
+        AppSingleton.getInstance().getPurityReports().clear();
+        AppSingleton.setLocation(null);
+        return true;
     }
 }

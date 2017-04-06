@@ -29,6 +29,8 @@ import com.nasasurvivors.water.app.waterapp.model.WaterSourceReport;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Map of water reports class
@@ -36,9 +38,9 @@ import java.util.HashMap;
 public class WaterMarkersMapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private HashMap<Integer, Marker> markers;
-    private ArrayList<WaterSourceReport> sourceData;
-    private ArrayList<WaterPurityReport> purityData;
+    private Map<Integer, Marker> markers;
+    private List<WaterSourceReport> sourceData;
+    private List<WaterPurityReport> purityData;
     private UserType currUserType;
 
     private FirebaseDatabase database = FirebaseDatabase.getInstance();

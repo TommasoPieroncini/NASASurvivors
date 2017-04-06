@@ -24,6 +24,7 @@ import com.nasasurvivors.water.app.waterapp.model.AppSingleton;
 import com.nasasurvivors.water.app.waterapp.model.WaterPurityReport;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * class to generate history report graph
@@ -88,9 +89,9 @@ public class GraphGenerateActivity extends AppCompatActivity {
                     RadioButton rb = (RadioButton) findViewById(id);
                     String type = rb.getText().toString();
 
-                    ArrayList<DataPoint> virusData = new ArrayList<>();
-                    ArrayList<DataPoint> contaminantData = new ArrayList<>();
-                    ArrayList<WaterPurityReport> selectedReports = new ArrayList<>();
+                    List<DataPoint> virusData = new ArrayList<>();
+                    List<DataPoint> contaminantData = new ArrayList<>();
+                    List<WaterPurityReport> selectedReports = new ArrayList<>();
                     int i = 0;
 
                     for (WaterPurityReport p : AppSingleton.getInstance().getPurityReports()) {

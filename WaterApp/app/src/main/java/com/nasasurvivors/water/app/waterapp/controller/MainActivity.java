@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 AppSingleton.getInstance().setCurrentUser(u);
                 while (AppSingleton.getInstance().getCurrentUser() == null) {
                 }
+                AppSingleton.getInstance().setLoggedOut(false);
                 welcome.setText("Welcome, " + AppSingleton.getInstance().getCurrentUser().getUsername() + "!");
 
 
@@ -282,13 +283,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * logout and set user to null
+     * logout and set all private data to null
      */
     private void logout() {
         Intent loggedOut = new Intent(this, LoginActivity.class);
         loggedOut.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         Toast.makeText(this, "Goodbye " + AppSingleton.getInstance().getCurrentUser().getUsername() + ".", Toast.LENGTH_SHORT).show();
-//        AppSingleton.getInstance().setCurrentUser(null);
+        AppSingleton.logout();
         mAuth.signOut();
         startActivity(loggedOut);
     }
