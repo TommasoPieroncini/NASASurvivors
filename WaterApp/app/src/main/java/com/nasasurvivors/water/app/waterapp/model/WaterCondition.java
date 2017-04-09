@@ -8,12 +8,12 @@ package com.nasasurvivors.water.app.waterapp.model;
  * Water condition model class
  */
 public enum WaterCondition {
-        WASTE ("Waste"), TREATABLECLEAR ("Treatable Clear"), TREATABLEMUDDY ("Treatable Muddy"), POTABLE ("Potable");
+        WASTE ("Waste"), TREATABLE_CLEAR ("Treatable Clear"), TREATABLE_MUDDY ("Treatable Muddy"), POTABLE ("Potable");
 
         private String value;
 
         /**
-         * contructor which sets value
+         * constructor which sets value
          * @param v value to assign
          */
         WaterCondition(String v) {
@@ -21,7 +21,7 @@ public enum WaterCondition {
         }
 
         /**
-        * overriding tostring method
+        * overriding toString method
         * @return return value
         */
         public String toString() {

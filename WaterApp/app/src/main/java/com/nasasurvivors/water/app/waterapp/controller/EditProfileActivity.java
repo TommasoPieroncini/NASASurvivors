@@ -1,12 +1,10 @@
 package com.nasasurvivors.water.app.waterapp.controller;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -20,10 +18,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.nasasurvivors.water.app.waterapp.R;
-import com.nasasurvivors.water.app.waterapp.model.AppSingleton;
 import com.nasasurvivors.water.app.waterapp.model.CredentialVerification;
 import com.nasasurvivors.water.app.waterapp.model.User;
 import com.nasasurvivors.water.app.waterapp.model.UserType;
@@ -36,11 +32,11 @@ import java.util.List;
  */
 public class EditProfileActivity extends AppCompatActivity {
 
-    //declare firebase components
+    //declare fireBase components
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private FirebaseUser fbuser;
+    private FirebaseUser fbUser;
 
 
     // declare UI components
@@ -75,15 +71,13 @@ public class EditProfileActivity extends AppCompatActivity {
         type.setAdapter(adapter);
 
 
-//        final User currUser = AppSingleton.getInstance().getCurrentUser();
-        fbuser = mAuth.getCurrentUser();
-//        email.setText(fbuser.getEmail());
+        fbUser = mAuth.getCurrentUser();
         DatabaseReference myRef = database.getReference();
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot o : dataSnapshot.getChildren()) {
-                    if (o.getKey().equals(fbuser.getUid())) {
+                    if (o.getKey().equals(fbUser.getUid())) {
                         String emailStr = (String) o.child("email").getValue();
                         String nameStr = (String) o.child("name").getValue();
                         String passwordStr = (String) o.child("password").getValue();
@@ -144,10 +138,8 @@ public class EditProfileActivity extends AppCompatActivity {
                                 public void onClick(DialogInterface dialog, int which) {
 //                                    String user = currUser.getUsername();
 
-                                    User newProfile = new User(userStr, passStr, nameStr, emailStr, userType);
-//                                    AppSingleton.getInstance().setCurrentUser(newProfile);
                                     User u = new User(userStr, passStr, nameStr, emailStr, userType);
-                                    DatabaseReference ref = database.getReference(fbuser.getUid());
+                                    DatabaseReference ref = database.getReference(fbUser.getUid());
                                     ref.setValue(u);
 
                                     Toast.makeText(getBaseContext(), "You've edited your profile!", Toast.LENGTH_SHORT).show();

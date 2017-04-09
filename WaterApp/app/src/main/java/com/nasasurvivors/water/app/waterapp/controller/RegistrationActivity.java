@@ -10,7 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -30,7 +29,7 @@ import java.util.List;
 
 
 /**
- * Created by zachschlesinger on 3/10/17.
+ * Created by Zach Schlesinger on 3/10/17.
  */
 
 public class RegistrationActivity extends AppCompatActivity {
@@ -121,7 +120,7 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     /**
-     * registers account with firebase
+     * registers account with fireBase
      * @param email email to register
      * @param password password to register
      */
@@ -136,7 +135,6 @@ public class RegistrationActivity extends AppCompatActivity {
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                             if (user != null) {
                                 DatabaseReference myRef = database.getReference(user.getUid());
-                                //User u = new User("trollmaster6969","Alexandre","Locquet", new ArrayList<>(Arrays.asList("basketball", "baseball")));
                                 UserType type = (UserType) spinnerType.getSelectedItem();
                                 User u = new User(editTextDisplayName.getText().toString(), editTextPassword.getText().toString(), editTextFirst.getText().toString(), editTextEmail.getText().toString(), type);
                                 myRef.setValue(u);
@@ -144,7 +142,6 @@ public class RegistrationActivity extends AppCompatActivity {
                             Toast.makeText(getBaseContext(), "Authentication succeeded",
                                     Toast.LENGTH_SHORT).show();
                         } else {
-                            Log.d("Firebase",task.getException().getMessage().toString());
                             Toast.makeText(getBaseContext(), "Authentication failed",
                                     Toast.LENGTH_SHORT).show();
                         }
@@ -155,7 +152,7 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     /**
-     * sign in with firebase
+     * sign in with fireBase
      * @param email email to sign in
      * @param password password to sign in
      */

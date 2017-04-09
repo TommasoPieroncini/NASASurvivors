@@ -17,9 +17,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.nasasurvivors.water.app.waterapp.R;
-import com.nasasurvivors.water.app.waterapp.model.AppSingleton;
-import com.nasasurvivors.water.app.waterapp.model.CredentialVerification;
 
+/**
+ * Login activity that uses fireBase email sign in
+ */
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -97,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /**
-     * firebase signIn method
+     * fireBase signIn method
      * @param email email to sign in
      * @param password password to sign in
      */

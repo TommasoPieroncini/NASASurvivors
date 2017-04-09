@@ -18,7 +18,8 @@
         android:id="@+id/imageView"
         android:layout_marginTop="27dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:contentDescription="logo" />
 
     <LinearLayout
         android:orientation="vertical"

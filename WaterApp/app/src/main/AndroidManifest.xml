@@ -18,7 +18,8 @@
         android:icon="@mipmap/ic_launcher"
         android:label="AQUA"
         android:supportsRtl="true"
-        android:theme="@style/NasaTheme">
+        android:theme="@style/NasaTheme"
+        android:fullBackupContent="true" >
         <activity
             android:name=".controller.RegistrationActivity"
             android:label="REGISTRATION"

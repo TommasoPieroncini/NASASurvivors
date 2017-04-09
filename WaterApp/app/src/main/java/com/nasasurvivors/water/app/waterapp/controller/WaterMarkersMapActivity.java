@@ -6,7 +6,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ContextThemeWrapper;
 import android.util.Log;
-import android.widget.Toast;
+import android.util.SparseArray;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -27,10 +27,7 @@ import com.nasasurvivors.water.app.waterapp.model.UserType;
 import com.nasasurvivors.water.app.waterapp.model.WaterPurityReport;
 import com.nasasurvivors.water.app.waterapp.model.WaterSourceReport;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Map of water reports class
@@ -38,10 +35,11 @@ import java.util.Map;
 public class WaterMarkersMapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private Map<Integer, Marker> markers;
+    private SparseArray<Marker> markers;
     private List<WaterSourceReport> sourceData;
     private List<WaterPurityReport> purityData;
     private UserType currUserType;
+    private AppSingleton app = AppSingleton.getInstance();
 
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
 
@@ -49,7 +47,7 @@ public class WaterMarkersMapActivity extends AppCompatActivity implements OnMapR
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_water_sources_map);
-        currUserType = AppSingleton.getInstance().getCurrentUser().getUserType();
+        currUserType = app.getCurrentUser().getUserType();
 
 
 
@@ -86,28 +84,24 @@ public class WaterMarkersMapActivity extends AppCompatActivity implements OnMapR
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // AppSingleton.getInstance().getPurityReports().clear();
-                // AppSingleton.getInstance().getSourceReports().clear();
-                //Log.e("TESTING", "MAPACTIVTIY1");
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                        //Log.e("TESTING", "MAPACTIVTIY2");
                         if (ds.getKey().equals("WaterSourceReports")) {
-                            AppSingleton.getInstance().getSourceReports().clear();
+                            app.getSourceReports().clear();
                             for (DataSnapshot r : ds.getChildren()) {
                                 if (!r.getKey().equals("id")) {
                                     WaterSourceReport report = r.getValue(WaterSourceReport.class);
                                     Log.e("TESTING", r.getKey() + "  " + String.valueOf(report.getId()));
-                                    AppSingleton.getInstance().addSourceReport(report);
+                                    app.addSourceReport(report);
                                 }
                             }
                         }
                         if (ds.getKey().equals("WaterPurityReports")) {
-                            AppSingleton.getInstance().getPurityReports().clear();
+                            app.getPurityReports().clear();
                             for (DataSnapshot r : ds.getChildren()) {
                                 if (!r.getKey().equals("id")) {
                                     WaterPurityReport report = r.getValue(WaterPurityReport.class);
                                     Log.e("TESTING", r.getKey() + "  " + String.valueOf(report.getId()));
-                                    AppSingleton.getInstance().addPurityReport(report);
+                                    app.addPurityReport(report);
                                 }
                             }
                         }
@@ -144,9 +138,9 @@ public class WaterMarkersMapActivity extends AppCompatActivity implements OnMapR
      * helper method to add markers to map
      */
     private void addMarkers() {
-        markers = new HashMap<>();
-        sourceData = AppSingleton.getInstance().getSourceReports();
-        purityData = AppSingleton.getInstance().getPurityReports();
+        markers = new SparseArray<>();
+        sourceData = app.getSourceReports();
+        purityData = app.getPurityReports();
         if (mMap != null) {
             mMap.clear();
         }
@@ -193,7 +187,6 @@ public class WaterMarkersMapActivity extends AppCompatActivity implements OnMapR
                 && (currUserType.equals(UserType.MANAGER) || currUserType.equals(UserType.ADMIN))) {
             com.nasasurvivors.water.app.waterapp.model.LatLng loc = purityData.get(0).getLocation();
             mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(loc.getLatitude(), loc.getLongitude())));
-        } else {
         }
     }
 }

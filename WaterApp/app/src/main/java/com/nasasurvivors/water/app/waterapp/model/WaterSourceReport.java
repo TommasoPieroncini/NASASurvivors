@@ -36,6 +36,7 @@ public class WaterSourceReport {
      * @param location location of the water source
      * @param typ water source type
      * @param con water source condition
+     * @param id report id
      */
     public WaterSourceReport(Date date, String user, LatLng location, WaterType typ, WaterCondition con, int id) {
 
