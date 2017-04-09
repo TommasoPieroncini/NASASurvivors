@@ -50,8 +50,8 @@ public class MainActivity extends AppCompatActivity {
     private Location currentLocation;
 
     private FirebaseAuth mAuth;
-    private FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private AppSingleton app = AppSingleton.getInstance();
+    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private final AppSingleton app = AppSingleton.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,11 +99,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
+        if ((ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+                && (ActivityCompat.checkSelfPermission(this, Manifest.permission.
+                ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED)) {
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
             //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
@@ -174,24 +174,29 @@ public class MainActivity extends AppCompatActivity {
                         AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
                                 .setTitle("Add Report")
                                 .setMessage("Choose which report you want to create.")
-                                .setPositiveButton("Water Source Report", new DialogInterface.OnClickListener() {
+                                .setPositiveButton("Water Source Report", new DialogInterface.
+                                        OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        Intent toSourceReport = new Intent(getBaseContext(), WaterSourceReportActivity.class);
+                                        Intent toSourceReport = new Intent(getBaseContext(),
+                                                WaterSourceReportActivity.class);
                                         startActivity(toSourceReport);
                                     }
                                 })
-                                .setNegativeButton("Water Purity Report", new DialogInterface.OnClickListener() {
+                                .setNegativeButton("Water Purity Report",
+                                        new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        Intent toPurityReport = new Intent(getBaseContext(), WaterPurityReportActivity.class);
+                                        Intent toPurityReport = new Intent(getBaseContext(),
+                                                WaterPurityReportActivity.class);
                                         startActivity(toPurityReport);
                                     }
                                 }).create();
 
                         dialog.show();
                     } else {
-                        Intent toSourceReport = new Intent(getBaseContext(), WaterSourceReportActivity.class);
+                        Intent toSourceReport = new Intent(getBaseContext(),
+                                WaterSourceReportActivity.class);
                         startActivity(toSourceReport);
                     }
                 }
@@ -203,28 +208,34 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (app.getCurrentUser() != null) {
                     UserType currUserType = app.getCurrentUser().getUserType();
-                    if (currUserType.equals(UserType.MANAGER) || currUserType.equals(UserType.ADMIN)) {
+                    if (currUserType.equals(UserType.MANAGER) || currUserType.equals(
+                            UserType.ADMIN)) {
                         AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
                                 .setTitle("View Reports")
                                 .setMessage("Choose which reports you want to view.")
-                                .setPositiveButton("Water Source Reports", new DialogInterface.OnClickListener() {
+                                .setPositiveButton("Water Source Reports",
+                                        new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        Intent toSourceReport = new Intent(getBaseContext(), ViewSourceReportsActivity.class);
+                                        Intent toSourceReport = new Intent(getBaseContext(),
+                                                ViewSourceReportsActivity.class);
                                         startActivity(toSourceReport);
                                     }
                                 })
-                                .setNegativeButton("Water Purity Reports", new DialogInterface.OnClickListener() {
+                                .setNegativeButton("Water Purity Reports",
+                                        new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        Intent toPurityReport = new Intent(getBaseContext(), ViewPurityReportsActivity.class);
+                                        Intent toPurityReport = new Intent(getBaseContext(),
+                                                ViewPurityReportsActivity.class);
                                         startActivity(toPurityReport);
                                     }
                                 }).create();
 
                         dialog.show();
                     } else {
-                        Intent toViewReports = new Intent(getBaseContext(), ViewSourceReportsActivity.class);
+                        Intent toViewReports = new Intent(getBaseContext(),
+                                ViewSourceReportsActivity.class);
                         startActivity(toViewReports);
                     }
                 }
@@ -288,7 +299,8 @@ public class MainActivity extends AppCompatActivity {
     private void logout() {
         Intent loggedOut = new Intent(this, LoginActivity.class);
         loggedOut.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        Toast.makeText(this, "Goodbye " + app.getCurrentUser().getUsername() + ".", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Goodbye " + app.getCurrentUser().getUsername() + ".",
+                Toast.LENGTH_SHORT).show();
         AppSingleton.logout();
         mAuth.signOut();
         startActivity(loggedOut);

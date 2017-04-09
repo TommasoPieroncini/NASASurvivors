@@ -6,10 +6,10 @@ import org.junit.Test;
 
 import static com.nasasurvivors.water.app.waterapp.model.CredentialVerification.verifyEmail;
 import static com.nasasurvivors.water.app.waterapp.model.CredentialVerification.verifyPassword;
-import static org.junit.Assert.*;
 
 /**
- * TESTS for 2 methods in CredentialsVerification: verifyPassword (Emma Flynn) and verifyEmail (Meha Agrawal)
+ * TESTS for 2 methods in CredentialsVerification: verifyPassword (Emma Flynn) and verifyEmail
+ * (Meha Agrawal)
  * Example local unit test, which will execute on the development machine (host).
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
@@ -25,9 +25,12 @@ public class CredentialVerificationTest {
         Assert.assertEquals(verifyPassword("ABCDE123"), "\nPassword does not contain a lowercase");
         Assert.assertEquals(verifyPassword("Abcdefgh"), "\nPassword does not contain a number");
         Assert.assertEquals(verifyPassword("Abcde1234frhg"), "");
-        Assert.assertEquals(verifyPassword("abc12"), "Password is too short\nPassword does not contain an uppercase");
-        Assert.assertEquals(verifyPassword("A123"), "Password is too short\nPassword does not contain a lowercase");
-        Assert.assertEquals(verifyPassword(""), "Password is too short\nPassword does not contain an uppercase" +
+        Assert.assertEquals(verifyPassword("abc12"), "Password is too short\nPassword " +
+                "does not contain an uppercase");
+        Assert.assertEquals(verifyPassword("A123"), "Password is too short\nPassword does " +
+                "not contain a lowercase");
+        Assert.assertEquals(verifyPassword(""), "Password is too short\nPassword does not " +
+                "contain an uppercase" +
                 "\nPassword does not contain a lowercase\nPassword does not contain a number");
         Assert.assertEquals(verifyPassword("abcde"), "Password is too short" +
                 "\nPassword does not contain an uppercase\nPassword does not contain a number");

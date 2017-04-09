@@ -1,9 +1,5 @@
 package com.nasasurvivors.water.app.waterapp.model;
 
-/**
- * Created by Tommaso on 3/12/17.
- */
-
 import java.text.DateFormat;
 import java.util.Date;
 
@@ -135,6 +131,7 @@ public class WaterPurityReport {
      * @return string representation of purity report
      */
     public String toString() {
-        return id + ", " + reporter + ", " + date.toString() + ", " + location.toString() + ", contaminant: " + contaminantPPM + ", virus: " + virusPPM;
+        return id + ", " + reporter + ", " + date.toString() + ", " + location.toString() +
+                ", contaminant: " + contaminantPPM + ", virus: " + virusPPM;
     }
 }

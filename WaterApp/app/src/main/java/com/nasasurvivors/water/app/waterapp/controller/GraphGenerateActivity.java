@@ -2,7 +2,6 @@ package com.nasasurvivors.water.app.waterapp.controller;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,9 +36,9 @@ public class GraphGenerateActivity extends AppCompatActivity {
     private EditText yearInput;
     private RadioGroup virOrCont;
 
-    private FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private DatabaseReference myRef = database.getReference();
-    private AppSingleton app = AppSingleton.getInstance();
+    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private final DatabaseReference myRef = database.getReference();
+    private final AppSingleton app = AppSingleton.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,10 +56,10 @@ public class GraphGenerateActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds: dataSnapshot.getChildren()) {
-                    if (ds.getKey().equals("WaterPurityReports")) {
+                    if (("WaterPurityReports").equals(ds.getKey())) {
                         app.getPurityReports().clear();
                         for (DataSnapshot r: ds.getChildren()) {
-                            if (!r.getKey().equals("id")) {
+                            if (!("id").equals(r.getKey())) {
                                 WaterPurityReport report = r.getValue(WaterPurityReport.class);
                                 app.addPurityReport(report);
                             }
@@ -80,7 +79,10 @@ public class GraphGenerateActivity extends AppCompatActivity {
         generate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!yearInput.getText().toString().equals("") && !latInput.getText().toString().equals("") && !longInput.getText().toString().equals("") && virOrCont.getCheckedRadioButtonId() != -1) {
+                if ((!("").equals(yearInput.getText().toString())) && (!("").
+                        equals(latInput.getText().toString())) && (!("").
+                        equals(longInput.getText().toString())) &&
+                        (virOrCont.getCheckedRadioButtonId() != -1)) {
                     graph.removeAllSeries();
                     int lat = Double.valueOf(latInput.getText().toString()).intValue();
                     int lng = Double.valueOf(longInput.getText().toString()).intValue();
@@ -95,7 +97,8 @@ public class GraphGenerateActivity extends AppCompatActivity {
                     int i = 0;
 
                     for (WaterPurityReport p : app.getPurityReports()) {
-                        if ((int) p.getLocation().getLatitude() == lat && (int) p.getLocation().getLongitude() == lng) {
+                        if (((int) p.getLocation().getLatitude() == lat) &&
+                                ((int) p.getLocation().getLongitude() == lng)) {
                             virusData.add(new DataPoint(i, p.getVirusPPM()));
                             contaminantData.add(new DataPoint(i, p.getContaminantPPM()));
                             selectedReports.add(p);
@@ -105,9 +108,9 @@ public class GraphGenerateActivity extends AppCompatActivity {
 
                     DataPoint[] data = new DataPoint[virusData.size()];
                     PointsGraphSeries<DataPoint> series = null;
-                    if (type.equals("Virus")) {
+                    if (("Virus").equals(type)) {
                         series = new PointsGraphSeries<>(virusData.toArray(data));
-                    } else if (type.equals("Contaminant")) {
+                    } else if (("Contaminant").equals(type)) {
                         series = new PointsGraphSeries<>(contaminantData.toArray(data));
                     }
                     for (WaterPurityReport r : selectedReports) {
@@ -115,7 +118,8 @@ public class GraphGenerateActivity extends AppCompatActivity {
                     }
                     graph.addSeries(series);
                 } else {
-                    Toast.makeText(getBaseContext(), "Insert some information first!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), "Insert some information first!",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         });

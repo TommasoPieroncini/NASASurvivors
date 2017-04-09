@@ -1,16 +1,12 @@
 package com.nasasurvivors.water.app.waterapp.model;
 
 /**
- * Created by Tommaso on 2/21/17.
- */
-
-/**
  * User Type model class
  */
 public enum UserType {
     USER("User"), WORKER("Worker"), MANAGER("Manager"), ADMIN("Admin");
 
-    private String value;
+    private final String value;
 
     /**
      * constructor which sets value

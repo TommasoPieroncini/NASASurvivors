@@ -1,16 +1,12 @@
 package com.nasasurvivors.water.app.waterapp.model;
 
 /**
- * Created by Tommaso on 3/12/17.
- */
-
-/**
  * water overall condition
  */
 public enum WaterSafetyCondition {
     SAFE("Safe"), TREATABLE("Treatable"), UNSAFE("Unsafe");
 
-    private String value;
+    private final String value;
 
     /**
      * enum constructor

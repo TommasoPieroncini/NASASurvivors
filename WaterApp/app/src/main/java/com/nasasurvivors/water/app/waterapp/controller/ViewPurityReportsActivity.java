@@ -19,7 +19,7 @@ import com.nasasurvivors.water.app.waterapp.model.WaterPurityReport;
 public class ViewPurityReportsActivity extends AppCompatActivity {
 
     private ListView reportsList;
-    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,7 @@ public class ViewPurityReportsActivity extends AppCompatActivity {
                 AppSingleton.getInstance().getPurityReports().clear();
                 for (DataSnapshot r : dataSnapshot.getChildren()) {
                     //Log.e("TESTING", r.toString());
-                    if (!r.getKey().equals("id")) {
+                    if (!("id").equals(r.getKey())) {
                         WaterPurityReport report = r.getValue(WaterPurityReport.class);
                         AppSingleton.getInstance().addPurityReport(report);
                     }

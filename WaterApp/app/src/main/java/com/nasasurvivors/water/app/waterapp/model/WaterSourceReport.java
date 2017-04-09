@@ -4,10 +4,6 @@ import java.text.DateFormat;
 import java.util.Date;
 
 /**
- * Created by elf82 on 2/25/2017.
- */
-
-/**
  * Water report model class
  */
 public class WaterSourceReport {
@@ -38,7 +34,8 @@ public class WaterSourceReport {
      * @param con water source condition
      * @param id report id
      */
-    public WaterSourceReport(Date date, String user, LatLng location, WaterType typ, WaterCondition con, int id) {
+    public WaterSourceReport(Date date, String user, LatLng location, WaterType typ,
+                             WaterCondition con, int id) {
 
         this.date = date;
         reporter = user;

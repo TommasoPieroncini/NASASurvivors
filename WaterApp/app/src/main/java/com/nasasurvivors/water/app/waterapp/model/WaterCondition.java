@@ -1,16 +1,13 @@
 package com.nasasurvivors.water.app.waterapp.model;
 
 /**
- * Created by elf82 on 2/25/2017.
- */
-
-/**
  * Water condition model class
  */
 public enum WaterCondition {
-        WASTE ("Waste"), TREATABLE_CLEAR ("Treatable Clear"), TREATABLE_MUDDY ("Treatable Muddy"), POTABLE ("Potable");
+        WASTE ("Waste"), TREATABLE_CLEAR ("Treatable Clear"), TREATABLE_MUDDY ("Treatable Muddy"),
+        POTABLE ("Potable");
 
-        private String value;
+        private final String value;
 
         /**
          * constructor which sets value

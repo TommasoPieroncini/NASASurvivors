@@ -12,13 +12,13 @@ import java.util.ArrayList;
  * a list of water reports and global methods for the app
  */
 public class AppSingleton {
-    private static AppSingleton currInstance = new AppSingleton();;
+    private static final AppSingleton currInstance = new AppSingleton();
     private static Context currContext;
     private static User currentUser;
-    private static ArrayList<WaterSourceReport> sourceReports = new ArrayList<>();
-    private static ArrayList<WaterPurityReport> purityReports = new ArrayList<>();
+    private static final ArrayList<WaterSourceReport> sourceReports = new ArrayList<>();
+    private static final ArrayList<WaterPurityReport> purityReports = new ArrayList<>();
     private static Location currentLocation;
-    public static boolean loggedOut = true;
+    private static boolean loggedOut = true;
 
     /**
      * getter with current context
@@ -42,7 +42,7 @@ public class AppSingleton {
      * method use to mark incomplete implementation
      */
     public void incompleteMethod() {
-        Toast.makeText(currContext, "Functionality not implemented (YET)", Toast.LENGTH_SHORT).show();
+        Toast.makeText(currContext, "Functionality not implemented", Toast.LENGTH_SHORT).show();
     }
 
     /**
