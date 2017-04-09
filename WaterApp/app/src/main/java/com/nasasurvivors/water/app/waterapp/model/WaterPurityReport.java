@@ -1,7 +1,7 @@
 package com.nasasurvivors.water.app.waterapp.model;
 
 /**
- * Created by tommaso on 3/12/17.
+ * Created by Tommaso on 3/12/17.
  */
 
 import java.text.DateFormat;
@@ -28,6 +28,16 @@ public class WaterPurityReport {
     public WaterPurityReport() {
     }
 
+    /**
+     * constructor for waterPurityReport
+     * @param date input date
+     * @param reporter report author
+     * @param location report location
+     * @param overallCondition input condition
+     * @param virusPPM input virus PPM
+     * @param contaminantPPM input contaminant PPM
+     * @param id report id
+     */
     public WaterPurityReport(Date date, String reporter,
                              LatLng location, WaterSafetyCondition overallCondition,
                              int virusPPM, int contaminantPPM, int id) {

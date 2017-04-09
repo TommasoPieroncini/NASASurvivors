@@ -4,12 +4,10 @@ import android.content.Context;
 import android.location.Location;
 import android.widget.Toast;
 
-import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.ArrayList;
 
 /**
- * Created by tommaso on 2/12/17.
+ * Created by Tommaso on 2/12/17.
  * AppSingleton that includes a reference to the current user,
  * a list of water reports and global methods for the app
  */
@@ -104,7 +102,7 @@ public class AppSingleton {
     }
 
     /**
-     * gett for location
+     * get for location
      * @return current location
      */
     public static Location getLocation() {
@@ -113,7 +111,7 @@ public class AppSingleton {
 
     /**
      * set loggedOut bit
-     * @param logOut
+     * @param logOut logOut bit
      */
     public void setLoggedOut(boolean logOut) {
         loggedOut = logOut;
@@ -127,6 +125,10 @@ public class AppSingleton {
         return loggedOut;
     }
 
+    /**
+     * logout method
+     * @return whether logout happened successfully
+     */
     public static boolean logout() {
         AppSingleton.getInstance().setCurrentUser(null);
         AppSingleton.getInstance().setLoggedOut(true);

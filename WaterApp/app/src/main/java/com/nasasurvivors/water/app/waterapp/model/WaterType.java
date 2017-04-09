@@ -13,7 +13,7 @@ public enum WaterType {
     private String value;
 
     /**
-     * contructor which sets value
+     * constructor which sets value
      * @param v value to assign
      */
     WaterType(String v) {
@@ -21,7 +21,7 @@ public enum WaterType {
     }
 
     /**
-     * overriding tostring method
+     * overriding toString method
      * @return return value
      */
     public String toString() {

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -19,10 +18,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.nasasurvivors.water.app.waterapp.R;
 import com.nasasurvivors.water.app.waterapp.model.AppSingleton;
-import com.nasasurvivors.water.app.waterapp.model.WaterCondition;
 import com.nasasurvivors.water.app.waterapp.model.WaterPurityReport;
 import com.nasasurvivors.water.app.waterapp.model.WaterSafetyCondition;
-import com.nasasurvivors.water.app.waterapp.model.WaterType;
 
 import java.util.Date;
 
@@ -113,8 +110,9 @@ public class WaterPurityReportActivity extends AppCompatActivity {
 
                 WaterPurityReport report = new WaterPurityReport(date,
                         AppSingleton.getInstance().getCurrentUser().getUsername(),
-                        position, safetyType, virus, contaminant, WaterPurityReport.currPurityReportID++);
+                        position, safetyType, virus, contaminant, WaterPurityReport.currPurityReportID);
 
+                WaterPurityReport.currPurityReportID++;
                 AppSingleton.getInstance().addPurityReport(report);
 
                 myRef.child("Report " + report.getId()).setValue(report);

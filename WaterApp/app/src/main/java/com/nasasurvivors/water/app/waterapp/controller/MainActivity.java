@@ -50,8 +50,8 @@ public class MainActivity extends AppCompatActivity {
     private Location currentLocation;
 
     private FirebaseAuth mAuth;
-    // private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private AppSingleton app = AppSingleton.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,19 +76,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User u = dataSnapshot.getValue(User.class);
-                AppSingleton.getInstance().setCurrentUser(u);
-                while (AppSingleton.getInstance().getCurrentUser() == null) {
+                app.setCurrentUser(u);
+                while (app.getCurrentUser() == null) {
                 }
-                AppSingleton.getInstance().setLoggedOut(false);
-                welcome.setText("Welcome, " + AppSingleton.getInstance().getCurrentUser().getUsername() + "!");
+                app.setLoggedOut(false);
+                welcome.setText("Welcome, " + app.getCurrentUser().getUsername() + "!");
 
 
 
                 addReport.setVisibility(View.VISIBLE);
                 viewReports.setVisibility(View.VISIBLE);
                 viewMap.setVisibility(View.VISIBLE);
-                if (AppSingleton.getInstance().getCurrentUser().getUserType().equals(UserType.MANAGER)
-                        || AppSingleton.getInstance().getCurrentUser().getUserType().equals(UserType.ADMIN)) {
+                if (app.getCurrentUser().getUserType().equals(UserType.MANAGER)
+                        || app.getCurrentUser().getUserType().equals(UserType.ADMIN)) {
                     viewGraph.setVisibility(View.VISIBLE);
                 }
             }
@@ -168,8 +168,8 @@ public class MainActivity extends AppCompatActivity {
         addReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (AppSingleton.getInstance().getCurrentUser() != null) {
-                    UserType currUserType = AppSingleton.getInstance().getCurrentUser().getUserType();
+                if (app.getCurrentUser() != null) {
+                    UserType currUserType = app.getCurrentUser().getUserType();
                     if (!currUserType.equals(UserType.USER)) {
                         AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
                                 .setTitle("Add Report")
@@ -201,8 +201,8 @@ public class MainActivity extends AppCompatActivity {
         viewReports.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (AppSingleton.getInstance().getCurrentUser() != null) {
-                    UserType currUserType = AppSingleton.getInstance().getCurrentUser().getUserType();
+                if (app.getCurrentUser() != null) {
+                    UserType currUserType = app.getCurrentUser().getUserType();
                     if (currUserType.equals(UserType.MANAGER) || currUserType.equals(UserType.ADMIN)) {
                         AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
                                 .setTitle("View Reports")
@@ -234,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
         viewMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (AppSingleton.getInstance().getCurrentUser() != null) {
+                if (app.getCurrentUser() != null) {
                     Intent toMap = new Intent(getBaseContext(), WaterMarkersMapActivity.class);
                     startActivity(toMap);
                 }
@@ -244,7 +244,7 @@ public class MainActivity extends AppCompatActivity {
         viewGraph.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (AppSingleton.getInstance().getCurrentUser() != null) {
+                if (app.getCurrentUser() != null) {
                     Intent toGraph = new Intent(getBaseContext(), GraphGenerateActivity.class);
                     startActivity(toGraph);
                 }
@@ -288,7 +288,7 @@ public class MainActivity extends AppCompatActivity {
     private void logout() {
         Intent loggedOut = new Intent(this, LoginActivity.class);
         loggedOut.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        Toast.makeText(this, "Goodbye " + AppSingleton.getInstance().getCurrentUser().getUsername() + ".", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Goodbye " + app.getCurrentUser().getUsername() + ".", Toast.LENGTH_SHORT).show();
         AppSingleton.logout();
         mAuth.signOut();
         startActivity(loggedOut);

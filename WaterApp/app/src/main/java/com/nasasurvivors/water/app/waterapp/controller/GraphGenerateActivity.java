@@ -1,6 +1,5 @@
 package com.nasasurvivors.water.app.waterapp.controller;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -40,6 +39,7 @@ public class GraphGenerateActivity extends AppCompatActivity {
 
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference myRef = database.getReference();
+    private AppSingleton app = AppSingleton.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,12 +57,12 @@ public class GraphGenerateActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds: dataSnapshot.getChildren()) {
-                    if (ds.getKey().toString().equals("WaterPurityReports")) {
-                        AppSingleton.getInstance().getPurityReports().clear();
+                    if (ds.getKey().equals("WaterPurityReports")) {
+                        app.getPurityReports().clear();
                         for (DataSnapshot r: ds.getChildren()) {
-                            if (!r.getKey().toString().equals("id")) {
+                            if (!r.getKey().equals("id")) {
                                 WaterPurityReport report = r.getValue(WaterPurityReport.class);
-                                AppSingleton.getInstance().addPurityReport(report);
+                                app.addPurityReport(report);
                             }
                         }
                     }
@@ -84,7 +84,7 @@ public class GraphGenerateActivity extends AppCompatActivity {
                     graph.removeAllSeries();
                     int lat = Double.valueOf(latInput.getText().toString()).intValue();
                     int lng = Double.valueOf(longInput.getText().toString()).intValue();
-                    String year = yearInput.getText().toString();
+                    // String year = yearInput.getText().toString();
                     int id = virOrCont.getCheckedRadioButtonId();
                     RadioButton rb = (RadioButton) findViewById(id);
                     String type = rb.getText().toString();
@@ -94,11 +94,8 @@ public class GraphGenerateActivity extends AppCompatActivity {
                     List<WaterPurityReport> selectedReports = new ArrayList<>();
                     int i = 0;
 
-                    for (WaterPurityReport p : AppSingleton.getInstance().getPurityReports()) {
+                    for (WaterPurityReport p : app.getPurityReports()) {
                         if ((int) p.getLocation().getLatitude() == lat && (int) p.getLocation().getLongitude() == lng) {
-                            Log.e("TESTING", p.toString());
-                            // virusData.add(new DataPoint((int) p.getDate().getTime(), p.getVirusPPM()));
-                            // contaminantData.add(new DataPoint((int) p.getDate().getTime(), p.getContaminantPPM()));
                             virusData.add(new DataPoint(i, p.getVirusPPM()));
                             contaminantData.add(new DataPoint(i, p.getContaminantPPM()));
                             selectedReports.add(p);
@@ -116,9 +113,7 @@ public class GraphGenerateActivity extends AppCompatActivity {
                     for (WaterPurityReport r : selectedReports) {
                         Toast.makeText(getBaseContext(), r.toString(), Toast.LENGTH_SHORT).show();
                     }
-                    Log.e("TESTING", series.toString());
                     graph.addSeries(series);
-                    //graph.getLegendRenderer().setVisible(true);
                 } else {
                     Toast.makeText(getBaseContext(), "Insert some information first!", Toast.LENGTH_SHORT).show();
                 }

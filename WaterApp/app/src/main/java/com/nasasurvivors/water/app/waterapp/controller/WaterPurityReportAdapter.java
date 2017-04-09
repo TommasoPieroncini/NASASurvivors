@@ -13,7 +13,7 @@ import com.nasasurvivors.water.app.waterapp.model.WaterPurityReport;
 import java.util.List;
 
 /**
- * Created by tommaso on 3/1/17.
+ * Created by Tommaso on 3/1/17.
  */
 
 /**
@@ -22,9 +22,9 @@ import java.util.List;
 public class WaterPurityReportAdapter extends ArrayAdapter<WaterPurityReport> {
 
     /**
-     * constructor with a textview
+     * constructor with a textView
      * @param context current context
-     * @param textViewResourceId textview resource
+     * @param textViewResourceId textView resource
      */
     public WaterPurityReportAdapter(Context context, int textViewResourceId) {
         super(context, textViewResourceId);
@@ -63,7 +63,7 @@ public class WaterPurityReportAdapter extends ArrayAdapter<WaterPurityReport> {
             if (title != null) {
                 title.setText("Report ID: " + r.getId()
                         + "\n\nDate: " + r.getDate()
-                        + "\n\nTime: " + r.getTime().toString()
+                        + "\n\nTime: " + r.getTime()
                         + "\n\nAuthor: " + r.getReporter());
             }
 

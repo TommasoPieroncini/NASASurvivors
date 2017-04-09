@@ -1,7 +1,7 @@
 package com.nasasurvivors.water.app.waterapp.model;
 
 /**
- * Created by tommaso on 3/30/17.
+ * Created by Tommaso on 3/30/17.
  * LatLng class to handle location objects
  */
 public class LatLng {
@@ -9,13 +9,13 @@ public class LatLng {
     private double longitude;
 
     /**
-     * no params constructor for firebase object translation
+     * no params constructor for fireBase object translation
      */
     public LatLng() {
     }
 
     /**
-     * latlng constructor
+     * latLng constructor
      * @param lt latitude
      * @param lg longitude
      */
@@ -38,7 +38,7 @@ public class LatLng {
 
     /**
      * overrides toString method
-     * @return string representation of latlng object
+     * @return string representation of latLng object
      */
     public String toString() {
         return "lat: " + latitude + ", " + "long: " + longitude;

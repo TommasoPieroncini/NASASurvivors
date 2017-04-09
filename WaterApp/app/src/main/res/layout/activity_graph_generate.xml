@@ -90,7 +90,7 @@
             android:id="@+id/virus"
             android:layout_weight="1"
             android:layout_marginLeft="20dp"
-            android:textSize="15dp"
+            android:textSize="15sp"
             android:textColor="@color/onScreenText" />
 
         <RadioButton
@@ -98,7 +98,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/contaminant"
-            android:textSize="15dp"
+            android:textSize="15sp"
             android:layout_weight="1"
             android:textColor="@color/onScreenText" />
 

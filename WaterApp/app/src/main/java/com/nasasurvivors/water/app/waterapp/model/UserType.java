@@ -1,7 +1,7 @@
 package com.nasasurvivors.water.app.waterapp.model;
 
 /**
- * Created by tommaso on 2/21/17.
+ * Created by Tommaso on 2/21/17.
  */
 
 /**
@@ -13,7 +13,7 @@ public enum UserType {
     private String value;
 
     /**
-     * contructor which sets value
+     * constructor which sets value
      * @param v value to assign
      */
     UserType(String v) {
@@ -21,7 +21,7 @@ public enum UserType {
     }
 
     /**
-     * overriding tostring method
+     * overriding toString method
      * @return return value
      */
     public String toString() {
