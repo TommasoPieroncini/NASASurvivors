@@ -13,13 +13,9 @@ import com.nasasurvivors.water.app.waterapp.model.WaterSourceReport;
 import java.util.List;
 
 /**
- * Created by Tommaso on 3/1/17.
- */
-
-/**
  * Custom list view for water reports class
  */
-public class WaterSourceReportAdapter extends ArrayAdapter<WaterSourceReport> {
+class WaterSourceReportAdapter extends ArrayAdapter<WaterSourceReport> {
 
     /**
      * constructor with a textView

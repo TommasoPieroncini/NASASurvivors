@@ -35,7 +35,7 @@ public class EditProfileActivity extends AppCompatActivity {
     //declare fireBase components
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
     private FirebaseUser fbUser;
 
 
@@ -66,7 +66,8 @@ public class EditProfileActivity extends AppCompatActivity {
         List<UserType> userTypes = Arrays.asList(UserType.USER, UserType.WORKER,
                 UserType.MANAGER, UserType.ADMIN);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, userTypes);
+        ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item,
+                userTypes);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         type.setAdapter(adapter);
 
@@ -121,34 +122,35 @@ public class EditProfileActivity extends AppCompatActivity {
                 final String emailStr = email.getText().toString();
 
                 if (CredentialVerification.verifyEmail(emailStr) &&
-                        CredentialVerification.verifyPassword(passStr).equals("")) {
+                        ("").equals(CredentialVerification.verifyPassword(passStr))) {
 
-//                    if (!userStr.equals(currUser.getUsername()) && CredentialVerification.getInstance().getData().keySet().contains(userStr)) {
-//                        Toast.makeText(getBaseContext(), "Username already in use!", Toast.LENGTH_LONG).show();
-//                        return;
-//                    }
 
 
                     // Alert user and modify data
                     AlertDialog dialog = new AlertDialog.Builder(EditProfileActivity.this)
                             .setTitle("Edit Profile?")
-                            .setMessage("Are you sure you want to edit your profile with this information?")
-                            .setPositiveButton("Yes, I'm sure.", new DialogInterface.OnClickListener() {
+                            .setMessage("Are you sure you want to edit your profile " +
+                                    "with this information?")
+                            .setPositiveButton("Yes, I'm sure.",
+                                    new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
 //                                    String user = currUser.getUsername();
 
-                                    User u = new User(userStr, passStr, nameStr, emailStr, userType);
+                                    User u = new User(userStr, passStr, nameStr, emailStr,
+                                            userType);
                                     DatabaseReference ref = database.getReference(fbUser.getUid());
                                     ref.setValue(u);
 
-                                    Toast.makeText(getBaseContext(), "You've edited your profile!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getBaseContext(), "You've edited your profile!",
+                                            Toast.LENGTH_SHORT).show();
                                     Intent back = new Intent(getBaseContext(), MainActivity.class);
                                     back.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     startActivity(back);
                                 }
                             })
-                            .setNegativeButton("Never mind.", new DialogInterface.OnClickListener() {
+                            .setNegativeButton("Never mind.",
+                                    new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.cancel();
@@ -156,7 +158,8 @@ public class EditProfileActivity extends AppCompatActivity {
                             }).create();
                     dialog.show();
                 } else {
-                    Toast.makeText(getBaseContext(), "Something is invalid! Check again.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), "Something is invalid! Check again.",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         });

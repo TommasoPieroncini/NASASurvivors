@@ -35,7 +35,7 @@ public class WaterSourceReportActivity extends AppCompatActivity {
     private Spinner condSpinner;
     private Button submit;
     private Location currentLocation;
-    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
     private final DatabaseReference myRef = database.getReference("WaterSourceReports");
 
     @Override
@@ -46,7 +46,8 @@ public class WaterSourceReportActivity extends AppCompatActivity {
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                WaterSourceReport.currSourceReportID = dataSnapshot.child("id").getValue(Integer.class);
+                WaterSourceReport.currSourceReportID = dataSnapshot.child("id").
+                        getValue(Integer.class);
             }
 
             @Override
@@ -63,28 +64,15 @@ public class WaterSourceReportActivity extends AppCompatActivity {
         waterTypeSpinner = (Spinner) findViewById(R.id.overallCondSpinner);
         condSpinner = (Spinner) findViewById(R.id.conditionSpinner);
 
-        ArrayAdapter<String> typeAdapter = new ArrayAdapter(getBaseContext(), android.R.layout.simple_spinner_item, WaterType.values());
+        ArrayAdapter<String> typeAdapter = new ArrayAdapter(getBaseContext(),
+                android.R.layout.simple_spinner_item, WaterType.values());
         typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         waterTypeSpinner.setAdapter(typeAdapter);
 
-        ArrayAdapter<String> condAdapter = new ArrayAdapter(getBaseContext(), android.R.layout.simple_spinner_item, WaterCondition.values());
+        ArrayAdapter<String> condAdapter = new ArrayAdapter(getBaseContext(),
+                android.R.layout.simple_spinner_item, WaterCondition.values());
         condAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         condSpinner.setAdapter(condAdapter);
-
-
-        /*if (isGpsLocationProviderEnabled()) {
-            Log.e("TEST", "ENABLED");
-        }*/
-
-        /*int counter = 0;
-        while (currentLocation == null && counter < 3000) {
-            try {
-                counter++;
-                currentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            } catch (Exception e) {
-                Log.e("ERROR", "Failed to get current location: " + e);
-            }
-        }*/
 
         if (currentLocation != null) {
             lat.setText(String.valueOf(currentLocation.getLatitude()));
@@ -93,17 +81,18 @@ public class WaterSourceReportActivity extends AppCompatActivity {
 
 
         submit.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View view) {
 
                 Date date = new Date();
 
-                if (lat.getText().toString().equals("")) {
+                if ("".equals(lat.getText().toString())) {
                     lat.setError("You left a field empty!");
                     lat.requestFocus();
                     return;
                 }
 
-                if (longitude.getText().toString().equals("")) {
+                if ("".equals(longitude.getText().toString())) {
                     longitude.setError("You left a field empty!");
                     longitude.requestFocus();
                     return;
@@ -142,13 +131,4 @@ public class WaterSourceReportActivity extends AppCompatActivity {
             }
         });
     }
-
-    /*private boolean isGpsLocationProviderEnabled() {
-        try {
-            return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        } catch (Exception e) {
-            Log.d("ERROR_TEST", e.getMessage());
-        }
-        return false;
-    }*/
 }

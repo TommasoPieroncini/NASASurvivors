@@ -39,9 +39,9 @@ public class WaterMarkersMapActivity extends AppCompatActivity implements OnMapR
     private List<WaterSourceReport> sourceData;
     private List<WaterPurityReport> purityData;
     private UserType currUserType;
-    private AppSingleton app = AppSingleton.getInstance();
+    private final AppSingleton app = AppSingleton.getInstance();
 
-    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,22 +85,24 @@ public class WaterMarkersMapActivity extends AppCompatActivity implements OnMapR
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                        if (ds.getKey().equals("WaterSourceReports")) {
+                        if ("WaterSourceReports".equals(ds.getKey())) {
                             app.getSourceReports().clear();
                             for (DataSnapshot r : ds.getChildren()) {
-                                if (!r.getKey().equals("id")) {
+                                if (!"id".equals(r.getKey())) {
                                     WaterSourceReport report = r.getValue(WaterSourceReport.class);
-                                    Log.e("TESTING", r.getKey() + "  " + String.valueOf(report.getId()));
+                                    Log.e("TESTING", r.getKey() + "  " +
+                                            String.valueOf(report.getId()));
                                     app.addSourceReport(report);
                                 }
                             }
                         }
-                        if (ds.getKey().equals("WaterPurityReports")) {
+                        if ("WaterPurityReports".equals(ds.getKey())) {
                             app.getPurityReports().clear();
                             for (DataSnapshot r : ds.getChildren()) {
-                                if (!r.getKey().equals("id")) {
+                                if (!"id".equals(r.getKey())) {
                                     WaterPurityReport report = r.getValue(WaterPurityReport.class);
-                                    Log.e("TESTING", r.getKey() + "  " + String.valueOf(report.getId()));
+                                    Log.e("TESTING", r.getKey() + "  " + String.valueOf(
+                                            report.getId()));
                                     app.addPurityReport(report);
                                 }
                             }
@@ -121,7 +123,8 @@ public class WaterMarkersMapActivity extends AppCompatActivity implements OnMapR
      * @param marker clicked marker
      */
     private void createDialog(Marker marker) {
-        AlertDialog dialog = new AlertDialog.Builder(new ContextThemeWrapper(WaterMarkersMapActivity.this,R.style.MyAlertDialogTheme))
+        AlertDialog dialog = new AlertDialog.Builder(new ContextThemeWrapper(
+                WaterMarkersMapActivity.this,R.style.MyAlertDialogTheme))
                 .setTitle(marker.getTitle())
                 .setMessage(marker.getSnippet())
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -147,7 +150,8 @@ public class WaterMarkersMapActivity extends AppCompatActivity implements OnMapR
 
         for (WaterSourceReport swr : sourceData) {
             Marker marker = mMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(swr.getLocation().getLatitude(), swr.getLocation().getLongitude()))
+                    .position(new LatLng(swr.getLocation().getLatitude(), swr.getLocation().
+                            getLongitude()))
                     .title("Source Report #" + (swr.getId()))
                     .snippet(swr.getMonthDayYear()
                             + "\nCreated: " + swr.getTime()
@@ -164,7 +168,8 @@ public class WaterMarkersMapActivity extends AppCompatActivity implements OnMapR
         if (currUserType.equals(UserType.MANAGER) || currUserType.equals(UserType.ADMIN)) {
             for (WaterPurityReport pwr : purityData) {
                 Marker marker = mMap.addMarker(new MarkerOptions()
-                                .position(new LatLng(pwr.getLocation().getLatitude(), pwr.getLocation().getLongitude()))
+                                .position(new LatLng(pwr.getLocation().getLatitude(),
+                                        pwr.getLocation().getLongitude()))
                                 .title("Purity Report #" + (pwr.getId()))
                                 .snippet(pwr.getMonthDayYear()
                                         + "\nCreated: " + pwr.getTime()
@@ -172,7 +177,8 @@ public class WaterMarkersMapActivity extends AppCompatActivity implements OnMapR
                                         + "\nType: " + pwr.getOverallCondition()
                                         + "\nVirusPPM: " + pwr.getVirusPPM()
                                         + "\nContaminantPPM: " + pwr.getContaminantPPM())
-                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+                                .icon(BitmapDescriptorFactory.defaultMarker(
+                                        BitmapDescriptorFactory.HUE_GREEN))
                         //.icon(BitmapDescriptorFactory.fromResource(R.drawable.nasa_logo1))
                 );
 
@@ -180,13 +186,15 @@ public class WaterMarkersMapActivity extends AppCompatActivity implements OnMapR
             }
         }
 
-        if (sourceData.size() != 0) {
+        if (!sourceData.isEmpty()) {
             com.nasasurvivors.water.app.waterapp.model.LatLng loc = sourceData.get(0).getLocation();
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(loc.getLatitude(), loc.getLongitude())));
-        } else if (purityData.size() != 0
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(loc.getLatitude(),
+                    loc.getLongitude())));
+        } else if (!purityData.isEmpty()
                 && (currUserType.equals(UserType.MANAGER) || currUserType.equals(UserType.ADMIN))) {
             com.nasasurvivors.water.app.waterapp.model.LatLng loc = purityData.get(0).getLocation();
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(loc.getLatitude(), loc.getLongitude())));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(loc.getLatitude(),
+                    loc.getLongitude())));
         }
     }
 }

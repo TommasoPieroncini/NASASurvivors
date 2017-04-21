@@ -29,14 +29,14 @@ import java.util.List;
 
 
 /**
- * Created by Zach Schlesinger on 3/10/17.
+ * Created by Zach Schlesinger on 3/10/17
  */
 
 public class RegistrationActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     // declare UI components
     private EditText editTextEmail;
@@ -62,7 +62,8 @@ public class RegistrationActivity extends AppCompatActivity {
         List<UserType> userTypes = Arrays.asList(UserType.USER, UserType.WORKER,
                 UserType.MANAGER, UserType.ADMIN);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, userTypes);
+        ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item,
+                userTypes);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerType.setAdapter(adapter);
         spinnerType.setPrompt("Select your user type");
@@ -136,7 +137,10 @@ public class RegistrationActivity extends AppCompatActivity {
                             if (user != null) {
                                 DatabaseReference myRef = database.getReference(user.getUid());
                                 UserType type = (UserType) spinnerType.getSelectedItem();
-                                User u = new User(editTextDisplayName.getText().toString(), editTextPassword.getText().toString(), editTextFirst.getText().toString(), editTextEmail.getText().toString(), type);
+                                User u = new User(editTextDisplayName.getText().toString(),
+                                        editTextPassword.getText().toString(),
+                                        editTextFirst.getText().toString(),
+                                        editTextEmail.getText().toString(), type);
                                 myRef.setValue(u);
                             }
                             Toast.makeText(getBaseContext(), "Authentication succeeded",
@@ -169,7 +173,8 @@ public class RegistrationActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Toast.makeText(getBaseContext(), "Authentication succeeded",
                                     Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
+                            startActivity(new Intent(RegistrationActivity.this,
+                                    MainActivity.class));
                         } else {
                             Log.w("Pickup", "signInWithEmail:failed", task.getException());
                             Toast.makeText(getBaseContext(), "Authentication failed",

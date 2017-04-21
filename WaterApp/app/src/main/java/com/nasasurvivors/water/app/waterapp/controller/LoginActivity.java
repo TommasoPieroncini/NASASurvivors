@@ -68,7 +68,8 @@ public class LoginActivity extends AppCompatActivity {
                 if (!email.isEmpty() && !password.isEmpty()) {
                     signIn(email, password);
                 } else {
-                    Toast.makeText(getBaseContext(), "You have to give an email and password!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), "You have to give an email and password!",
+                            Toast.LENGTH_SHORT).show();
                 }
 
             }

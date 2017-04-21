@@ -34,7 +34,7 @@ public class WaterPurityReportActivity extends AppCompatActivity {
     private EditText contaminantInput;
     private Spinner safetySpinner;
     private Location currentLocation;
-    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
     private final DatabaseReference myRef = database.getReference("WaterPurityReports");
 
     @Override
@@ -45,7 +45,8 @@ public class WaterPurityReportActivity extends AppCompatActivity {
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                WaterPurityReport.currPurityReportID = dataSnapshot.child("id").getValue(Integer.class);
+                WaterPurityReport.currPurityReportID = dataSnapshot.child("id").getValue(
+                        Integer.class);
                 //Log.e("TESTING", "GETTING ID " + WaterPurityReport.currPurityReportID);
             }
 
@@ -62,7 +63,8 @@ public class WaterPurityReportActivity extends AppCompatActivity {
         contaminantInput = (EditText) findViewById(R.id.contaminantPPM);
         safetySpinner = (Spinner) findViewById(R.id.overallCondSpinner);
 
-        final ArrayAdapter<String> safetyAdapter = new ArrayAdapter(getBaseContext(), android.R.layout.simple_spinner_item, WaterSafetyCondition.values());
+        final ArrayAdapter<String> safetyAdapter = new ArrayAdapter(getBaseContext(),
+                android.R.layout.simple_spinner_item, WaterSafetyCondition.values());
         safetyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         safetySpinner.setAdapter(safetyAdapter);
 
@@ -77,13 +79,13 @@ public class WaterPurityReportActivity extends AppCompatActivity {
 
                 Date date = new Date();
 
-                if (latInput.getText().toString().equals("")) {
+                if ("".equals(latInput.getText().toString())) {
                     latInput.setError("You left a field empty!");
                     latInput.requestFocus();
                     return;
                 }
 
-                if (longInput.getText().toString().equals("")) {
+                if ("".equals(longInput.getText().toString())) {
                     longInput.setError("You left a field empty!");
                     longInput.requestFocus();
                     return;
@@ -104,13 +106,15 @@ public class WaterPurityReportActivity extends AppCompatActivity {
                 double latitude = Double.valueOf(latInput.getText().toString());
                 double longitude = Double.valueOf(longInput.getText().toString());
                 LatLng position = new LatLng(latitude, longitude);
-                WaterSafetyCondition safetyType = (WaterSafetyCondition) safetySpinner.getSelectedItem();
+                WaterSafetyCondition safetyType = (WaterSafetyCondition)
+                        safetySpinner.getSelectedItem();
                 int virus = Integer.valueOf(virusInput.getText().toString());
                 int contaminant = Integer.valueOf(contaminantInput.getText().toString());
 
                 WaterPurityReport report = new WaterPurityReport(date,
                         AppSingleton.getInstance().getCurrentUser().getUsername(),
-                        position, safetyType, virus, contaminant, WaterPurityReport.currPurityReportID);
+                        position, safetyType, virus, contaminant,
+                        WaterPurityReport.currPurityReportID);
 
                 WaterPurityReport.currPurityReportID++;
                 AppSingleton.getInstance().addPurityReport(report);

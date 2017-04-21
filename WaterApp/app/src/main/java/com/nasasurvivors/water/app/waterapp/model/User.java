@@ -1,10 +1,6 @@
 package com.nasasurvivors.water.app.waterapp.model;
 
 /**
- * Created by Tommaso on 2/21/17.
- */
-
-/**
  * User model class
  */
 public class User {

@@ -19,7 +19,7 @@ import com.nasasurvivors.water.app.waterapp.model.WaterSourceReport;
 public class ViewSourceReportsActivity extends AppCompatActivity {
 
     private ListView reportsList;
-    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +37,13 @@ public class ViewSourceReportsActivity extends AppCompatActivity {
                 AppSingleton.getInstance().getSourceReports().clear();
                 for (DataSnapshot r : dataSnapshot.getChildren()) {
                     //Log.e("TESTING", r.toString());
-                    if (!r.getKey().equals("id")) {
+                    if (!("id").equals(r.getKey())) {
                         WaterSourceReport report = r.getValue(WaterSourceReport.class);
                         AppSingleton.getInstance().addSourceReport(report);
                     }
                 }
-                WaterSourceReportAdapter adapter = new WaterSourceReportAdapter(getBaseContext(), R.layout.adapter_view,
+                WaterSourceReportAdapter adapter = new WaterSourceReportAdapter(getBaseContext(),
+                        R.layout.adapter_view,
                         AppSingleton.getInstance().getSourceReports());
                 reportsList.setAdapter(adapter);
             }

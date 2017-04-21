@@ -1,14 +1,19 @@
 package com.nasasurvivors.water.app.waterapp;
 
 
-import com.nasasurvivors.water.app.waterapp.controller.MainActivity;
-import com.nasasurvivors.water.app.waterapp.model.*;
+import com.nasasurvivors.water.app.waterapp.model.AppSingleton;
+import com.nasasurvivors.water.app.waterapp.model.LatLng;
+import com.nasasurvivors.water.app.waterapp.model.WaterCondition;
+import com.nasasurvivors.water.app.waterapp.model.WaterPurityReport;
+import com.nasasurvivors.water.app.waterapp.model.WaterSafetyCondition;
+import com.nasasurvivors.water.app.waterapp.model.WaterSourceReport;
+import com.nasasurvivors.water.app.waterapp.model.WaterType;
+
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -30,12 +35,12 @@ public class AppSingletonTest {
     private static WaterSourceReport source4;
     private static List<WaterPurityReport> pReports;
     private static List<WaterSourceReport> sReports;
-    private AppSingleton app = AppSingleton.getInstance();
+    private final AppSingleton app = AppSingleton.getInstance();
 
     @Before
     public void setUp() {
-        pReports = new ArrayList<WaterPurityReport>();
-        sReports = new ArrayList<WaterSourceReport>();
+        pReports = new ArrayList<>();
+        sReports = new ArrayList<>();
         purity1 = new WaterPurityReport(new Date(), "Username", new LatLng(1.0, 1.0), WaterSafetyCondition.SAFE, 30, 50, 2);
         purity2 = new WaterPurityReport(new Date(),
                 "OtherUsername", new LatLng(4.0, 1.0), WaterSafetyCondition.UNSAFE, 40, 500, 7);
@@ -49,7 +54,7 @@ public class AppSingletonTest {
         source3 = new WaterSourceReport();
         source4 = new WaterSourceReport(new Date(),
                 new String("Username"), new LatLng(6.0, 2.0), WaterType.LAKE, WaterCondition.TREATABLE_CLEAR, 6);
-        pReports = new ArrayList<WaterPurityReport>();
+        pReports = new ArrayList<>();
         pReports.add(purity1);
         pReports.add(purity2);
         pReports.add(purity3);
